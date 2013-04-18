@@ -22,7 +22,7 @@ exports.template = function (grunt, init, done) {
 
         // Generate package.json file, used by npm and grunt.
         init.writePackageJSON('package.json', {
-            name            : 'sample-grunt-project',
+            name            : props.name,
             version         : '0.1.0',
             npm_test        : 'grunt test',
             node_version    : '>=0.8.0 <0.9.1',
