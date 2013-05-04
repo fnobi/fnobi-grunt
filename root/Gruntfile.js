@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         watch: {
             javascripts: {
                 files: 'src/js/**/*.js',
-                tasks: []
+                tasks: ['jstask:dev']
             },
             stylesheets: {
                 files: 'src/sass/*.scss',
@@ -25,6 +25,17 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            dev: {
+                files: [
+                    { expand: true, cwd: 'src/js/', src: ['**'], dest: 'js/' }
+                ]
+            }
+        },
+        jstask: {
+            dev: { type: 'copy' },
+            dist: { type: 'requirejs' }
+        },
         mocha_phantomjs: {
             all: ['test/*.html']
         },
@@ -35,12 +46,20 @@ module.exports = function(grunt) {
         }
     });
 
+    // targetによって、jsの処理を切り替えるためのtask
+    grunt.registerMultiTask('jstask', 'process js files.', function () {
+        var target = this.target;
+        var config = grunt.config('jstask')[target];
+        grunt.task.run([ config.type + ':' + (config.target || target)]);
+    });
+
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-koko');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
 
-    grunt.registerTask('init', ['compass:dev']);
+    grunt.registerTask('init', ['compass:dev', 'jstask:dev']);
     grunt.registerTask('server', ['koko:dev']);
     grunt.registerTask('test', ['mocha_phantomjs']);
 
