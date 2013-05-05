@@ -5,22 +5,23 @@
         },
         shim: {
             main: {
-                deps: [ 'jquery', 'sub' ]
+                deps: [ 'jquery', 'sub' ],
+                route: '/'
             }
-        },
-        modules: [{
-            name: 'main',
-            route: '/'
-        }]
+        }
     };
 
-    var path = location.pathname;
-    var modules = [];
-    config.modules.forEach(function (module) {
-        if (path.match(new RegExp('^' + module.route + '$'))) {
-            modules.push(module.name);
+    var path = location.pathname, modules = [], route, name;
+
+    for (name in config.shim) {
+        route = config.shim[name].route;
+        if (!route) {
+            continue;
         }
-    });
+        if (path.match(new RegExp('^' + route + '$'))) {
+            modules.push(name);
+        }
+    };
 
     requirejs.config(config);
     require(modules);
