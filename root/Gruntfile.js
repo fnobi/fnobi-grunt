@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: 'src/js/**/*.js',
-                tasks: ['copy:js']
+                tasks: ['copy:js', 'mocha_html']
             },
             css: {
                 files: 'src/sass/*.scss',
@@ -32,8 +32,15 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        mocha_html: {
+            all: {
+                src   : [ 'js/sub.js' ],
+                test  : [ 'test/*-test.js' ],
+                assert : 'chai'
+            }
+        },
         mocha_phantomjs: {
-            all: ['test/*.html']
+            all: [ 'test/*.html' ]
         },
         koko: {
             dev: {
@@ -45,10 +52,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-mocha-html');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-koko');
 
-    grunt.registerTask('init', ['compass:dev', 'copy:js']);
+    grunt.registerTask('init', ['compass:dev', 'copy:js', 'mocha_html']);
     grunt.registerTask('server', ['koko:dev']);
     grunt.registerTask('test', ['mocha_phantomjs']);
 
