@@ -56,9 +56,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-koko');
 
-    grunt.registerTask('init', ['compass:dev', 'copy:js', 'mocha_html']);
+    grunt.registerTask('build', ['compass:dev', 'copy:js', 'mocha_html']);
     grunt.registerTask('server', ['koko:dev']);
     grunt.registerTask('test', ['mocha_phantomjs']);
 
-    grunt.registerTask('default', ['init']);
+    grunt.registerTask('default', ['build']);
 };
