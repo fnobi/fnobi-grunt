@@ -7,20 +7,20 @@ module.exports = function(grunt) {
                 tasks: ['copy:js', 'mocha_html']
             },
             css: {
-                files: 'src/sass/*.scss',
+                files: 'src/sass/**/*.scss',
                 tasks: ['compass:dev']
             }
         },
         compass: {
             dist: {
                 options: {
-                    config: 'config/compass.config.dist.rb',
+                    config: 'src/config.rb',
                     environment: 'production'
                 }
             },
             dev: {
                 options: {
-                    config: 'config/compass.config.dev.rb',
+                    config: 'src/config.rb',
                     environment: 'development'
                 }
             }
