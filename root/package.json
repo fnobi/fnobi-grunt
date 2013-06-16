@@ -1,5 +1,6 @@
 {
-  "name": "fnobi-grunt",
+  "name": "{%= name %}",
+  "description": "{%= description %}",
   "version": "0.1.0",
   "scripts": {
     "test": "grunt test"
@@ -11,8 +12,6 @@
     "grunt": "~0.4.0",
     "grunt-contrib-watch": "~0.1.1",
     "grunt-contrib-compass": "~0.1.3",
-    "grunt-contrib-requirejs": "~0.4.0",
-    "grunt-contrib-jasmine": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-mocha-html": "0.0.1",
     "grunt-mocha-phantomjs": "~0.2.8",
