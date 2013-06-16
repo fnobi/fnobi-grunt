@@ -1,4 +1,4 @@
-exports.description = 'web page template (compass + requirejs + mocha + koko)';
+exports.description = 'web page template (compass + embed require + mocha + koko)';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
