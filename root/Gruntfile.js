@@ -1,17 +1,37 @@
-module.exports = function(grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        watch: {
-            js: {
-                files: 'src/js/**/*.js',
-                tasks: ['embed_require:dev', 'mocha_html']
-            },
-            css: {
-                files: 'src/sass/**/*.scss',
-                tasks: ['compass:dev']
+module.exports = function (grunt) {
+    var config = {}, build = [];
+
+
+    // basic
+    {
+        config.pkg =  grunt.file.readJSON('package.json');
+
+        grunt.loadNpmTasks('grunt-contrib-watch');
+        config.watch = {};
+    }
+
+
+    // js
+    {
+        grunt.loadNpmTasks('grunt-embed-require');
+        config.embed_require = {
+            dev: {
+                src: 'src/js',
+                dest: 'js'
             }
-        },
-        compass: {
+        };
+        config.watch.js = {
+            files: 'src/js/**/*.js',
+            tasks: ['embed_require:dev']
+        };
+    }
+
+
+    // css
+    {
+        grunt.loadNpmTasks('grunt-contrib-compass');
+
+        config.compass =  {
             dist: {
                 options: {
                     config: 'src/config.rb',
@@ -24,40 +44,57 @@ module.exports = function(grunt) {
                     environment: 'development'
                 }
             }
-        },
-        embed_require: {
-            dev: {
-                src: 'src/js',
-                dest: 'js'
-            }
-        },
-        mocha_html: {
+        };
+
+        config.watch.css = {
+            files: 'src/sass/**/*.scss',
+            tasks: ['compass:dev']
+        };
+
+        build.push('compass:dev');
+    }
+
+
+    // test{% if (with_test) { %}
+    {
+        grunt.loadNpmTasks('grunt-mocha-html');
+        grunt.loadNpmTasks('grunt-mocha-phantomjs');
+
+        config.mocha_html =  {
             all: {
                 src   : [ 'js/sub.js' ],
                 test  : [ 'test/*-test.js' ],
                 assert : 'chai'
             }
-        },
-        mocha_phantomjs: {
+        };
+        build.push('mocha_html');
+        config.watch.js.tasks.push('mocha_html');
+
+        config.mocha_phantomjs =  {
             all: [ 'test/*.html' ]
-        },
-        koko: {
+        };
+
+        grunt.registerTask('test', ['mocha_phantomjs']);
+
+    }
+    // {% } %}
+
+
+    // server
+    {
+        grunt.loadNpmTasks('grunt-koko');
+        config.koko = {
             dev: {
                 openPath: '/'
             }
-        }
-    });
+        };
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-embed-require');
-    grunt.loadNpmTasks('grunt-mocha-html');
-    grunt.loadNpmTasks('grunt-mocha-phantomjs');
-    grunt.loadNpmTasks('grunt-koko');
+        grunt.registerTask('server', ['koko:dev']);
+    }
 
-    grunt.registerTask('build', ['compass:dev', 'embed_require:dev', 'mocha_html']);
-    grunt.registerTask('server', ['koko:dev']);
-    grunt.registerTask('test', ['mocha_phantomjs']);
 
+    // init
+    grunt.initConfig(config);
+    grunt.registerTask('build', build);
     grunt.registerTask('default', ['build']);
 };
