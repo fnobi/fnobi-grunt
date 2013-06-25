@@ -1,17 +1,17 @@
-grunt-init-jsapp
+grunt-init-me
 ================
 
-web page template (compass + requirejs + mocha + koko)
+web page template (compass + mocha + koko + simple ejs)
 
 
 ## start developing web application with modern enviornment!!
 
 ```
 # install this template
-git clone git@github.com:fnobi/grunt-init-jsapp.git ~/.grunt-init/jsapp
+git clone git@github.com:fnobi/grunt-init-me.git ~/.grunt-init/me
 
 # project scaffolding
-mkdir my-jsapp
-cd my-jsapp
-grunt-init jsapp
+mkdir my-project
+cd my-project
+grunt-init me
 ```
