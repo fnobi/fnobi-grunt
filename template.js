@@ -39,6 +39,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-contrib-compass': '~0.1.3',
                 'grunt-embed-require': 'git://github.com/fnobi/grunt-embed-require.git',
                 'grunt-koko': '~0.1.0',
+                "grunt-simple-ejs": "git://github.com/nobii/grunt-simple-ejs.git",
                 'grunt-mocha-html': '0.0.1',
                 'grunt-mocha-phantomjs': '~0.2.8',
                 'chai': '~1.6.1'
@@ -54,6 +55,9 @@ exports.template = function (grunt, init, done) {
 
         if (!props.with_ejs) {
             init.escapeFiles('src/ejs/**/*.*', files);
+            delete pkg.devDependencies['grunt-simple-ejs'];
+        } else {
+            init.escapeFiles('index.html', files);
         }
 
         // Actually copy (and process) files.

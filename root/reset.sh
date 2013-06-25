@@ -1,4 +1,4 @@
 rm -rf *
-grunt-init jsapp
+grunt-init me
 npm install
 grunt build

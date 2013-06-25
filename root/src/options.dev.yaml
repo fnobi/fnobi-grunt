@@ -1,0 +1,39 @@
+url:
+  http://example.com/
+
+root: ''
+
+meta:
+  title:
+    {%= name %}
+  description:
+    {%= description %}
+  keywords: []
+  favicon_url: /img/favicon.ico
+
+ios:
+  viewport: 
+    - width=device-width
+    - initial-scale=1.0
+    - maximum-scale=1.0
+    - user-scalable=0
+  icon_url: /img/apple-touch-icon.png
+
+sns:
+  twitter:
+    sharetext:
+      {%= description %}      
+    sharehashtag: []
+    shareurl: http://example.com/
+
+  facebook:
+    app_id: ''
+    sharetext:
+      {%= description %}
+
+ogp:
+  url: http://example.com/
+  image: 
+    url: http://example.com/ogp-icon.png
+    width: 300
+    height: 300

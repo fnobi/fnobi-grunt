@@ -55,6 +55,27 @@ module.exports = function (grunt) {
     }
 
 
+    // ejs{% if (with_ejs) { %}
+    {
+        grunt.loadNpmTasks('grunt-simple-ejs');
+
+        config.ejs = {
+            dev: {
+                template: ['src/ejs/*.ejs'],
+                dest: './',
+                options: 'src/options.dev.yaml'
+            }
+        };
+        build.push('ejs:dev');
+
+        config.watch.ejs = {
+            files: ['src/ejs/*.ejs'],
+            tasks: ['ejs:dev']
+        };
+    }
+    // {% } %}
+
+
     // test{% if (with_test) { %}
     {
         grunt.loadNpmTasks('grunt-mocha-html');
