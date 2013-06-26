@@ -32,15 +32,12 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-contrib-compass');
 
         config.compass =  {
-            dist: {
-                options: {
-                    config: 'src/config.rb',
-                    environment: 'production'
-                }
-            },
             dev: {
                 options: {
-                    config: 'src/config.rb',
+                    sassDir: 'src/sass',
+                    cssDir: 'css',
+                    imagesDir: 'img',
+                    javascriptsDir: 'js',
                     environment: 'development'
                 }
             }
