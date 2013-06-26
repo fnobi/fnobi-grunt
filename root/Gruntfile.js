@@ -21,7 +21,7 @@ module.exports = function (grunt) {
             }
         };
         config.watch.js = {
-            files: 'src/js/**/*.js',
+            files: ['src/js/*.js', 'src/js/**/*.js'],
             tasks: ['embed_require:dev']
         };
     }
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         };
 
         config.watch.css = {
-            files: 'src/sass/**/*.scss',
+            files: ['src/sass/*.scss', 'src/sass/**/*.scss'],
             tasks: ['compass:dev']
         };
 
