@@ -32,6 +32,6 @@ sns:
 
 ogp:
   image: 
-    url: http://example.com/ogp-icon.png
+    url: /img/ogp-icon.png
     width: 300
     height: 300
