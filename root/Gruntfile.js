@@ -13,17 +13,23 @@ module.exports = function (grunt) {
 
     // js
     {
-        grunt.loadNpmTasks('grunt-embed-require');
-        config.embed_require = {
+        grunt.loadNpmTasks('grunt-auto-deps');
+        config.auto_deps = {
             dev: {
-                src: 'src/js',
-                dest: 'js'
+                scripts: ['{%= name %}'],
+                loadPath: ['src/js/*.js', 'src/js/lib/*.js'],
+                locate: {
+                    $: 'src/js/lib/jquery.js'
+                }
             }
         };
+
         config.watch.js = {
             files: ['src/js/*.js', 'src/js/**/*.js'],
-            tasks: ['embed_require:dev']
+            tasks: ['auto_deps:dev']
         };
+
+        build.push('auto_deps:dev');
     }
 
 

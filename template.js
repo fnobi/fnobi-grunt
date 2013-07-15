@@ -1,4 +1,4 @@
-exports.description = 'web page template (compass + embed require + mocha + koko)';
+exports.description = 'web page template (compass + auto deps + mocha + koko)';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
@@ -37,7 +37,7 @@ exports.template = function (grunt, init, done) {
                 'grunt': '~0.4.0',
                 'grunt-contrib-watch': '~0.1.1',
                 'grunt-contrib-compass': '0.3.0',
-                'grunt-embed-require': 'git://github.com/fnobi/grunt-embed-require.git',
+                'grunt-auto-deps': 'git://github.com/nobii/grunt-auto-deps.git',
                 'grunt-koko': '~0.1.0',
                 "grunt-simple-ejs": "git://github.com/nobii/grunt-simple-ejs.git",
                 'grunt-mocha-html': '0.0.1',
