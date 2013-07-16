@@ -86,7 +86,7 @@ module.exports = function (grunt) {
 
         config.mocha_html =  {
             all: {
-                src   : [ 'js/sub.js' ],
+                src   : [ 'js/{%= name %}.js' ],
                 test  : [ 'test/*-test.js' ],
                 assert : 'chai'
             }
