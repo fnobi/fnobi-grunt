@@ -42,6 +42,7 @@ exports.template = function (grunt, init, done) {
                 "grunt-simple-ejs": "git://github.com/nobii/grunt-simple-ejs.git",
                 'grunt-mocha-html': '0.0.1',
                 'grunt-mocha-phantomjs': '~0.2.8',
+                'mocha': '~1.9.0',
                 'chai': '~1.6.1'
             }
         };
@@ -51,6 +52,7 @@ exports.template = function (grunt, init, done) {
             delete pkg.devDependencies['grunt-mocha-html'];
             delete pkg.devDependencies['grunt-mocha-phantomjs'];
             delete pkg.devDependencies['chai'];
+            delete pkg.devDependencies['mocha'];
         }
 
         if (!props.with_ejs) {

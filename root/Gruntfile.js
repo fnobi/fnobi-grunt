@@ -92,6 +92,11 @@ module.exports = function (grunt) {
             }
         };
         build.push('mocha_html');
+
+        config.watch.test = {
+            files: ['test/*-test.js'],
+            tasks: ['mocha_phantomjs']
+        };
         config.watch.js.tasks.push('mocha_html');
 
         config.mocha_phantomjs =  {
