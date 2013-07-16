@@ -72,7 +72,7 @@ module.exports = function (grunt) {
         build.push('ejs:dev');
 
         config.watch.ejs = {
-            files: ['src/ejs/*.ejs'],
+            files: ['src/ejs/*.ejs', 'src/ejs/**/*.ejs', 'src/options.dev.yaml'],
             tasks: ['ejs:dev']
         };
     }
