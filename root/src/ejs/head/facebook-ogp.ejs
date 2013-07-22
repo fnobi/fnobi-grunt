@@ -1,5 +1,5 @@
-<!-- facebook ogp -->
-<meta property="fb:app_id" content="<%= sns.facebook.app_id %>">
+<!-- facebook ogp --><% if (sns.facebook.app_id) { %>
+<meta property="fb:app_id" content="<%= sns.facebook.app_id %>"><% } %>
 <meta property="og:url" content="<%= ogp.url || url %>">
 <meta property="og:image" content="<%= ogp.image.url %>">
 <meta property="og:image:width" content="<%= ogp.image.width %>">
