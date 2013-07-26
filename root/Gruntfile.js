@@ -114,7 +114,8 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-koko');
         config.koko = {
             dev: {
-                openPath: '/'
+                root: '',
+                openPath: '/index.html'
             }
         };
 

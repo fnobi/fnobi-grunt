@@ -38,7 +38,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-contrib-watch': '~0.1.1',
                 'grunt-contrib-compass': '0.3.0',
                 'grunt-auto-deps': '0.0.3',
-                'grunt-koko': '~0.1.0',
+                'grunt-koko': '0.1.1',
                 "grunt-simple-ejs": "0.1.0",
                 'grunt-mocha-html': '0.0.1',
                 'grunt-mocha-phantomjs': '~0.2.8',
