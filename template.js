@@ -62,6 +62,10 @@ exports.template = function (grunt, init, done) {
             init.escapeFiles('index.html', files);
         }
 
+        props.template_name = 'me';
+        props.project_path = process.cwd();
+        props.pkg = pkg;
+
         // Actually copy (and process) files.
         init.copyAndProcess(files, props, {});
 
