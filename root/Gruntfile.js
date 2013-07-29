@@ -43,6 +43,7 @@ module.exports = function (grunt) {
                     sassDir: 'src/sass',
                     cssDir: 'css',
                     imagesDir: 'img',
+                    httpImagesPath: '../img',
                     javascriptsDir: 'js',
                     environment: 'development'
                 }
