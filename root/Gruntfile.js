@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                 scripts: ['{%= name %}'],
                 loadPath: ['src/js/*.js', 'src/js/lib/*.js'],
                 locate: {
-                    $: 'src/js/lib/jquery.js'
+                    $: 'bower_components/jquery/jquery.js'
                 }
             }
         };
