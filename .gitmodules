@@ -1,3 +1,0 @@
-[submodule "root/src/ejs/components"]
-	path = root/src/ejs/components
-	url = git://github.com/fnobi/ejs-components.git
