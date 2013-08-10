@@ -142,6 +142,17 @@ module.exports = function (grunt) {
         grunt.registerTask('server', ['koko:dev']);
     }
 
+    // release
+    {
+        grunt.loadNpmTasks('grunt-release');
+
+        config.release = {
+            options: {
+                file: 'bower.json',
+                npm: false
+            }
+        };
+    }
 
     // init
     grunt.initConfig(config);
