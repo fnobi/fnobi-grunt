@@ -1,6 +1,21 @@
 module.exports = function (grunt) {
     var config = {}, build = [];
 
+    var path = {
+        src: {
+            js:   'src/js',
+            sass: 'src/sass',
+            ejs:  'src/ejs'
+        },
+        dist: {
+            js:  'js',
+            css: 'css',
+            html:  '.',
+            img: 'img'
+        },
+        test: 'test',
+        bower: 'bower_components'
+    };
 
     // basic
     {
@@ -17,15 +32,15 @@ module.exports = function (grunt) {
         config.auto_deps = {
             dev: {
                 scripts: ['{%= name %}'],
-                loadPath: ['src/js/*.js', 'src/js/lib/*.js'],
+                loadPath: [path.src.js + '/*.js'],
                 locate: {
-                    $: 'bower_components/jquery/jquery.js'
+                    $: path.bower + '/jquery/jquery.js'
                 }
             }
         };
 
         config.watch.js = {
-            files: ['src/js/*.js', 'src/js/**/*.js'],
+            files: [path.src.js + '/*.js'],
             tasks: ['auto_deps:dev']
         };
 
@@ -40,18 +55,18 @@ module.exports = function (grunt) {
         config.compass =  {
             dev: {
                 options: {
-                    sassDir: 'src/sass',
-                    cssDir: 'css',
-                    imagesDir: 'img',
+                    sassDir: path.src.sass,
+                    cssDir: path.dist.css,
+                    javascriptsDir: path.dist.js,
+                    imagesDir: path.dist.img,
                     httpImagesPath: '../img',
-                    javascriptsDir: 'js',
                     environment: 'development'
                 }
             }
         };
 
         config.watch.css = {
-            files: ['src/sass/*.scss', 'src/sass/**/*.scss'],
+            files: [path.src.sass + '/*.scss', path.src.sass + '/**/*.scss'],
             tasks: ['compass:dev']
         };
 
@@ -65,15 +80,19 @@ module.exports = function (grunt) {
 
         config.ejs = {
             dev: {
-                template: ['src/ejs/*.ejs'],
-                dest: './',
+                template: [path.src.ejs + '/*.ejs'],
+                dest: path.dist.html,
                 options: 'src/options.dev.yaml'
             }
         };
         build.push('ejs:dev');
 
         config.watch.ejs = {
-            files: ['src/ejs/*.ejs', 'src/ejs/**/*.ejs', 'src/options.dev.yaml'],
+            files: [
+                path.src.ejs + '/*.ejs',
+                path.src.ejs + '/**/*.ejs',
+                'src/options.dev.yaml'
+            ],
             tasks: ['ejs:dev']
         };
     }
@@ -87,21 +106,21 @@ module.exports = function (grunt) {
 
         config.mocha_html =  {
             all: {
-                src   : [ 'js/{%= name %}.js' ],
-                test  : [ 'test/*-test.js' ],
+                src   : [ path.dist.js + '/{%= name %}.js' ],
+                test  : [ path.test + '/*-test.js' ],
                 assert : 'chai'
             }
         };
         build.push('mocha_html');
 
         config.watch.test = {
-            files: ['test/*-test.js'],
+            files: [path.test + '/*-test.js'],
             tasks: ['mocha_phantomjs']
         };
         config.watch.js.tasks.push('mocha_html');
 
         config.mocha_phantomjs =  {
-            all: [ 'test/*.html' ]
+            all: [ path.test + '/*.html' ]
         };
 
         grunt.registerTask('test', ['mocha_phantomjs']);
