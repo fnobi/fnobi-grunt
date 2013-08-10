@@ -48,6 +48,17 @@ exports.template = function (grunt, init, done) {
             }
         };
 
+        var bower = {
+            'name': props.name,
+            'version': '0.0.0',
+            'main': 'index.html',
+            'dependencies': {
+                'ejs-head-modules': '~0.0.1',
+                'ejs-sns-modules': '~0.0.2',
+                'jquery': '~2.0.3'
+            }
+        };
+
         if (!props.with_test) {
             init.escapeFiles('test/*.*', files);
             delete pkg.devDependencies['grunt-mocha-html'];
@@ -59,6 +70,8 @@ exports.template = function (grunt, init, done) {
         if (!props.with_ejs) {
             init.escapeFiles('src/ejs/**/*.*', files);
             delete pkg.devDependencies['grunt-simple-ejs'];
+            delete bower.dependencies['ejs-head-modules'];
+            delete bower.dependencies['ejs-sns-modules'];
         } else {
             init.escapeFiles('index.html', files);
         }
@@ -72,6 +85,9 @@ exports.template = function (grunt, init, done) {
 
         // write package.json
         init.writePackageJSON('package.json', pkg);
+
+        // write bower.json
+        init.writePackageJSON('bower.json', bower);
 
         // All done!
         done();
