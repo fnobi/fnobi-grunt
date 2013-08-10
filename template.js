@@ -23,9 +23,15 @@ exports.template = function (grunt, init, done) {
         init.prompt('description'),
         {
             name: 'options',
-            message: 'select using options from [test,ejs].',
+            message: 'choose using options from [test,ejs].',
             default: 'test,ejs',
             validator: /^((test|ejs),?)*$/
+        },
+        {
+            name: 'project_type',
+            message: 'choose project type from [production,library].',
+            default: 'production',
+            validator: /^(production|library)$/
         }
     ], function(err, props) {
         // package setting

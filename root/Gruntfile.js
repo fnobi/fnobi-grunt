@@ -135,7 +135,7 @@ module.exports = function (grunt) {
         config.koko = {
             dev: {
                 root: '',
-                openPath: '/index.html'
+                openPath: path.dist.html
             }
         };
 
