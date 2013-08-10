@@ -17,14 +17,14 @@ exports.template = function (grunt, init, done) {
     init.process( {}, [
         init.prompt('name'),
         init.prompt('description'),
-        init.boolPrompt('with_test', 'With mocha test?'),
-        init.boolPrompt('with_ejs', 'With ejs template?')
+        {
+            name: 'options',
+            message: 'select using options from [test,ejs].',
+            default: 'test,ejs',
+            validator: /^((test|ejs),?)*$/
+        }
     ], function(err, props) {
-        // Files to copy (and process).
-        var files = init.filesToCopy(props);
-
-        init.boolProps(props);
-
+        // package setting
         var pkg = {
             name: props.name,
             description: props.description,
@@ -48,6 +48,7 @@ exports.template = function (grunt, init, done) {
             }
         };
 
+        // bower setting
         var bower = {
             'name': props.name,
             'version': '0.0.0',
@@ -58,6 +59,19 @@ exports.template = function (grunt, init, done) {
                 'jquery': '~2.0.3'
             }
         };
+
+
+        // add template info to props.
+        props.template_name = 'me';
+        props.project_path = process.cwd();
+        props.with_test = props.options.indexOf('test') >= 0;
+        props.with_ejs = props.options.indexOf('ejs') >= 0;
+        props.pkg = pkg;
+        props.bower = bower;
+
+
+        // Files to copy (and process).
+        var files = init.filesToCopy(props);
 
         if (!props.with_test) {
             init.escapeFiles('test/*.*', files);
@@ -75,10 +89,6 @@ exports.template = function (grunt, init, done) {
         } else {
             init.escapeFiles('index.html', files);
         }
-
-        props.template_name = 'me';
-        props.project_path = process.cwd();
-        props.pkg = pkg;
 
         // Actually copy (and process) files.
         init.copyAndProcess(files, props, {});
