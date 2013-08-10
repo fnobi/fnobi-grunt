@@ -47,7 +47,7 @@ exports.template = function (grunt, init, done) {
         var pkg = {
             name: props.name,
             description: props.description,
-            version: '0.0.0',
+            version: props.version,
             scripts: { },
             engines: {
                 node: '>=0.8.0 <0.9.1'
@@ -70,7 +70,7 @@ exports.template = function (grunt, init, done) {
         // bower setting
         var bower = {
             'name': props.name,
-            'version': '0.0.0',
+            'version': props.version,
             'main': 'index.html',
             'dependencies': {
                 'ejs-head-modules': '~0.0.1',
@@ -82,9 +82,13 @@ exports.template = function (grunt, init, done) {
 
         // add template info to props.
         props.template_name = 'me';
+
         props.project_path = process.cwd();
+        props.document_root = '.';
+
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
+
         props.pkg = pkg;
         props.bower = bower;
 
@@ -107,11 +111,14 @@ exports.template = function (grunt, init, done) {
             delete bower.dependencies['ejs-sns-modules'];
         } else {
             init.escapeFiles('index.html', files);
+            init.escapeFiles('examples/index.html', files);
         }
 
         if (props.project_type == 'production') {
             init.escapeFiles('README.md', files);
+            init.escapeFiles('examples/*', files);
         } else {
+            props.document_root = 'examples';
         }
 
         // Actually copy (and process) files.

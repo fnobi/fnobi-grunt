@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         dist: {
             js:  'js',
             css: 'css',
-            html:  '.',
+            html:  '{%= document_root %}',
             img: 'img'
         },
         test: 'test',
