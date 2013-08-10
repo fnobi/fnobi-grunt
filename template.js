@@ -4,7 +4,11 @@ exports.description = 'web page template (compass + auto deps + mocha + koko)';
 exports.notes = '';
 
 // Template-specific notes to be displayed after question prompts.
-exports.after = '';
+exports.after = [
+    '',
+    'initialize project: source tools/init.sh',
+    'reset project:      source tools/reset.sh'
+].join('\n');
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
