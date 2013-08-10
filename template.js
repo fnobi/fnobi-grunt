@@ -21,6 +21,15 @@ exports.template = function (grunt, init, done) {
     init.process( {}, [
         init.prompt('name'),
         init.prompt('description'),
+        init.prompt('version'),
+        init.prompt('repository'),
+        // init.prompt('homepage'),
+        // init.prompt('bugs'),
+        init.prompt('licenses'),
+        init.prompt('author_name'),
+        init.prompt('author_email'),
+        // init.prompt('author_url'),
+        // init.prompt('jquery_version'),
         {
             name: 'options',
             message: 'choose using options from [test,ejs].',
@@ -98,6 +107,11 @@ exports.template = function (grunt, init, done) {
             delete bower.dependencies['ejs-sns-modules'];
         } else {
             init.escapeFiles('index.html', files);
+        }
+
+        if (props.project_type == 'production') {
+            init.escapeFiles('README.md', files);
+        } else {
         }
 
         // Actually copy (and process) files.
