@@ -32,9 +32,9 @@ exports.template = function (grunt, init, done) {
         // init.prompt('jquery_version'),
         {
             name: 'options',
-            message: 'choose using options from [test,ejs].',
+            message: 'choose using options from [test,ejs] or "none".',
             default: 'test,ejs',
-            validator: /^((test|ejs),?)*$/
+            validator: /^((none|test|ejs),?)*$/
         },
         {
             name: 'project_type',
@@ -88,6 +88,8 @@ exports.template = function (grunt, init, done) {
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
+
+        console.log('[%s]', props.options);
 
         props.pkg = pkg;
         props.bower = bower;
