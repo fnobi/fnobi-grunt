@@ -84,7 +84,7 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
-        props.document_root = '.';
+        props.document_root = '';
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
