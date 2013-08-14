@@ -73,8 +73,8 @@ exports.template = function (grunt, init, done) {
             'version': props.version,
             'main': 'index.html',
             'dependencies': {
-                'ejs-head-modules': '~0.0.1',
-                'ejs-sns-modules': '~0.0.2',
+                'ejs-head-modules': '~0.1.0',
+                'ejs-sns-modules': '~0.1.2',
                 'jquery': '~2.0.3'
             }
         };
