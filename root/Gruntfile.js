@@ -7,7 +7,7 @@ module.exports = function (grunt) {
             sass: 'src/sass',
             ejs:  'src/ejs'
         },
-        dist: {
+        dest: {
             js:  'js',
             css: 'css',
             html:  '{%= document_root %}',
@@ -32,6 +32,7 @@ module.exports = function (grunt) {
         config.auto_deps = {
             dev: {
                 scripts: ['{%= name %}'],
+                dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: {
                     $: path.bower + '/jquery/jquery.js'
@@ -56,9 +57,9 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     sassDir: path.src.sass,
-                    cssDir: path.dist.css,
-                    javascriptsDir: path.dist.js,
-                    imagesDir: path.dist.img,
+                    cssDir: path.dest.css,
+                    javascriptsDir: path.dest.js,
+                    imagesDir: path.dest.img,
                     httpImagesPath: '../img',
                     environment: 'development'
                 }
@@ -81,7 +82,7 @@ module.exports = function (grunt) {
         config.ejs = {
             dev: {
                 template: [path.src.ejs + '/*.ejs'],
-                dest: path.dist.html,
+                dest: path.dest.html,
                 options: 'src/options.dev.yaml'
             }
         };
@@ -106,7 +107,7 @@ module.exports = function (grunt) {
 
         config.mocha_html =  {
             all: {
-                src   : [ path.dist.js + '/{%= name %}.js' ],
+                src   : [ path.dest.js + '/{%= name %}.js' ],
                 test  : [ path.test + '/*-test.js' ],
                 assert : 'chai'
             }
@@ -134,8 +135,8 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-koko');
         config.koko = {
             dev: {
-                root: '',
-                openPath: path.dist.html
+                root: path.dest.html,
+                openPath: '/'
             }
         };
 
