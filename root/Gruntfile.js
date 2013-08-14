@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         config.auto_deps = {
             dev: {
                 scripts: ['{%= name %}'],
-                dest: path.dist.js,
+                dest: path.dest.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: {
                     $: path.bower + '/jquery/jquery.js'
