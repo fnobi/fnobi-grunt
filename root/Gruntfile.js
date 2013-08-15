@@ -10,11 +10,13 @@ module.exports = function (grunt) {
         dest: {
             js:  'js',
             css: 'css',
-            html:  '{%= document_root %}',
+            html:  '{%= main_path %}',
             img: 'img'
         },
         test: 'test',
-        bower: 'bower_components'
+        namespaces: {
+            $: 'bower_components/jquery/jquery.js'
+        }
     };
 
     // basic
@@ -34,9 +36,7 @@ module.exports = function (grunt) {
                 scripts: ['{%= name %}'],
                 dest: path.dest.js,
                 loadPath: [path.src.js + '/*.js'],
-                locate: {
-                    $: path.bower + '/jquery/jquery.js'
-                }
+                locate: path.namespaces
             }
         };
 
@@ -135,8 +135,7 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-koko');
         config.koko = {
             dev: {
-                root: path.dest.html,
-                openPath: '/'
+                openPath: path.dest.html || '/'
             }
         };
 
