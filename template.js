@@ -84,12 +84,10 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
-        props.main_path = '';
+        props.grunt_build_env = 'dist';
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
-
-        console.log('[%s]', props.options);
 
         props.pkg = pkg;
         props.bower = bower;
@@ -120,7 +118,7 @@ exports.template = function (grunt, init, done) {
             init.escapeFiles('README.md', files);
             init.escapeFiles('examples/*', files);
         } else {
-            props.main_path = 'examples';
+            props.grunt_build_env = 'examples';
         }
 
         // Actually copy (and process) files.

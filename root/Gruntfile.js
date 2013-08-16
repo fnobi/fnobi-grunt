@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     var config = {}, build = [];
 
+    var httpPath = '';
+
     var path = {
         src: {
             js:   'src/js',
@@ -43,15 +45,21 @@ module.exports = function (grunt) {
                 dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: path.namespaces
+            },
+            examples: {
+                scripts: ['{%= name %}-demo'],
+                dest: path.examples.js,
+                loadPath: [path.src.js + '/*.js'],
+                locate: path.namespaces
             }
         };
 
         config.watch.js = {
             files: [path.src.js + '/*.js'],
-            tasks: ['auto_deps:dist']
+            tasks: ['auto_deps:{%= grunt_build_env %}']
         };
 
-        build.push('auto_deps:dist');
+        build.push('auto_deps:{%= grunt_build_env %}');
     }
 
 
@@ -66,7 +74,17 @@ module.exports = function (grunt) {
                     cssDir: path.dist.css,
                     javascriptsDir: path.dist.js,
                     imagesDir: path.dist.img,
-                    httpImagesPath: path.dist.html + path.dist.img,
+                    httpImagesPath: httpPath + '/' + path.dist.img,
+                    environment: 'development'
+                }
+            },
+            examples: {
+                options: {
+                    sassDir: path.src.sass,
+                    cssDir: path.examples.css,
+                    javascriptsDir: path.examples.js,
+                    imagesDir: path.examples.img,
+                    httpImagesPath: httpPath + '/' + path.examples.img,
                     environment: 'development'
                 }
             }
@@ -74,10 +92,10 @@ module.exports = function (grunt) {
 
         config.watch.css = {
             files: [path.src.sass + '/*.scss', path.src.sass + '/**/*.scss'],
-            tasks: ['compass:dist']
+            tasks: ['compass:{%= grunt_build_env %}']
         };
 
-        build.push('compass:dist');
+        build.push('compass:{%= grunt_build_env %}');
     }
 
 
@@ -89,18 +107,39 @@ module.exports = function (grunt) {
             dist: {
                 template: [path.src.ejs + '/*.ejs'],
                 dest: path.dist.html,
-                options: 'src/options.dist.yaml'
+                options: [
+                    {
+                        http_path: httpPath,
+                        css_path: [ httpPath, path.dist.css ].join('/'),
+                        js_path: [ httpPath, path.dist.js ].join('/'),
+                        script_main: '{%= name %}'
+                    },
+                    'src/options.yaml'
+                ]
+            },
+            examples: {
+                template: [path.src.ejs + '/*.ejs'],
+                dest: path.examples.html,
+                options: [
+                    {
+                        http_path: httpPath,
+                        css_path: [ httpPath, path.examples.css ].join('/'),
+                        js_path: [ httpPath, path.examples.js ].join('/'),
+                        script_main: '{%= name %}-demo'
+                    },
+                    'src/options.yaml'
+                ]
             }
         };
-        build.push('ejs:dist');
+        build.push('ejs:{%= grunt_build_env %}');
 
         config.watch.ejs = {
             files: [
                 path.src.ejs + '/*.ejs',
                 path.src.ejs + '/**/*.ejs',
-                'src/options.dist.yaml'
+                'src/options.yaml'
             ],
-            tasks: ['ejs:dist']
+            tasks: ['ejs:{%= grunt_build_env %}']
         };
     }
     // {% } %}
@@ -141,11 +180,14 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-koko');
         config.koko = {
             dist: {
-                openPath: path.dist.html || '/'
+                openPath: httpPath + '/' + path.dist.html
+            },
+            examples: {
+                openPath: httpPath + '/' + path.examples.html
             }
         };
 
-        grunt.registerTask('server', ['koko:dist']);
+        grunt.registerTask('server', ['koko:{%= grunt_build_env %}']);
     }
 
     // release

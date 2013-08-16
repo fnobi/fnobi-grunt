@@ -3,8 +3,6 @@ name: {%= name %}
 url:
   http://example.com/
 
-root: ''
-
 meta:
   title:
     {%= name %}
