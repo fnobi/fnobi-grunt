@@ -7,11 +7,17 @@ module.exports = function (grunt) {
             sass: 'src/sass',
             ejs:  'src/ejs'
         },
-        dest: {
-            js:  'js',
-            css: 'css',
-            html:  '{%= main_path %}',
-            img: 'img'
+        dist: {
+            js:   'js',
+            css:  'css',
+            html: '',
+            img:  'img'
+        },
+        examples: {
+            js:   'examples/js',
+            css:  'examples/css',
+            html: 'examples',
+            img:  'examples/img'
         },
         test: 'test',
         namespaces: {
@@ -32,9 +38,9 @@ module.exports = function (grunt) {
     {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = {
-            dev: {
+            dist: {
                 scripts: ['{%= name %}'],
-                dest: path.dest.js,
+                dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: path.namespaces
             }
@@ -42,10 +48,10 @@ module.exports = function (grunt) {
 
         config.watch.js = {
             files: [path.src.js + '/*.js'],
-            tasks: ['auto_deps:dev']
+            tasks: ['auto_deps:dist']
         };
 
-        build.push('auto_deps:dev');
+        build.push('auto_deps:dist');
     }
 
 
@@ -54,13 +60,13 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-contrib-compass');
 
         config.compass =  {
-            dev: {
+            dist: {
                 options: {
                     sassDir: path.src.sass,
-                    cssDir: path.dest.css,
-                    javascriptsDir: path.dest.js,
-                    imagesDir: path.dest.img,
-                    httpImagesPath: '../img',
+                    cssDir: path.dist.css,
+                    javascriptsDir: path.dist.js,
+                    imagesDir: path.dist.img,
+                    httpImagesPath: path.dist.html + path.dist.img,
                     environment: 'development'
                 }
             }
@@ -68,10 +74,10 @@ module.exports = function (grunt) {
 
         config.watch.css = {
             files: [path.src.sass + '/*.scss', path.src.sass + '/**/*.scss'],
-            tasks: ['compass:dev']
+            tasks: ['compass:dist']
         };
 
-        build.push('compass:dev');
+        build.push('compass:dist');
     }
 
 
@@ -80,21 +86,21 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-simple-ejs');
 
         config.ejs = {
-            dev: {
+            dist: {
                 template: [path.src.ejs + '/*.ejs'],
-                dest: path.dest.html,
-                options: 'src/options.dev.yaml'
+                dest: path.dist.html,
+                options: 'src/options.dist.yaml'
             }
         };
-        build.push('ejs:dev');
+        build.push('ejs:dist');
 
         config.watch.ejs = {
             files: [
                 path.src.ejs + '/*.ejs',
                 path.src.ejs + '/**/*.ejs',
-                'src/options.dev.yaml'
+                'src/options.dist.yaml'
             ],
-            tasks: ['ejs:dev']
+            tasks: ['ejs:dist']
         };
     }
     // {% } %}
@@ -107,7 +113,7 @@ module.exports = function (grunt) {
 
         config.mocha_html =  {
             all: {
-                src   : [ path.dest.js + '/{%= name %}.js' ],
+                src   : [ path.dist.js + '/{%= name %}.js' ],
                 test  : [ path.test + '/*-test.js' ],
                 assert : 'chai'
             }
@@ -134,12 +140,12 @@ module.exports = function (grunt) {
     {
         grunt.loadNpmTasks('grunt-koko');
         config.koko = {
-            dev: {
-                openPath: path.dest.html || '/'
+            dist: {
+                openPath: path.dist.html || '/'
             }
         };
 
-        grunt.registerTask('server', ['koko:dev']);
+        grunt.registerTask('server', ['koko:dist']);
     }
 
     // release
