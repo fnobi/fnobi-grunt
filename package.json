@@ -25,6 +25,7 @@
     "async": "~0.2.8"
   },
   "dependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "async": "~0.2.9"
   }
 }

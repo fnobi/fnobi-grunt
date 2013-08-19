@@ -1,5 +1,6 @@
-var escapeFiles = require('./lib/escapeFiles');
-
+var escapeFiles = require('./lib/escapeFiles'),
+    async = require('async'),
+    exec = require('child_process').exec;
 
 exports.description = 'web page template (compass + auto deps + mocha + koko)';
 
@@ -126,8 +127,14 @@ exports.template = function (grunt, init, done) {
         // write bower.json
         init.writePackageJSON('bower.json', bower);
 
-        // All done!
-        done();
+        // npm install & bower install
+        async.series([function (next) {
+            console.log('Installing npm dependencies...');
+            exec('npm install', next);
+        },function (next) {
+            console.log('Installing bower dependencies...');
+            exec('bower install', next);
+        }], done);
     });
 };
 
