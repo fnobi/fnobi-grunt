@@ -68,7 +68,9 @@ exports.template = function (grunt, init, done) {
         var bower = {
             'name': props.name,
             'version': props.version,
-            'main': 'index.html',
+            'main': (
+                props.project_type == 'production'
+            ) ? 'index.html' : 'js/' + props.name + '.js',
             'dependencies': {
                 'ejs-head-modules': '~0.1.0',
                 'ejs-sns-modules': '~0.1.1',
@@ -81,6 +83,9 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
+        props.script_main = (
+            props.project_type == 'production'
+        ) ? (props.name) : (props.name + '-demo');
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;

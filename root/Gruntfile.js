@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = {
             dist: {
-                scripts: ['{%= name %}'],
+                scripts: ['{%= script_main %}'],
                 dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: path.namespaces
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
                         http_path: httpPath,
                         css_path: [ httpPath, path.dist.css ].join('/'),
                         js_path: [ httpPath, path.dist.js ].join('/'),
-                        script_main: '{%= name %}'
+                        script_main: '{%= script_main %}'
                     },
                     'src/options.yaml'
                 ]
