@@ -1,3 +1,6 @@
+var escapeFiles = require('./lib/escapeFiles');
+
+
 exports.description = 'web page template (compass + auto deps + mocha + koko)';
 
 // Template-specific notes to be displayed before question prompts.
@@ -15,8 +18,6 @@ exports.warnOn = '*';
 
 // The actual init template.
 exports.template = function (grunt, init, done) {
-    // custom methods
-    require('./customMethods')(grunt, init);
 
     init.process( {}, [
         init.prompt('name'),
@@ -96,7 +97,7 @@ exports.template = function (grunt, init, done) {
         var files = init.filesToCopy(props);
 
         if (!props.with_test) {
-            init.escapeFiles('test/*.*', files);
+            escapeFiles('test/*.*', files);
             delete pkg.devDependencies['grunt-mocha-html'];
             delete pkg.devDependencies['grunt-mocha-phantomjs'];
             delete pkg.devDependencies['chai'];
@@ -104,16 +105,16 @@ exports.template = function (grunt, init, done) {
         }
 
         if (!props.with_ejs) {
-            init.escapeFiles('src/ejs/**/*.*', files);
+            escapeFiles('src/ejs/**/*.*', files);
             delete pkg.devDependencies['grunt-simple-ejs'];
             delete bower.dependencies['ejs-head-modules'];
             delete bower.dependencies['ejs-sns-modules'];
         } else {
-            init.escapeFiles('index.html', files);
+            escapeFiles('index.html', files);
         }
 
         if (props.project_type == 'production') {
-            init.escapeFiles('README.md', files);
+            escapeFiles('README.md', files);
         }
 
         // Actually copy (and process) files.
