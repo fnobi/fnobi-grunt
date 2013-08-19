@@ -84,7 +84,6 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
-        props.grunt_build_env = 'dist';
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
@@ -111,14 +110,10 @@ exports.template = function (grunt, init, done) {
             delete bower.dependencies['ejs-sns-modules'];
         } else {
             init.escapeFiles('index.html', files);
-            init.escapeFiles('examples/index.html', files);
         }
 
         if (props.project_type == 'production') {
             init.escapeFiles('README.md', files);
-            init.escapeFiles('examples/*', files);
-        } else {
-            props.grunt_build_env = 'examples';
         }
 
         // Actually copy (and process) files.

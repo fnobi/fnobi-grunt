@@ -15,12 +15,6 @@ module.exports = function (grunt) {
             html: '',
             img:  'img'
         },
-        examples: {
-            js:   'examples/js',
-            css:  'examples/css',
-            html: 'examples',
-            img:  'examples/img'
-        },
         test: 'test',
         namespaces: {
             $: 'bower_components/jquery/jquery.js'
@@ -45,21 +39,15 @@ module.exports = function (grunt) {
                 dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],
                 locate: path.namespaces
-            },
-            examples: {
-                scripts: ['{%= name %}-demo'],
-                dest: path.examples.js,
-                loadPath: [path.src.js + '/*.js'],
-                locate: path.namespaces
             }
         };
 
         config.watch.js = {
             files: [path.src.js + '/*.js'],
-            tasks: ['auto_deps:{%= grunt_build_env %}']
+            tasks: ['auto_deps:dist']
         };
 
-        build.push('auto_deps:{%= grunt_build_env %}');
+        build.push('auto_deps:dist');
     }
 
 
@@ -77,25 +65,15 @@ module.exports = function (grunt) {
                     httpImagesPath: httpPath + '/' + path.dist.img,
                     environment: 'development'
                 }
-            },
-            examples: {
-                options: {
-                    sassDir: path.src.sass,
-                    cssDir: path.examples.css,
-                    javascriptsDir: path.examples.js,
-                    imagesDir: path.examples.img,
-                    httpImagesPath: httpPath + '/' + path.examples.img,
-                    environment: 'development'
-                }
             }
         };
 
         config.watch.css = {
             files: [path.src.sass + '/*.scss', path.src.sass + '/**/*.scss'],
-            tasks: ['compass:{%= grunt_build_env %}']
+            tasks: ['compass:dist']
         };
 
-        build.push('compass:{%= grunt_build_env %}');
+        build.push('compass:dist');
     }
 
 
@@ -116,22 +94,9 @@ module.exports = function (grunt) {
                     },
                     'src/options.yaml'
                 ]
-            },
-            examples: {
-                template: [path.src.ejs + '/*.ejs'],
-                dest: path.examples.html,
-                options: [
-                    {
-                        http_path: httpPath,
-                        css_path: [ httpPath, path.examples.css ].join('/'),
-                        js_path: [ httpPath, path.examples.js ].join('/'),
-                        script_main: '{%= name %}-demo'
-                    },
-                    'src/options.yaml'
-                ]
             }
         };
-        build.push('ejs:{%= grunt_build_env %}');
+        build.push('ejs:dist');
 
         config.watch.ejs = {
             files: [
@@ -139,7 +104,7 @@ module.exports = function (grunt) {
                 path.src.ejs + '/**/*.ejs',
                 'src/options.yaml'
             ],
-            tasks: ['ejs:{%= grunt_build_env %}']
+            tasks: ['ejs:dist']
         };
     }
     // {% } %}
@@ -181,13 +146,10 @@ module.exports = function (grunt) {
         config.koko = {
             dist: {
                 openPath: httpPath + '/' + path.dist.html
-            },
-            examples: {
-                openPath: httpPath + '/' + path.examples.html
             }
         };
 
-        grunt.registerTask('server', ['koko:{%= grunt_build_env %}']);
+        grunt.registerTask('server', ['koko:dist']);
     }
 
     // release
