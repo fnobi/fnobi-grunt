@@ -1,7 +1,10 @@
 name: {%= name %}
 
 url:
-  http://example.com/
+  {%= homepage %}
+
+repository:
+  {%= repository %}
 
 meta:
   title:
@@ -32,6 +35,6 @@ sns:
 
 ogp:
   image: 
-    url: http://example.com/img/ogp-icon.png
+    url: {%= homepage %}/img/ogp-icon.png
     width: 300
     height: 300

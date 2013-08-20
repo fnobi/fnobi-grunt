@@ -35,12 +35,12 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = {
             dist: {
-                scripts: [{% if (script_main != name) { %}
-                    '{%= name %}',{% } %}
-                    '{%= script_main %}'
+                scripts: [{% if (project_type == 'library') { %}
+                    '{%= demo_script %}',{% } %}
+                    '{%= name %}'
                 ],
                 dest: path.dist.js,
-                loadPath: [path.src.js + '/*.js'],{% if (script_main != name) { %}
+                loadPath: [path.src.js + '/*.js'],{% if (project_type == 'library') { %}
                 ignore: ['{%= name %}'],{% } %}
                 locate: path.namespaces
             }
@@ -93,8 +93,7 @@ module.exports = function (grunt) {
                     {
                         http_path: httpPath,
                         css_path: [ httpPath, path.dist.css ].join('/'),
-                        js_path: [ httpPath, path.dist.js ].join('/'),
-                        script_main: '{%= script_main %}'
+                        js_path: [ httpPath, path.dist.js ].join('/')
                     },
                     'src/options.yaml'
                 ]

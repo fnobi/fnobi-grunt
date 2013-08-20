@@ -20,9 +20,9 @@ exports.template = function (grunt, init, done) {
         init.prompt('description'),
         init.prompt('version'),
         init.prompt('repository'),
-        // init.prompt('homepage'),
+        init.prompt('homepage'),
         // init.prompt('bugs'),
-        init.prompt('licenses'),
+        // init.prompt('licenses'),
         init.prompt('author_name'),
         init.prompt('author_email'),
         // init.prompt('author_url'),
@@ -83,9 +83,7 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
-        props.script_main = (
-            props.project_type == 'production'
-        ) ? (props.name) : (props.name + '-demo');
+        props.demo_script = props.name + '-demo';
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;

@@ -5,9 +5,9 @@
 <% include ../../../bower_components/ejs-head-modules/ios-meta %>
 <% include ../../../bower_components/ejs-head-modules/facebook-ogp %>
 <title><%= meta.title %></title>
-<link rel="stylesheet" href="<%= css_path %>/<%= name %>.css" />{% if (script_main != name) { %}
-<script src="<%= js_path %>/<%= name %>.js"></script>{% } %}
-<script src="<%= js_path %>/<%= script_main %>.js"></script>
+<link rel="stylesheet" href="<%= css_path %>/<%= name %>.css" />
+<script src="<%= js_path %>/<%= name %>.js"></script>{% if (project_type == 'library') { %}
+<script src="<%= js_path %>/{%= demo_script %}.js"></script>{% } %}
 </head>
 <body><% content(buf) %></body>
 </html>
