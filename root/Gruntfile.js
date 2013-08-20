@@ -35,9 +35,13 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = {
             dist: {
-                scripts: ['{%= script_main %}'],
+                scripts: [{% if (script_main != name) { %}
+                    '{%= name %}',{% } %}
+                    '{%= script_main %}'
+                ],
                 dest: path.dist.js,
-                loadPath: [path.src.js + '/*.js'],
+                loadPath: [path.src.js + '/*.js'],{% if (script_main != name) { %}
+                ignore: ['{%= name %}'],{% } %}
                 locate: path.namespaces
             }
         };
