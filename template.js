@@ -115,7 +115,7 @@ exports.template = function (grunt, init, done) {
         }
 
         if (props.project_type == 'production') {
-            escapeFiles('README.md', files);
+            escapeFiles('src/ejs/README.md.ejs', files);
         }
 
         // Actually copy (and process) files.
