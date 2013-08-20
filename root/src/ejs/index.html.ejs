@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<% include ../../bower_components/ejs-head-modules/meta %>
-<% include ../../bower_components/ejs-head-modules/ios-meta %>
-<% include ../../bower_components/ejs-head-modules/facebook-ogp %>
-<title><%= meta.title %></title>
-<link rel="stylesheet" href="<%= css_path %>/<%= name %>.css" />{% if (script_main != name) { %}
-<script src="<%= js_path %>/<%= name %>.js"></script>{% } %}
-<script src="<%= js_path %>/<%= script_main %>.js"></script>
-</head>
-<body>
+<% function content (buf) { %>
 <h1><%= meta.title %></h1>
 <%= meta.description %>
-</body>
-</html>
+<% } %><% include layouts/default %>
