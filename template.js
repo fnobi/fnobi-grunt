@@ -73,7 +73,7 @@ exports.template = function (grunt, init, done) {
             ) ? 'index.html' : 'js/' + props.name + '.js',
             'dependencies': {
                 'ejs-head-modules': '~0.1.0',
-                'ejs-sns-modules': '~0.1.1',
+                'ejs-sns-modules': '~0.2.4',
                 'jquery': '~2.0.3'
             }
         };
@@ -114,6 +114,7 @@ exports.template = function (grunt, init, done) {
 
         if (props.project_type == 'production') {
             escapeFiles('src/ejs/README.md.ejs', files);
+            escapeFiles('src/js/' + props.demo_script + '.js', files);
         }
 
         // Actually copy (and process) files.
