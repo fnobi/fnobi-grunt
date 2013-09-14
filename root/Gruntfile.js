@@ -93,7 +93,8 @@ module.exports = function (grunt) {
                     {
                         http_path: httpPath,
                         css_path: [ httpPath, path.dist.css ].join('/'),
-                        js_path: [ httpPath, path.dist.js ].join('/')
+                        js_path: [ httpPath, path.dist.js ].join('/'),
+                        img_path: [ httpPath, path.dist.img ].join('/')
                     },
                     'src/options.yaml'
                 ]
