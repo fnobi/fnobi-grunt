@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         },
         test: 'test',
         namespaces: {
-            $: 'bower_components/jquery/jquery.js'
+            // $: 'bower_components/jquery/jquery.js'
         }
     };
 
