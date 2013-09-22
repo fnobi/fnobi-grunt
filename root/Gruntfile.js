@@ -16,9 +16,7 @@ module.exports = function (grunt) {
             img:  'img'
         },
         test: 'test',
-        namespaces: {
-            // $: 'bower_components/jquery/jquery.js'
-        }
+        namespaces: { }
     };
 
     // basic
@@ -42,6 +40,7 @@ module.exports = function (grunt) {
                 dest: path.dist.js,
                 loadPath: [path.src.js + '/*.js'],{% if (project_type == 'library') { %}
                 ignore: ['{%= name %}'],{% } %}
+                forced: ['html5shiv'],
                 locate: path.namespaces
             }
         };
