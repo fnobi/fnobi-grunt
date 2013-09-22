@@ -53,7 +53,7 @@ exports.template = function (grunt, init, done) {
                 'grunt': '~0.4.0',
                 'grunt-contrib-watch': '~0.1.1',
                 'grunt-contrib-compass': '0.3.0',
-                'grunt-auto-deps': '0.1.0',
+                'grunt-auto-deps': '0.2.0',
                 'grunt-koko': '0.1.1',
                 'grunt-simple-ejs': '0.1.1',
                 'grunt-mocha-html': '0.0.1',
