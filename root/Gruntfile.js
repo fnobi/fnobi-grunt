@@ -31,26 +31,46 @@ module.exports = function (grunt) {
     // js
     {
         grunt.loadNpmTasks('grunt-auto-deps');
-        config.auto_deps = {
+        config.auto_deps = {{% if (project_type == 'library') { %}
             dist: {
-                scripts: [{% if (project_type == 'library') { %}
-                    '{%= demo_script %}',{% } %}
+                scripts: [
                     '{%= name %}'
                 ],
                 dest: path.dist.js,
-                loadPath: [path.src.js + '/*.js'],{% if (project_type == 'library') { %}
-                ignore: ['{%= name %}'],{% } %}
+                loadPath: [path.src.js + '/*.js'],
+                ignore: [],
+                forced: [],
+                locate: path.namespaces
+            },
+            demo: {
+                scripts: [
+                    '{%= demo_script %}'
+                ],
+                dest: path.dist.js,
+                loadPath: [path.src.js + '/*.js'],
+                ignore: ['{%= name %}'],
                 forced: ['html5shiv'],
                 locate: path.namespaces
-            }
+            }{% } else { %}
+            dist: {
+                scripts: [
+                    '{%= name %}'
+                ],
+                dest: path.dist.js,
+                loadPath: [path.src.js + '/*.js'],
+                ignore: [],
+                forced: ['html5shiv'],
+                locate: path.namespaces
+            }{% } %}
         };
 
         config.watch.js = {
             files: [path.src.js + '/*.js'],
-            tasks: ['auto_deps:dist']
+            tasks: ['auto_deps:dist'{% if (project_type == 'library') { %}, 'auto_deps:demo'{% } %}]
         };
 
-        build.push('auto_deps:dist');
+        build.push('auto_deps:dist');{% if (project_type == 'library') { %}
+        build.push('auto_deps:demo');{% } %}
     }
 
 
