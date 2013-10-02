@@ -96,7 +96,7 @@ exports.template = function (grunt, init, done) {
         var files = init.filesToCopy(props);
 
         if (!props.with_test) {
-            escapeFiles('test/*.*', files);
+            escapeFiles('src/test/*.*', files);
             delete pkg.devDependencies['grunt-mocha-html'];
             delete pkg.devDependencies['grunt-mocha-phantomjs'];
             delete pkg.devDependencies['chai'];
@@ -124,17 +124,17 @@ exports.template = function (grunt, init, done) {
         init.copyAndProcess(files, props, {});
 
         // write package.json
-        init.writePackageJSON('package.json', pkg);
+        init.writePackageJSON('src/package.json', pkg);
 
         // write bower.json
-        init.writePackageJSON('bower.json', bower);
+        init.writePackageJSON('src/bower.json', bower);
 
         // npm install & bower install
         shellLines([{
-            command: 'npm install',
+            command: 'cd src; npm install',
             message: 'Installing npm dependencies'
         },{
-            command: 'bower install',
+            command: 'cd src; bower install',
             message: 'Installing bower dependencies'
         }], done);
     });
