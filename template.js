@@ -115,6 +115,9 @@ exports.template = function (grunt, init, done) {
         if (props.project_type == 'production') {
             escapeFiles('src/ejs/README.md.ejs', files);
             escapeFiles('src/js/' + props.demo_script + '.js', files);
+        } else {
+            bower.devDependencies = bower.dependencies;
+            delete bower.dependencies;
         }
 
         // Actually copy (and process) files.
