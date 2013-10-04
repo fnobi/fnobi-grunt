@@ -95,7 +95,10 @@ module.exports = function (grunt) {
             config.ejs[name] = {
                 template: ['ejs/*.ejs'],
                 dest: env.sitePath,
-                include: ['bower_components/ejs-head-modules/*.ejs'],
+                include: [
+                    'bower_components/ejs-head-modules/*.ejs',
+                    'bower_components/ejs-sns-modules/*.ejs'
+                ],
                 options: [
                     {
                         http_path : env.httpPath,

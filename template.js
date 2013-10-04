@@ -73,7 +73,7 @@ exports.template = function (grunt, init, done) {
             ) ? 'index.html' : 'js/' + props.name + '.js',
             'dependencies': {
                 'ejs-head-modules': '~1.0.5',
-                'ejs-sns-modules': '~0.3.0',
+                'ejs-sns-modules': '~0.4.1',
                 'html5shiv': '~3.6.2'
             }
         };
