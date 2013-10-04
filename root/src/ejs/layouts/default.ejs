@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<% include ../../bower_components/ejs-head-modules/meta %>
-<% include ../../bower_components/ejs-head-modules/ios-meta %>
-<% include ../../bower_components/ejs-head-modules/facebook-ogp %>
+<% partial_meta(buf, {}) %>
+<% partial_ios_meta(buf, {}) %>
+<% partial_ogp(buf, {}) %>
 <title><%= meta.title %></title>
 <link rel="stylesheet" href="<%= css_path %>/<%= name %>.css" />
 <script src="<%= js_path %>/<%= name %>.js"></script>{% if (project_type == 'library') { %}

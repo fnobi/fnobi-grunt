@@ -55,7 +55,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-contrib-compass': '0.3.0',
                 'grunt-auto-deps': '0.2.2',
                 'grunt-koko': '0.1.1',
-                'grunt-simple-ejs': '0.1.1',
+                'grunt-simple-ejs': '0.2.0',
                 'grunt-mocha-html': '0.0.1',
                 'grunt-mocha-phantomjs': '~0.2.8',
                 'grunt-release': '~0.5.1',
@@ -72,7 +72,7 @@ exports.template = function (grunt, init, done) {
                 props.project_type == 'production'
             ) ? 'index.html' : 'js/' + props.name + '.js',
             'dependencies': {
-                'ejs-head-modules': '~0.1.0',
+                'ejs-head-modules': '~1.0.4',
                 'ejs-sns-modules': '~0.3.0',
                 'html5shiv': '~3.6.2'
             }
