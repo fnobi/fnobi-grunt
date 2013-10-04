@@ -72,7 +72,7 @@ exports.template = function (grunt, init, done) {
                 props.project_type == 'production'
             ) ? 'index.html' : 'js/' + props.name + '.js',
             'dependencies': {
-                'ejs-head-modules': '~1.0.4',
+                'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.3.0',
                 'html5shiv': '~3.6.2'
             }
