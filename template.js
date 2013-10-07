@@ -56,7 +56,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-auto-deps': '0.2.2',
                 'grunt-koko': '0.1.1',
                 'grunt-simple-ejs': '0.2.0',
-                'grunt-mocha-html': '0.0.1',
+                'grunt-mocha-html': '0.1.0',
                 'grunt-mocha-phantomjs': '~0.2.8',
                 'grunt-release': '~0.5.1',
                 'mocha': '~1.9.0',
