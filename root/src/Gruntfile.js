@@ -29,32 +29,60 @@ module.exports = function (grunt) {
         {
             grunt.loadNpmTasks('grunt-auto-deps');
             config.auto_deps = config.auto_deps || {};
-            config.auto_deps[name] = {{% if (project_type == 'library') { %}
-                scripts: [
-                    '{%= name %}'
-                ],
-                dest: path.resolve(env.sitePath, 'js'),
-                loadPath: ['js/*.js'],
-                ignore: [],
-                forced: [],
-                locate: namespaces{% } else { %}
-                scripts: [
-                    '{%= name %}'
-                ],
-                dest: path.resolve(env.sitePath, 'js'),
-                loadPath: ['js/*.js'],
-                ignore: [],
-                forced: ['html5shiv'],
-                locate: namespaces{% } %}
-            };
-    
-            if (env.watch) {
-                config.watch.js = {
-                    files: ['js/*.js'],
-                    tasks: ['auto_deps:' + name]
+
+            if (env.demo) {
+                config.auto_deps[name] = {
+                    scripts: [
+                        '{%= name %}'
+                    ],
+                    dest: path.resolve(env.sitePath, 'js'),
+                    loadPath: ['js/*.js'],
+                    ignore: [],
+                    forced: [],
+                    locate: namespaces
                 };
-            }    
-            env.tasks.push('auto_deps:' + name);
+                config.auto_deps[name + '-demo'] = {
+                    scripts: [
+                        '{%= name %}-demo'
+                    ],
+                    dest: path.resolve(env.sitePath, 'js'),
+                    loadPath: ['js/*.js'],
+                    ignore: ['{%= name %}'],
+                    forced: ['html5shiv'],
+                    locate: namespaces
+                };
+
+                if (env.watch) {
+                    config.watch.js = {
+                        files: ['js/*.js'],
+                        tasks: [
+                            'auto_deps:' + name,
+                            'auto_deps:' + name + '-demo'
+                        ]
+                    };
+                }    
+                env.tasks.push('auto_deps:' + name);
+                env.tasks.push('auto_deps:' + name + '-demo');
+            } else {
+                config.auto_deps[name] = {
+                    scripts: [
+                        '{%= name %}'
+                    ],
+                    dest: path.resolve(env.sitePath, 'js'),
+                    loadPath: ['js/*.js'],
+                    ignore: [],
+                    forced: ['html5shiv'],
+                    locate: namespaces
+                };
+
+                if (env.watch) {
+                    config.watch.js = {
+                        files: ['js/*.js'],
+                        tasks: ['auto_deps:' + name]
+                    };
+                }    
+                env.tasks.push('auto_deps:' + name);
+            }
         }
     
     
@@ -179,7 +207,7 @@ module.exports = function (grunt) {
         watch: true,
         ejs: true,
         test: true,
-        demo: true
+        demo: {%= (project_type == 'library') ? 'true' : 'false' %}
     });
 
     // init
