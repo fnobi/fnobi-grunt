@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<% locals.layout_default = function (buf, content) { %><!DOCTYPE html>
 <html lang="ja">
 <head>
 <% partial_meta(buf, {
@@ -29,4 +29,4 @@
 <script src="<%= js_path %>/{%= demo_script %}.js"></script>{% } %}
 </head>
 <body><% content(buf) %></body>
-</html>
+</html><% } %>

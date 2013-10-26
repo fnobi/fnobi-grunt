@@ -121,12 +121,13 @@ module.exports = function (grunt) {
     
             config.ejs = config.ejs || {};
             config.ejs[name] = {
-                templateRoot: ['ejs'],
+                templateRoot: 'ejs',
                 template: ['*.ejs'],
                 dest: env.sitePath,
                 include: [
                     'bower_components/ejs-head-modules/*.ejs',
-                    'bower_components/ejs-sns-modules/*.ejs'
+                    'bower_components/ejs-sns-modules/*.ejs',
+                    'ejs/layout/*.ejs'
                 ],
                 silentInclude: true,
                 options: [
