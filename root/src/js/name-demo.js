@@ -1,3 +1,7 @@
-window.addEventListener('load', function () {
-    new {%= name %}();
-}, false);
+(function () {
+    function init () {
+        new {%= name %}();
+    }
+
+    window.addEventListener('load', init, false);
+})();
