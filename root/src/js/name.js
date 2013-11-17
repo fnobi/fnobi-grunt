@@ -3,5 +3,5 @@
 
     };
 
-    win.{%= name %} = {%= name %}
+    win.{%= name %} = {%= name %};
 })(window);
