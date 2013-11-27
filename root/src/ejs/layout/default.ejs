@@ -25,8 +25,12 @@
 }) %>
 <title><%= title %></title>
 <link rel="stylesheet" href="<%= css_path %>/<%= name %>.css" />
+</head>
+<body>
+<section id="wrapper">
+<% content(buf) %>
+<!-- /#wrapper --></section>
 <script src="<%= js_path %>/<%= name %>.js"></script>{% if (project_type == 'library') { %}
 <script src="<%= js_path %>/{%= demo_script %}.js"></script>{% } %}
-</head>
-<body><% content(buf) %></body>
+</body>
 </html><% } %>
