@@ -39,6 +39,7 @@ module.exports = function (grunt) {
                     loadPath: ['js/*.js'],
                     ignore: [],
                     forced: [],
+                    wrap: true,
                     locate: namespaces
                 };
                 config.auto_deps[name + '-demo'] = {
@@ -49,6 +50,7 @@ module.exports = function (grunt) {
                     loadPath: ['js/*.js'],
                     ignore: ['{%= name %}'],
                     forced: ['html5shiv'],
+                    wrap: true,
                     locate: namespaces
                 };
 
@@ -72,6 +74,7 @@ module.exports = function (grunt) {
                     loadPath: ['js/*.js'],
                     ignore: [],
                     forced: ['html5shiv'],
+                    wrap: true,
                     locate: namespaces
                 };
 
