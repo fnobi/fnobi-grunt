@@ -32,9 +32,7 @@ module.exports = function (grunt) {
 
             if (env.demo) {
                 config.auto_deps[name] = {
-                    scripts: [
-                        '{%= name %}'
-                    ],
+                    scripts: ['{%= name %}'],
                     dest: path.resolve(env.sitePath, 'js'),
                     loadPath: ['js/*.js'],
                     ignore: [],
@@ -43,13 +41,11 @@ module.exports = function (grunt) {
                     locate: namespaces
                 };
                 config.auto_deps[name + '-demo'] = {
-                    scripts: [
-                        '{%= name %}-demo'
-                    ],
+                    scripts: ['{%= name %}-demo'],
                     dest: path.resolve(env.sitePath, 'js'),
                     loadPath: ['js/*.js'],
                     ignore: ['{%= name %}'],
-                    forced: ['html5shiv'],
+                    forced: [],
                     wrap: true,
                     locate: namespaces
                 };
@@ -67,13 +63,11 @@ module.exports = function (grunt) {
                 env.tasks.push('auto_deps:' + name + '-demo');
             } else {
                 config.auto_deps[name] = {
-                    scripts: [
-                        '{%= name %}'
-                    ],
+                    scripts: ['{%= name %}'],
                     dest: path.resolve(env.sitePath, 'js'),
                     loadPath: ['js/*.js'],
                     ignore: [],
-                    forced: ['html5shiv'],
+                    forced: [],
                     wrap: true,
                     locate: namespaces
                 };
