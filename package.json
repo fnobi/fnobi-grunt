@@ -1,5 +1,5 @@
 {
-  "name": "grunt-init-jsapp",
+  "name": "grunt-init-me",
   "version": "0.0.0",
   "description": "web page template (compass + requirejs + mocha + koko)",
   "main": "template.js",
