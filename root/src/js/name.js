@@ -1,7 +1,4 @@
-(function (win) {
-    var {%= name %} = function () {
+function {%= name %} () {
 
-    };
+};
 
-    win.{%= name %} = {%= name %};
-})(window);
