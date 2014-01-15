@@ -9,7 +9,9 @@ module.exports = function (grunt) {
         config.pkg =  grunt.file.readJSON('package.json');
 
         grunt.loadNpmTasks('grunt-contrib-watch');
+        grunt.loadNpmTasks('grunt-contrib-copy');
         config.watch = {};
+        config.copy = {};
     }
 
     // release
@@ -81,6 +83,26 @@ module.exports = function (grunt) {
                 env.tasks.push('auto_deps:' + name);
             }
         }
+
+        // js lib copy
+        (function () {
+            var libs = [
+                'bower_components/html5shiv/src/html5shiv.js'
+            ];
+
+            var libDir = path.resolve(env.sitePath, 'js') + '/lib/';
+            var files = [];
+            libs.forEach(function (lib) {
+                files.push({
+                    expand: true,
+                    flatten: true,
+                    src: lib,
+                    dest: libDir
+                    });
+            });
+            config.copy[name] = { files: files };
+            env.tasks.push('copy:' + name);
+        })();
     
     
         // css
