@@ -67,15 +67,16 @@ exports.template = function (grunt, init, done) {
 
         // bower setting
         var bower = {
-            'name': props.name,
-            'version': props.version,
-            'main': (
+            name: props.name,
+            version: props.version,
+            main: (
                 props.project_type == 'production'
             ) ? 'index.html' : 'js/' + props.name + '.js',
-            'dependencies': {
+            dependencies: {
                 'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.4.1',
-                'html5shiv': '~3.6.2'
+                'html5shiv': '~3.6.2',
+                'jquery': '~1.10.*'
             }
         };
 

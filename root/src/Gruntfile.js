@@ -87,7 +87,8 @@ module.exports = function (grunt) {
         // js lib copy
         (function () {
             var libs = [
-                'bower_components/html5shiv/src/html5shiv.js'
+                'bower_components/html5shiv/src/html5shiv.js',
+                'bower_components/jquery/jquery.js'
             ];
 
             var libDir = path.resolve(env.sitePath, 'js') + '/lib/';
