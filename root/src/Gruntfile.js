@@ -2,7 +2,10 @@ module.exports = function (grunt) {
     var path = require('path');
     var config = {};
 
-    var namespaces = {};
+    var alias = {
+        $: 'jquery',
+        _: 'underscore'
+    };
 
     // basic
     {
@@ -40,7 +43,7 @@ module.exports = function (grunt) {
                     ignore: [],
                     forced: [],
                     wrap: true,
-                    locate: namespaces
+                    alias: alias
                 };
                 config.auto_deps[name + '-demo'] = {
                     scripts: ['{%= name %}-demo'],
@@ -49,7 +52,7 @@ module.exports = function (grunt) {
                     ignore: ['{%= name %}'],
                     forced: [],
                     wrap: true,
-                    locate: namespaces
+                    alias: alias
                 };
 
                 if (env.watch) {
@@ -71,7 +74,7 @@ module.exports = function (grunt) {
                     ignore: [],
                     forced: [],
                     wrap: true,
-                    locate: namespaces
+                    alias: alias
                 };
 
                 if (env.watch) {
@@ -87,8 +90,7 @@ module.exports = function (grunt) {
         // js lib copy
         (function () {
             var libs = [
-                'bower_components/html5shiv/src/html5shiv.js',
-                'bower_components/jquery/jquery.js'
+                'bower_components/html5shiv/src/html5shiv.js'
             ];
 
             var libDir = path.resolve(env.sitePath, 'js') + '/lib/';
