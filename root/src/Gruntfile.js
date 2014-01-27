@@ -35,57 +35,25 @@ module.exports = function (grunt) {
             grunt.loadNpmTasks('grunt-auto-deps');
             config.auto_deps = config.auto_deps || {};
 
-            if (env.demo) {
-                config.auto_deps[name] = {
-                    scripts: ['{%= name %}'],
-                    dest: path.resolve(env.sitePath, 'js'),
-                    loadPath: ['js/*.js'],
-                    ignore: [],
-                    forced: [],
-                    wrap: true,
-                    alias: alias
-                };
-                config.auto_deps[name + '-demo'] = {
-                    scripts: ['{%= name %}-demo'],
-                    dest: path.resolve(env.sitePath, 'js'),
-                    loadPath: ['js/*.js'],
-                    ignore: ['{%= name %}'],
-                    forced: [],
-                    wrap: true,
-                    alias: alias
-                };
+            config.auto_deps[name] = {
+                scripts: ['{%= name %}'],
+                dest: path.resolve(env.sitePath, 'js'),
+                loadPath: ['js/*.js'],
+                ignore: [],
+                forced: [],
+                wrap: true,
+                alias: alias
+            };
 
-                if (env.watch) {
-                    config.watch.js = {
-                        files: ['js/*.js'],
-                        tasks: [
-                            'auto_deps:' + name,
-                            'auto_deps:' + name + '-demo'
-                        ]
-                    };
-                }    
-                env.tasks.push('auto_deps:' + name);
-                env.tasks.push('auto_deps:' + name + '-demo');
-            } else {
-                config.auto_deps[name] = {
-                    scripts: ['{%= name %}'],
-                    dest: path.resolve(env.sitePath, 'js'),
-                    loadPath: ['js/*.js'],
-                    ignore: [],
-                    forced: [],
-                    wrap: true,
-                    alias: alias
+            if (env.watch) {
+                config.watch.js = {
+                    files: ['js/*.js'],
+                    tasks: ['auto_deps:' + name]
                 };
-
-                if (env.watch) {
-                    config.watch.js = {
-                        files: ['js/*.js'],
-                        tasks: ['auto_deps:' + name]
-                    };
-                }    
-                env.tasks.push('auto_deps:' + name);
-            }
+            }    
+            env.tasks.push('auto_deps:' + name);
         }
+
 
         // js lib copy
         (function () {
@@ -231,8 +199,7 @@ module.exports = function (grunt) {
         httpPath: '/',
         watch: true,
         ejs: true,
-        test: true,
-        demo: {%= (project_type == 'library') ? 'true' : 'false' %}
+        test: true
     });
 
     // init
