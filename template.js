@@ -75,8 +75,7 @@ exports.template = function (grunt, init, done) {
             dependencies: {
                 'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.4.1',
-                'html5shiv': '~3.6.2',
-                'jquery': '~1.10.*'
+                'html5shiv': '~3.6.2'
             }
         };
 
@@ -85,7 +84,6 @@ exports.template = function (grunt, init, done) {
         props.template_name = 'me';
 
         props.project_path = process.cwd();
-        props.demo_script = props.name + '-demo';
 
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
@@ -116,8 +114,10 @@ exports.template = function (grunt, init, done) {
 
         if (props.project_type == 'production') {
             escapeFiles('src/ejs/README.md.ejs', files);
-            escapeFiles('src/js/' + props.demo_script + '.js', files);
+            bower.dependencies.jquery = '~1.10.*';
         } else {
+            escapeFiles('src/ejs/index.html.ejs', files);
+            escapeFiles('src/ejs/layout/default.ejs', files);
             bower.devDependencies = bower.dependencies;
             delete bower.dependencies;
         }
