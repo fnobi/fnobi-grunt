@@ -38,7 +38,7 @@ module.exports = function (grunt) {
             config.auto_deps[name] = {
                 scripts: ['{%= name %}'],
                 dest: path.resolve(env.sitePath, 'js'),
-                loadPath: ['js/*.js'],
+                loadPath: ['js/*.js', 'js/lib/*.js'],
                 ignore: [],
                 forced: [],
                 wrap: true,
