@@ -102,7 +102,7 @@ module.exports = function (grunt) {
             }
     
             env.tasks.push('compass:' + name);
-        }
+        }{% if (with_ejs) { %}
     
     
         // ejs
@@ -142,7 +142,7 @@ module.exports = function (grunt) {
                     tasks: ['ejs:' + name]
                 };
             }
-        }
+        }{% } %}{% if (with_test) { %}
 
     
         // test
@@ -173,7 +173,7 @@ module.exports = function (grunt) {
     
             grunt.registerTask('test', ['mocha_phantomjs']);
     
-        }
+        }{% } %}
     
     
         // server
@@ -197,9 +197,9 @@ module.exports = function (grunt) {
         tasks: [],
         sitePath: '../',
         httpPath: '/',
-        watch: true,
-        ejs: true,
-        test: true
+        watch: true,{% if (with_ejs) { %}
+        ejs: true,{% } %}{% if (with_test) { %}
+        test: true{% } %}
     });
 
     // init
