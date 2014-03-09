@@ -67,7 +67,8 @@ exports.template = function (grunt, init, done) {
             dependencies: {
                 'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.4.1',
-                'html5shiv': '~3.6.2'
+                'html5shiv': '~3.6.2',
+                'jquery': '~1.10.*'
             }
         };
 
@@ -103,10 +104,6 @@ exports.template = function (grunt, init, done) {
         } else {
             escapeFiles('index.html', files);
         }
-
-
-        escapeFiles('src/ejs/README.md.ejs', files);
-        bower.dependencies.jquery = '~1.10.*';
 
 
         // Actually copy (and process) files.
