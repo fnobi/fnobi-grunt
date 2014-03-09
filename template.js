@@ -32,12 +32,6 @@ exports.template = function (grunt, init, done) {
             message: 'choose using options from [test,ejs] or "none".',
             default: 'test,ejs',
             validator: /^((none|test|ejs),?)*$/
-        },
-        {
-            name: 'project_type',
-            message: 'choose project type from [production,library].',
-            default: 'production',
-            validator: /^(production|library)$/
         }
     ], function(err, props) {
         // package setting
@@ -69,9 +63,7 @@ exports.template = function (grunt, init, done) {
         var bower = {
             name: props.name,
             version: props.version,
-            main: (
-                props.project_type == 'production'
-            ) ? 'index.html' : 'js/' + props.name + '.js',
+            main: 'index.html',
             dependencies: {
                 'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.4.1',
@@ -112,15 +104,10 @@ exports.template = function (grunt, init, done) {
             escapeFiles('index.html', files);
         }
 
-        if (props.project_type == 'production') {
-            escapeFiles('src/ejs/README.md.ejs', files);
-            bower.dependencies.jquery = '~1.10.*';
-        } else {
-            escapeFiles('src/ejs/index.html.ejs', files);
-            escapeFiles('src/ejs/layout/default.ejs', files);
-            bower.devDependencies = bower.dependencies;
-            delete bower.dependencies;
-        }
+
+        escapeFiles('src/ejs/README.md.ejs', files);
+        bower.dependencies.jquery = '~1.10.*';
+
 
         // Actually copy (and process) files.
         init.copyAndProcess(files, props, {});
