@@ -1,4 +1,4 @@
 {
-  "src/js/name.js": "src/js/{%= name %}.js",
+  "src/js/name.js": "src/js/{%= camelCasedName %}.js",
   "src/sass/name.scss": "src/sass/{%= name %}.scss"
 }

@@ -78,6 +78,18 @@ exports.template = function (grunt, init, done) {
 
         props.project_path = process.cwd();
 
+        props.camelCasedName = (function (name) {
+            var parts = name.split(/-|_/);
+            var camelCased = parts.shift();
+            parts.forEach(function (part) {
+                camelCased += [
+                    part.substr(0, 1).toUpperCase(),
+                    part.substr(1)
+                ].join('');
+            });
+            return camelCased;
+        })(props.name);
+
         props.with_test = props.options.indexOf('test') >= 0;
         props.with_ejs = props.options.indexOf('ejs') >= 0;
 
