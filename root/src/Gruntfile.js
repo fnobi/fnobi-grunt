@@ -36,7 +36,7 @@ module.exports = function (grunt) {
             config.auto_deps = config.auto_deps || {};
 
             config.auto_deps[name] = {
-                scripts: ['{%= name %}'],
+                scripts: ['{%= camelCasedName %}'],
                 dest: path.resolve(env.sitePath, 'js'),
                 loadPath: ['js/*.js', 'js/lib/*.js'],
                 ignore: [],
@@ -152,7 +152,7 @@ module.exports = function (grunt) {
     
             config.mocha_html = config.mocha_html || {};
             config.mocha_html[name] = {
-                src   : [ path.resolve(env.sitePath, 'js', '{%= name %}.js') ],
+                src   : [ path.resolve(env.sitePath, 'js', '{%= camelCasedName %}.js') ],
                 test  : [ 'test/*-test.js' ],
                 assert : 'chai'
             };
