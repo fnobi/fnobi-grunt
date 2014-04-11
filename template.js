@@ -45,7 +45,7 @@ exports.template = function (grunt, init, done) {
             },
             devDependencies: {
                 'grunt': '~0.4.0',
-                'grunt-contrib-watch': '~0.1.1',
+                'grunt-este-watch': '~0.1.15',
                 'grunt-contrib-copy': '0.5.0',
                 'grunt-contrib-compass': '0.3.0',
                 'grunt-auto-deps': '0.4.0',

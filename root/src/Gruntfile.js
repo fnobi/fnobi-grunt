@@ -11,9 +11,17 @@ module.exports = function (grunt) {
     {
         config.pkg =  grunt.file.readJSON('package.json');
 
-        grunt.loadNpmTasks('grunt-contrib-watch');
+        grunt.loadNpmTasks('grunt-este-watch');
         grunt.loadNpmTasks('grunt-contrib-copy');
-        config.watch = {};
+
+        grunt.registerTask('watch', 'esteWatch');
+
+        config.esteWatch = {
+            options: {
+                dirs: [],
+                livereload: { enabled: false }
+            }
+        };
         config.copy = {};
     }
 
@@ -45,12 +53,9 @@ module.exports = function (grunt) {
                 alias: alias
             };
 
-            if (env.watch) {
-                config.watch.js = {
-                    files: ['js/*.js'],
-                    tasks: ['auto_deps:' + name]
-                };
-            }    
+            config.esteWatch.options.dirs.push('js/*.js');
+            config.esteWatch['js'] = function () { return 'auto_deps:' + name; };
+
             env.tasks.push('auto_deps:' + name);
         }
 
@@ -94,13 +99,10 @@ module.exports = function (grunt) {
                     outputStyle             : 'compressed'
                 }
             };
-    
-            if (env.watch) {
-                config.watch.css = {
-                    files: ['sass/*.scss', 'sass/**/*.scss'],
-                    tasks: ['compass:' + name]
-                };
-            }
+            
+            config.esteWatch.options.dirs.push('sass/*.scss');
+            config.esteWatch.options.dirs.push('sass/**/*.scss');
+            config.esteWatch['scss'] = function () { return 'compass:' + name; };
     
             env.tasks.push('compass:' + name);
         }{% if (with_ejs) { %}
@@ -133,16 +135,10 @@ module.exports = function (grunt) {
             };
             env.tasks.push('ejs:' + name);
             
-            if (env.watch) {
-                config.watch.ejs = {
-                    files: [
-                        'ejs/*.ejs',
-                        'ejs/**/*.ejs',
-                        'options.yaml'
-                    ],
-                    tasks: ['ejs:' + name]
-                };
-            }
+            config.esteWatch.options.dirs.push('ejs/*.ejs');
+            config.esteWatch.options.dirs.push('ejs/**/*.ejs');
+            config.esteWatch['ejs'] = function () { return 'ejs:' + name; };
+
         }{% } %}{% if (with_test) { %}
 
     
@@ -158,15 +154,6 @@ module.exports = function (grunt) {
                 assert : 'chai'
             };
             env.tasks.push('mocha_html');
-    
-            
-            if (env.watch) {
-                config.watch.test = {
-                    files: ['test/*-test.js'],
-                    tasks: ['mocha_phantomjs']
-                };
-                config.watch.js.tasks.push('mocha_html');
-            }
     
             config.mocha_phantomjs =  {
                 all: [ 'test/*.html' ]
@@ -197,8 +184,7 @@ module.exports = function (grunt) {
     configureEnv('dev', {
         tasks: [],
         sitePath: '../',
-        httpPath: '/',
-        watch: true,{% if (with_ejs) { %}
+        httpPath: '/',{% if (with_ejs) { %}
         ejs: true,{% } %}{% if (with_test) { %}
         test: true{% } %}
     });
