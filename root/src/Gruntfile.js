@@ -69,7 +69,7 @@ module.exports = function (grunt) {
     // auto deps
     {
         grunt.loadNpmTasks('grunt-auto-deps');
-        config.auto_deps = config.auto_deps || {};
+        config.auto_deps = {};
     
         var autoDepsDefaultConfig = {
             scripts: ['//[= camelCasedName ]//'],
@@ -104,22 +104,21 @@ module.exports = function (grunt) {
             'bower_components/html5shiv/src/html5shiv.js'
         ];
     
-        var libDir = path.resolve(devSitePath, JS_LIB);
         var files = [];
         libs.forEach(function (lib) {
             files.push({
                 expand: true,
                 flatten: true,
                 src: lib,
-                dest: libDir
-                });
+                dest: path.resolve(devSitePath, JS_LIB)
+            });
         });
         config.copy[DEV] = { files: files };
         devTasks.push('copy:' + DEV);
     })();
     
     
-    // css
+    // compass
     {
         grunt.loadNpmTasks('grunt-contrib-compass');
     
