@@ -1,16 +1,16 @@
-name: {%= name %}
+name: //[= name ]//
 
 url:
-  {%= homepage %}
+  //[= homepage ]//
 
 repository:
-  {%= repository %}
+  //[= repository ]//
 
 title:
-  {%= name %}
+  //[= name ]//
 
 description:
-  {%= description %}
+  //[= description ]//
 
 keywords: []
 
@@ -36,16 +36,16 @@ ogp_image_height: 0
 sns:
   twitter:
     sharetext:
-      {%= description %}      
+      //[= description ]//      
     sharehashtag: []
 
   facebook:
     app_id: ''
     sharetext:
-      {%= description %}
+      //[= description ]//
 
 ogp:
   image: 
-    url: {%= homepage %}/img/ogp-icon.png
+    url: //[= homepage ]///img/ogp-icon.png
     width: 300
     height: 300

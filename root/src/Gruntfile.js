@@ -8,9 +8,9 @@ module.exports = function (grunt) {
         _: 'underscore'
     };
 
-    {% if (with_ejs) { %}
-    var useEjs = true;{% } %}{% if (with_test) { %}
-    var useTest = true;{% } %}
+    //[ if (with_ejs) { ]//
+    var useEjs = true;//[ } ]////[ if (with_test) { ]//
+    var useTest = true;//[ } ]//
 
     // dev config
     var DEV = 'dev';
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
         config.auto_deps = config.auto_deps || {};
     
         config.auto_deps[DEV] = {
-            scripts: ['{%= camelCasedName %}'],
+            scripts: ['//[= camelCasedName ]//'],
             dest: path.resolve(devSitePath, 'js'),
             loadPath: ['js/*.js', 'js/lib/*.js'],
             ignore: [],
@@ -120,7 +120,7 @@ module.exports = function (grunt) {
         config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
     
         devTasks.push('compass:' + DEV);
-    }{% if (with_ejs) { %}
+    }//[ if (with_ejs) { ]//
     
     
     // ejs
@@ -154,7 +154,7 @@ module.exports = function (grunt) {
         config.esteWatch.options.dirs.push('ejs/**/*.ejs');
         config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
     
-    }{% } %}{% if (with_test) { %}
+    }//[ } ]////[ if (with_test) { ]//
     
     
     // test
@@ -164,7 +164,7 @@ module.exports = function (grunt) {
     
         config.mocha_html = config.mocha_html || {};
         config.mocha_html[DEV] = {
-            src   : [ path.resolve(devSitePath, 'js', '{%= camelCasedName %}.js') ],
+            src   : [ path.resolve(devSitePath, 'js', '//[= camelCasedName ]//.js') ],
             test  : [ 'test/*-test.js' ],
             assert : 'chai'
         };
@@ -176,7 +176,7 @@ module.exports = function (grunt) {
     
         grunt.registerTask('test', ['mocha_phantomjs']);
     
-    }{% } %}
+    }//[ } ]//
     
     
     // server
