@@ -2,15 +2,24 @@ module.exports = function (grunt) {
     var path = require('path');
     var config = {};
 
+    // dirs
+    var JS = 'js';
+    var JS_LIB = 'js/lib';
+    var CSS = 'css';
+    var SASS = 'sass';
+    var IMG = 'img';
+    var EJS = 'ejs';
+    var TEST = 'test';
+    //[ if (with_ejs) { ]//
+    var useEjs = true;//[ } ]////[ if (with_test) { ]//
+    var useTest = true;//[ } ]//
+
     // js library alias
     var alias = {
         $: 'jquery',
         _: 'underscore'
     };
 
-    //[ if (with_ejs) { ]//
-    var useEjs = true;//[ } ]////[ if (with_test) { ]//
-    var useTest = true;//[ } ]//
 
     // dev config
     var DEV = 'dev';
@@ -18,9 +27,10 @@ module.exports = function (grunt) {
     var devSitePath = '../';
     var devHttpPath = '/';
 
-
     // prod config
-    var PROD = 'PROD';
+    var PROD = 'prod';
+    var prodTasks = [];
+    var prodSitePath = path.join(process.env.HOME, 'Desktop', '//[= name ]//');
 
 
     // basic
@@ -61,20 +71,28 @@ module.exports = function (grunt) {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = config.auto_deps || {};
     
-        config.auto_deps[DEV] = {
+        var autoDepsDefaultConfig = {
             scripts: ['//[= camelCasedName ]//'],
-            dest: path.resolve(devSitePath, 'js'),
-            loadPath: ['js/*.js', 'js/lib/*.js'],
+            loadPath: [JS + '/*.js', JS_LIB + '/*.js'],
             ignore: [],
             forced: [],
             wrap: true,
             alias: alias
         };
-    
-        config.esteWatch.options.dirs.push('js/*.js');
-        config.esteWatch['js'] = function () { return 'auto_deps:' + DEV; };
-    
+
+        // dev
+        config.auto_deps[DEV] = autoDepsDefaultConfig;
+        config.auto_deps[DEV].dest = path.resolve(devSitePath, JS);
         devTasks.push('auto_deps:' + DEV);
+
+        // prod
+        config.auto_deps[PROD] = autoDepsDefaultConfig;
+        config.auto_deps[PROD].dest = path.resolve(prodSitePath, JS);
+        prodTasks.push('auto_deps:' + PROD);
+    
+        // watch
+        config.esteWatch.options.dirs.push(JS + '/*.js');
+        config.esteWatch['js'] = function () { return 'auto_deps:' + DEV; };
     }
     
     
@@ -84,7 +102,7 @@ module.exports = function (grunt) {
             'bower_components/html5shiv/src/html5shiv.js'
         ];
     
-        var libDir = path.resolve(devSitePath, 'js') + '/lib/';
+        var libDir = path.resolve(devSitePath, JS_LIB);
         var files = [];
         libs.forEach(function (lib) {
             files.push({
@@ -106,20 +124,20 @@ module.exports = function (grunt) {
         config.compass = config.compass || {};
         config.compass[DEV] = {
             options: {
-                sassDir                 : 'sass',
-                cssDir                  : path.resolve(devSitePath, 'css'),
-                javascriptsDir          : path.resolve(devSitePath, 'js'),
-                imagesDir               : path.resolve(devSitePath, 'img'),
-                generatedImagesPath     : path.resolve(devSitePath, 'img'),
-                httpImagesPath          : path.resolve(devHttpPath, 'img'),
-                httpGeneratedImagesPath : path.resolve(devHttpPath, 'img'),
+                sassDir                 : SASS,
+                cssDir                  : path.resolve(devSitePath, CSS),
+                javascriptsDir          : path.resolve(devSitePath, JS),
+                imagesDir               : path.resolve(devSitePath, IMG),
+                generatedImagesPath     : path.resolve(devSitePath, IMG),
+                httpImagesPath          : path.resolve(devHttpPath, IMG),
+                httpGeneratedImagesPath : path.resolve(devHttpPath, IMG),
                 environment             : 'production',
                 outputStyle             : 'compressed'
             }
         };
         
-        config.esteWatch.options.dirs.push('sass/*.scss');
-        config.esteWatch.options.dirs.push('sass/**/*.scss');
+        config.esteWatch.options.dirs.push(SASS + '/*.scss');
+        config.esteWatch.options.dirs.push(SASS + '/**/*.scss');
         config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
     
         devTasks.push('compass:' + DEV);
@@ -132,29 +150,29 @@ module.exports = function (grunt) {
     
         config.ejs = config.ejs || {};
         config.ejs[DEV] = {
-            templateRoot: 'ejs',
+            templateRoot: EJS,
             template: ['*.ejs'],
             dest: devSitePath,
             include: [
                 'bower_components/ejs-head-modules/*.ejs',
                 'bower_components/ejs-sns-modules/*.ejs',
-                'ejs/layout/*.ejs'
+                EJS + '/layout/*.ejs'
             ],
             silentInclude: true,
             options: [
                 {
                     http_path : devHttpPath,
-                    css_path  : path.resolve(devHttpPath, 'css'),
-                    js_path   : path.resolve(devHttpPath, 'js' ),
-                    img_path  : path.resolve(devHttpPath, 'img')
+                    css_path  : path.resolve(devHttpPath, CSS),
+                    js_path   : path.resolve(devHttpPath, JS ),
+                    img_path  : path.resolve(devHttpPath, IMG)
                 },
                 'options.yaml'
             ]
         };
         devTasks.push('ejs:' + DEV);
         
-        config.esteWatch.options.dirs.push('ejs/*.ejs');
-        config.esteWatch.options.dirs.push('ejs/**/*.ejs');
+        config.esteWatch.options.dirs.push(EJS + '/*.ejs');
+        config.esteWatch.options.dirs.push(EJS + '/**/*.ejs');
         config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
     
     }//[ } ]////[ if (with_test) { ]//
@@ -167,14 +185,14 @@ module.exports = function (grunt) {
     
         config.mocha_html = config.mocha_html || {};
         config.mocha_html[DEV] = {
-            src   : [ path.resolve(devSitePath, 'js', '//[= camelCasedName ]//.js') ],
-            test  : [ 'test/*-test.js' ],
+            src   : [ path.resolve(devSitePath, JS, '//[= camelCasedName ]//.js') ],
+            test  : [ TEST + '/*-test.js' ],
             assert : 'chai'
         };
         devTasks.push('mocha_html');
     
         config.mocha_phantomjs =  {
-            all: [ 'test/*.html' ]
+            all: [ TEST + '/*.html' ]
         };
     
         grunt.registerTask('test', ['mocha_phantomjs']);
@@ -197,9 +215,10 @@ module.exports = function (grunt) {
     
     // set as task
     grunt.registerTask(DEV, devTasks);
+    grunt.registerTask(PROD, prodTasks);
 
 
     // init
     grunt.initConfig(config);
-    grunt.registerTask('default', ['dev']);
+    grunt.registerTask('default', [DEV]);
 };
