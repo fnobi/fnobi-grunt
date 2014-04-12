@@ -27,9 +27,13 @@ module.exports = function (grunt) {
     {
         config.pkg =  grunt.file.readJSON('package.json');
 
-        grunt.loadNpmTasks('grunt-este-watch');
         grunt.loadNpmTasks('grunt-contrib-copy');
+        config.copy = {};
+    }
 
+    // este watch
+    {
+        grunt.loadNpmTasks('grunt-este-watch');
         grunt.registerTask('watch', 'esteWatch');
 
         config.esteWatch = {
@@ -38,7 +42,6 @@ module.exports = function (grunt) {
                 livereload: { enabled: false }
             }
         };
-        config.copy = {};
     }
 
     // release
