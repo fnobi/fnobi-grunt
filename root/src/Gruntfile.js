@@ -31,6 +31,7 @@ module.exports = function (grunt) {
     var PROD = 'prod';
     var prodTasks = [];
     var prodSitePath = path.join(process.env.HOME, 'Desktop', '//[= name ]//');
+    var prodHttpPath = '/';
 
 
     // basic
@@ -121,27 +122,47 @@ module.exports = function (grunt) {
     // compass
     {
         grunt.loadNpmTasks('grunt-contrib-compass');
-    
-        config.compass = config.compass || {};
-        config.compass[DEV] = {
+        config.compass = {};
+
+        var compassDefaultConfig = {
             options: {
-                sassDir                 : SASS,
+                sassDir: SASS
+            }
+        };
+
+        // dev
+        config.compass[DEV] = util.clone(compassDefaultConfig, {
+            options: {
                 cssDir                  : path.resolve(devSitePath, CSS),
                 javascriptsDir          : path.resolve(devSitePath, JS),
                 imagesDir               : path.resolve(devSitePath, IMG),
                 generatedImagesPath     : path.resolve(devSitePath, IMG),
                 httpImagesPath          : path.resolve(devHttpPath, IMG),
-                httpGeneratedImagesPath : path.resolve(devHttpPath, IMG),
+                httpGeneratedImagesPath : path.resolve(devHttpPath, IMG)
+            }
+        });
+        devTasks.push('compass:' + DEV);
+
+        // prod
+        config.compass[PROD] = util.clone(compassDefaultConfig, {
+            options: {
+                cssDir                  : path.resolve(prodSitePath, CSS),
+                javascriptsDir          : path.resolve(prodSitePath, JS),
+                imagesDir               : path.resolve(prodSitePath, IMG),
+                generatedImagesPath     : path.resolve(prodSitePath, IMG),
+                httpImagesPath          : path.resolve(prodHttpPath, IMG),
+                httpGeneratedImagesPath : path.resolve(prodHttpPath, IMG),
                 environment             : 'production',
                 outputStyle             : 'compressed'
             }
-        };
+        });
+        prodTasks.push('compass:' + PROD);
         
+        // watch
         config.esteWatch.options.dirs.push(SASS + '/*.scss');
         config.esteWatch.options.dirs.push(SASS + '/**/*.scss');
         config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
     
-        devTasks.push('compass:' + DEV);
     }//[ if (with_ejs) { ]//
     
     
@@ -233,10 +254,20 @@ var util = {
 
         var key;
         for (key in obj) {
-            newObj[key] = obj[key];
+            if (typeof obj[key] == 'object') {
+                if (isNaN(obj[key].length)) {
+                    newObj[key] = util.clone(obj[key], opts[key]);
+                } else {
+                    newObj[key] = opts[key] || obj[key];
+                }
+            } else {
+                newObj[key] = opts[key] || obj[key];
+            }
         }
         for (key in opts) {
-            newObj[key] = opts[key];
+            if (!obj[key]) {
+                newObj[key] = opts[key];
+            }
         }
 
         return newObj;
