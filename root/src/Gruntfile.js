@@ -169,18 +169,22 @@ module.exports = function (grunt) {
     // ejs
     if (useEjs) {
         grunt.loadNpmTasks('grunt-simple-ejs');
-    
-        config.ejs = config.ejs || {};
-        config.ejs[DEV] = {
+        config.ejs = {};
+
+        var ejsDefaultConfig = {
             templateRoot: EJS,
             template: ['*.ejs'],
-            dest: devSitePath,
             include: [
                 'bower_components/ejs-head-modules/*.ejs',
                 'bower_components/ejs-sns-modules/*.ejs',
                 EJS + '/layout/*.ejs'
             ],
-            silentInclude: true,
+            silentInclude: true
+        };
+
+        // dev
+        config.ejs[DEV] = util.clone(ejsDefaultConfig, {
+            dest: devSitePath,
             options: [
                 {
                     http_path : devHttpPath,
@@ -190,9 +194,25 @@ module.exports = function (grunt) {
                 },
                 'options.yaml'
             ]
-        };
+        });
         devTasks.push('ejs:' + DEV);
+
+        // prod
+        config.ejs[PROD] = util.clone(ejsDefaultConfig, {
+            dest: prodSitePath,
+            options: [
+                {
+                    http_path : prodHttpPath,
+                    css_path  : path.resolve(prodHttpPath, CSS),
+                    js_path   : path.resolve(prodHttpPath, JS ),
+                    img_path  : path.resolve(prodHttpPath, IMG)
+                },
+                'options.yaml'
+            ]
+        });
+        prodTasks.push('ejs:' + PROD);
         
+        // watch
         config.esteWatch.options.dirs.push(EJS + '/*.ejs');
         config.esteWatch.options.dirs.push(EJS + '/**/*.ejs');
         config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
@@ -238,7 +258,6 @@ module.exports = function (grunt) {
     // set as task
     grunt.registerTask(DEV, devTasks);
     grunt.registerTask(PROD, prodTasks);
-
 
     // init
     grunt.initConfig(config);
