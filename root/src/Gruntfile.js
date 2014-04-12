@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         };
     }
 
-    // js
+    // auto deps
     {
         grunt.loadNpmTasks('grunt-auto-deps');
         config.auto_deps = config.auto_deps || {};
@@ -81,13 +81,15 @@ module.exports = function (grunt) {
         };
 
         // dev
-        config.auto_deps[DEV] = autoDepsDefaultConfig;
-        config.auto_deps[DEV].dest = path.resolve(devSitePath, JS);
+        config.auto_deps[DEV] = util.clone(autoDepsDefaultConfig, {
+            dest: path.resolve(devSitePath, JS)
+        });
         devTasks.push('auto_deps:' + DEV);
 
         // prod
-        config.auto_deps[PROD] = autoDepsDefaultConfig;
-        config.auto_deps[PROD].dest = path.resolve(prodSitePath, JS);
+        config.auto_deps[PROD] = util.clone(autoDepsDefaultConfig, {
+            dest: path.resolve(prodSitePath, JS)
+        });
         prodTasks.push('auto_deps:' + PROD);
     
         // watch
@@ -222,3 +224,23 @@ module.exports = function (grunt) {
     grunt.initConfig(config);
     grunt.registerTask('default', [DEV]);
 };
+
+
+var util = {
+    clone: function (obj, opts) {
+        opts = opts || {};
+
+        var newObj = {};
+
+        var key;
+        for (key in obj) {
+            newObj[key] = obj[key];
+        }
+        for (key in opts) {
+            newObj[key] = opts[key];
+        }
+
+        return newObj;
+    }
+};
+
