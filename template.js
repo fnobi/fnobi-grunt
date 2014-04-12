@@ -31,10 +31,10 @@ exports.template = function (grunt, init, done) {
         // init.prompt('author_url'),
         // init.prompt('jquery_version'),
         {
-            name: 'options',
-            message: 'choose using options from [test,ejs] or "none".',
-            default: 'test,ejs',
-            validator: /^((none|test|ejs),?)*$/
+            name: 'with_test',
+            message: 'use mocha test. [Y|n]',
+            default: 'n',
+            validator: /^(Y|n)$/
         }
     ], function(err, props) {
         // package setting
@@ -93,8 +93,7 @@ exports.template = function (grunt, init, done) {
             return camelCased;
         })(props.name);
 
-        props.with_test = props.options.indexOf('test') >= 0;
-        props.with_ejs = props.options.indexOf('ejs') >= 0;
+        props.with_test = props.with_test == 'Y';
 
         props.pkg = pkg;
         props.bower = bower;
@@ -109,15 +108,6 @@ exports.template = function (grunt, init, done) {
             delete pkg.devDependencies['grunt-mocha-phantomjs'];
             delete pkg.devDependencies['chai'];
             delete pkg.devDependencies['mocha'];
-        }
-
-        if (!props.with_ejs) {
-            escapeFiles('src/ejs/**/*.*', files);
-            delete pkg.devDependencies['grunt-simple-ejs'];
-            delete bower.dependencies['ejs-head-modules'];
-            delete bower.dependencies['ejs-sns-modules'];
-        } else {
-            escapeFiles('index.html', files);
         }
 
 

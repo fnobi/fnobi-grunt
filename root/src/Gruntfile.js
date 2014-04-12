@@ -10,8 +10,8 @@ module.exports = function (grunt) {
     var IMG = 'img';
     var EJS = 'ejs';
     var TEST = 'test';
-    //[ if (with_ejs) { ]//
-    var useEjs = true;//[ } ]////[ if (with_test) { ]//
+
+    var useEjs = true;//[ if (with_test) { ]//
     var useTest = true;//[ } ]//
 
     // js library alias
@@ -163,7 +163,7 @@ module.exports = function (grunt) {
         config.esteWatch.options.dirs.push(SASS + '/**/*.scss');
         config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
     
-    }//[ if (with_ejs) { ]//
+    }
     
     
     // ejs
@@ -217,7 +217,7 @@ module.exports = function (grunt) {
         config.esteWatch.options.dirs.push(EJS + '/**/*.ejs');
         config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
     
-    }//[ } ]////[ if (with_test) { ]//
+    }//[ if (with_test) { ]//
     
     
     // test
