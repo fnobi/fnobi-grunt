@@ -2,10 +2,26 @@ module.exports = function (grunt) {
     var path = require('path');
     var config = {};
 
+    // js library alias
     var alias = {
         $: 'jquery',
         _: 'underscore'
     };
+
+    {% if (with_ejs) { %}
+    var useEjs = true;{% } %}{% if (with_test) { %}
+    var useTest = true;{% } %}
+
+    // dev config
+    var DEV = 'dev';
+    var devTasks = [];
+    var devSitePath = '../';
+    var devHttpPath = '/';
+
+
+    // prod config
+    var PROD = 'PROD';
+
 
     // basic
     {
@@ -37,157 +53,148 @@ module.exports = function (grunt) {
         };
     }
 
-    var configureEnv = function (name, env) {
-        // js
-        {
-            grunt.loadNpmTasks('grunt-auto-deps');
-            config.auto_deps = config.auto_deps || {};
+    // js
+    {
+        grunt.loadNpmTasks('grunt-auto-deps');
+        config.auto_deps = config.auto_deps || {};
+    
+        config.auto_deps[DEV] = {
+            scripts: ['{%= camelCasedName %}'],
+            dest: path.resolve(devSitePath, 'js'),
+            loadPath: ['js/*.js', 'js/lib/*.js'],
+            ignore: [],
+            forced: [],
+            wrap: true,
+            alias: alias
+        };
+    
+        config.esteWatch.options.dirs.push('js/*.js');
+        config.esteWatch['js'] = function () { return 'auto_deps:' + DEV; };
+    
+        devTasks.push('auto_deps:' + DEV);
+    }
+    
+    
+    // js lib copy
+    (function () {
+        var libs = [
+            'bower_components/html5shiv/src/html5shiv.js'
+        ];
+    
+        var libDir = path.resolve(devSitePath, 'js') + '/lib/';
+        var files = [];
+        libs.forEach(function (lib) {
+            files.push({
+                expand: true,
+                flatten: true,
+                src: lib,
+                dest: libDir
+                });
+        });
+        config.copy[DEV] = { files: files };
+        devTasks.push('copy:' + DEV);
+    })();
+    
+    
+    // css
+    {
+        grunt.loadNpmTasks('grunt-contrib-compass');
+    
+        config.compass = config.compass || {};
+        config.compass[DEV] = {
+            options: {
+                sassDir                 : 'sass',
+                cssDir                  : path.resolve(devSitePath, 'css'),
+                javascriptsDir          : path.resolve(devSitePath, 'js'),
+                imagesDir               : path.resolve(devSitePath, 'img'),
+                generatedImagesPath     : path.resolve(devSitePath, 'img'),
+                httpImagesPath          : path.resolve(devHttpPath, 'img'),
+                httpGeneratedImagesPath : path.resolve(devHttpPath, 'img'),
+                environment             : 'production',
+                outputStyle             : 'compressed'
+            }
+        };
+        
+        config.esteWatch.options.dirs.push('sass/*.scss');
+        config.esteWatch.options.dirs.push('sass/**/*.scss');
+        config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
+    
+        devTasks.push('compass:' + DEV);
+    }{% if (with_ejs) { %}
+    
+    
+    // ejs
+    if (useEjs) {
+        grunt.loadNpmTasks('grunt-simple-ejs');
+    
+        config.ejs = config.ejs || {};
+        config.ejs[DEV] = {
+            templateRoot: 'ejs',
+            template: ['*.ejs'],
+            dest: devSitePath,
+            include: [
+                'bower_components/ejs-head-modules/*.ejs',
+                'bower_components/ejs-sns-modules/*.ejs',
+                'ejs/layout/*.ejs'
+            ],
+            silentInclude: true,
+            options: [
+                {
+                    http_path : devHttpPath,
+                    css_path  : path.resolve(devHttpPath, 'css'),
+                    js_path   : path.resolve(devHttpPath, 'js' ),
+                    img_path  : path.resolve(devHttpPath, 'img')
+                },
+                'options.yaml'
+            ]
+        };
+        devTasks.push('ejs:' + DEV);
+        
+        config.esteWatch.options.dirs.push('ejs/*.ejs');
+        config.esteWatch.options.dirs.push('ejs/**/*.ejs');
+        config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
+    
+    }{% } %}{% if (with_test) { %}
+    
+    
+    // test
+    if (useTest) {
+        grunt.loadNpmTasks('grunt-mocha-html');
+        grunt.loadNpmTasks('grunt-mocha-phantomjs');
+    
+        config.mocha_html = config.mocha_html || {};
+        config.mocha_html[DEV] = {
+            src   : [ path.resolve(devSitePath, 'js', '{%= camelCasedName %}.js') ],
+            test  : [ 'test/*-test.js' ],
+            assert : 'chai'
+        };
+        devTasks.push('mocha_html');
+    
+        config.mocha_phantomjs =  {
+            all: [ 'test/*.html' ]
+        };
+    
+        grunt.registerTask('test', ['mocha_phantomjs']);
+    
+    }{% } %}
+    
+    
+    // server
+    {
+        grunt.loadNpmTasks('grunt-koko');
+    
+        config.koko = config.koko || {};
+        config.koko[DEV] = {
+            root: path.resolve(devSitePath, path.relative(devHttpPath, '/')),
+            openPath: devHttpPath
+        };
+    
+        grunt.registerTask('server', ['koko:' + DEV]);
+    }
+    
+    // set as task
+    grunt.registerTask(DEV, devTasks);
 
-            config.auto_deps[name] = {
-                scripts: ['{%= camelCasedName %}'],
-                dest: path.resolve(env.sitePath, 'js'),
-                loadPath: ['js/*.js', 'js/lib/*.js'],
-                ignore: [],
-                forced: [],
-                wrap: true,
-                alias: alias
-            };
-
-            config.esteWatch.options.dirs.push('js/*.js');
-            config.esteWatch['js'] = function () { return 'auto_deps:' + name; };
-
-            env.tasks.push('auto_deps:' + name);
-        }
-
-
-        // js lib copy
-        (function () {
-            var libs = [
-                'bower_components/html5shiv/src/html5shiv.js'
-            ];
-
-            var libDir = path.resolve(env.sitePath, 'js') + '/lib/';
-            var files = [];
-            libs.forEach(function (lib) {
-                files.push({
-                    expand: true,
-                    flatten: true,
-                    src: lib,
-                    dest: libDir
-                    });
-            });
-            config.copy[name] = { files: files };
-            env.tasks.push('copy:' + name);
-        })();
-    
-    
-        // css
-        {
-            grunt.loadNpmTasks('grunt-contrib-compass');
-    
-            config.compass = config.compass || {};
-            config.compass[name] = {
-                options: {
-                    sassDir                 : 'sass',
-                    cssDir                  : path.resolve(env.sitePath, 'css'),
-                    javascriptsDir          : path.resolve(env.sitePath, 'js'),
-                    imagesDir               : path.resolve(env.sitePath, 'img'),
-                    generatedImagesPath     : path.resolve(env.sitePath, 'img'),
-                    httpImagesPath          : path.resolve(env.httpPath, 'img'),
-                    httpGeneratedImagesPath : path.resolve(env.httpPath, 'img'),
-                    environment             : 'production',
-                    outputStyle             : 'compressed'
-                }
-            };
-            
-            config.esteWatch.options.dirs.push('sass/*.scss');
-            config.esteWatch.options.dirs.push('sass/**/*.scss');
-            config.esteWatch['scss'] = function () { return 'compass:' + name; };
-    
-            env.tasks.push('compass:' + name);
-        }{% if (with_ejs) { %}
-    
-    
-        // ejs
-        if (env.ejs) {
-            grunt.loadNpmTasks('grunt-simple-ejs');
-    
-            config.ejs = config.ejs || {};
-            config.ejs[name] = {
-                templateRoot: 'ejs',
-                template: ['*.ejs'],
-                dest: env.sitePath,
-                include: [
-                    'bower_components/ejs-head-modules/*.ejs',
-                    'bower_components/ejs-sns-modules/*.ejs',
-                    'ejs/layout/*.ejs'
-                ],
-                silentInclude: true,
-                options: [
-                    {
-                        http_path : env.httpPath,
-                        css_path  : path.resolve(env.httpPath, 'css'),
-                        js_path   : path.resolve(env.httpPath, 'js' ),
-                        img_path  : path.resolve(env.httpPath, 'img')
-                    },
-                    'options.yaml'
-                ]
-            };
-            env.tasks.push('ejs:' + name);
-            
-            config.esteWatch.options.dirs.push('ejs/*.ejs');
-            config.esteWatch.options.dirs.push('ejs/**/*.ejs');
-            config.esteWatch['ejs'] = function () { return 'ejs:' + name; };
-
-        }{% } %}{% if (with_test) { %}
-
-    
-        // test
-        if (env.test) {
-            grunt.loadNpmTasks('grunt-mocha-html');
-            grunt.loadNpmTasks('grunt-mocha-phantomjs');
-    
-            config.mocha_html = config.mocha_html || {};
-            config.mocha_html[name] = {
-                src   : [ path.resolve(env.sitePath, 'js', '{%= camelCasedName %}.js') ],
-                test  : [ 'test/*-test.js' ],
-                assert : 'chai'
-            };
-            env.tasks.push('mocha_html');
-    
-            config.mocha_phantomjs =  {
-                all: [ 'test/*.html' ]
-            };
-    
-            grunt.registerTask('test', ['mocha_phantomjs']);
-    
-        }{% } %}
-    
-    
-        // server
-        {
-            grunt.loadNpmTasks('grunt-koko');
-    
-            config.koko = config.koko || {};
-            config.koko[name] = {
-                root: path.resolve(env.sitePath, path.relative(env.httpPath, '/')),
-                openPath: env.httpPath
-            };
-    
-            grunt.registerTask('server', ['koko:' + name]);
-        }
-
-        // set as task
-        grunt.registerTask(name, env.tasks);
-    };
-
-    configureEnv('dev', {
-        tasks: [],
-        sitePath: '../',
-        httpPath: '/',{% if (with_ejs) { %}
-        ejs: true,{% } %}{% if (with_test) { %}
-        test: true{% } %}
-    });
 
     // init
     grunt.initConfig(config);
