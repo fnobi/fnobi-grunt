@@ -39,7 +39,23 @@ module.exports = function (grunt) {
         config.pkg =  grunt.file.readJSON('package.json');
 
         grunt.loadNpmTasks('grunt-contrib-copy');
-        config.copy = {};
+        config.copy = {
+            prod: {
+                files: [
+                    { // img
+                        expand: true,
+                        src: path.join(devSitePath, IMG, '*'),
+                        dest: path.join(prodSitePath, IMG)
+                    },
+                    { // js lib
+                        expand: true,
+                        src: path.join(devSitePath, JS_LIB, '*'),
+                        dest: path.join(prodSitePath, JS)
+                    }
+                ]
+            }
+        };
+        prodTasks.push('copy:' + PROD);
     }
 
     // este watch
