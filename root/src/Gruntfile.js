@@ -257,7 +257,18 @@ module.exports = function (grunt) {
     
     }//[ } ]//
     
-    
+    // html validation
+    {
+        grunt.loadNpmTasks('grunt-html-validation');
+        config.validation = {
+            options: {
+            },
+            files: {
+                src: [ devSitePath + '*.html' ]
+            }
+        };
+    }
+
     // server
     {
         grunt.loadNpmTasks('grunt-koko');
