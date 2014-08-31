@@ -44,11 +44,11 @@ exports.template = function (grunt, init, done) {
             version: props.version,
             scripts: { },
             engines: {
-                node: '>=0.8.0 <0.9.1'
+                node: '>=0.10.2'
             },
             devDependencies: {
                 'grunt': '~0.4.0',
-                'grunt-este-watch': '~0.1.15',
+                'grunt-este-watch': 'git://github.com/fnobi/grunt-este-watch.git',
                 'grunt-contrib-copy': '0.5.0',
                 'grunt-contrib-compass': '0.3.0',
                 'grunt-auto-deps': '0.4.1',
