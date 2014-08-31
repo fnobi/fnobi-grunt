@@ -128,6 +128,9 @@ exports.template = function (grunt, init, done) {
         },{
             command: 'cd src; bower install',
             message: 'Installing bower dependencies'
+        },{
+            command: 'git init; git add .; git commit -m "scaffold."',
+            message: 'Initialize git'
         }], done);
     });
 };
