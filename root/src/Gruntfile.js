@@ -11,8 +11,8 @@ module.exports = function (grunt) {
     var EJS = 'ejs';
     var TEST = 'test';
 
-    var useEjs = true;//[ if (with_test) { ]//
-    var useTest = true;//[ } ]//
+    var useEjs = true;/*[ if (with_test) { ]*/
+    var useTest = true;/*[ } ]*/
 
     // js library alias
     var alias = {
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
     // prod config
     var PROD = 'prod';
     var prodTasks = [];
-    var prodSitePath = path.join(process.env.HOME, 'Desktop', '//[= name ]//');
+    var prodSitePath = path.join(process.env.HOME, 'Desktop', '/*[= name ]*/');
     var prodHttpPath = '/';
 
 
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
         config.auto_deps = {};
     
         var autoDepsDefaultConfig = {
-            scripts: ['//[= camelCasedName ]//'],
+            scripts: ['/*[= camelCasedName ]*/'],
             loadPath: [JS + '/*.js', JS_LIB + '/*.js'],
             ignore: [],
             forced: [],
@@ -233,7 +233,7 @@ module.exports = function (grunt) {
         config.esteWatch.options.dirs.push(EJS + '/**/*.ejs');
         config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
     
-    }//[ if (with_test) { ]//
+    }/*[ if (with_test) { ]*/
     
     
     // test
@@ -243,7 +243,7 @@ module.exports = function (grunt) {
     
         config.mocha_html = config.mocha_html || {};
         config.mocha_html[DEV] = {
-            src   : [ path.resolve(devSitePath, JS, '//[= camelCasedName ]//.js') ],
+            src   : [ path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.js') ],
             test  : [ TEST + '/*-test.js' ],
             assert : 'chai'
         };
@@ -255,7 +255,7 @@ module.exports = function (grunt) {
     
         grunt.registerTask('test', ['mocha_phantomjs']);
     
-    }//[ } ]//
+    }/*[ } ]*/
     
     // html validation
     {

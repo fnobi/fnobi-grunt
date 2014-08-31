@@ -16,7 +16,7 @@ exports.warnOn = '*';
 exports.template = function (grunt, init, done) {
 
     // override template delimiter
-    grunt.template.addDelimiters('init', '//[', ']//');
+    grunt.template.addDelimiters('init', '/*[', ']*/');
 
     init.process( {}, [
         init.prompt('name'),
