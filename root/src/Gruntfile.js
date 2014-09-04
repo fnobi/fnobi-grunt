@@ -142,7 +142,8 @@ module.exports = function (grunt) {
 
         var compassDefaultConfig = {
             options: {
-                sassDir: SASS
+                sassDir: SASS,
+                outputStyle: 'compressed'
             }
         };
 
@@ -168,8 +169,7 @@ module.exports = function (grunt) {
                 generatedImagesPath     : path.resolve(prodSitePath, IMG),
                 httpImagesPath          : path.resolve(prodHttpPath, IMG),
                 httpGeneratedImagesPath : path.resolve(prodHttpPath, IMG),
-                environment             : 'production',
-                outputStyle             : 'compressed'
+                environment             : 'production'
             }
         });
         prodTasks.push('compass:' + PROD);
