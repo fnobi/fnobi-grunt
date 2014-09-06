@@ -8,10 +8,15 @@ module.exports = function (grunt) {
     var CSS = 'css';
     var SASS = 'sass';
     var IMG = 'img';
+    var JADE = 'jade';
     var EJS = 'ejs';
     var TEST = 'test';
 
-    var useEjs = true;/*[ if (with_test) { ]*/
+    /*[ if (template_engine == 'jade') { ]*/
+    var useJade = true;/*[ } else { ]*/
+    var useJade = false;/*[ } if (template_engine == 'ejs') { ]*/
+    var useEjs = true;/*[ } else { ]*/
+    var useEjs = false;/*[ } if (with_test) { ]*/
     var useTest = true;/*[ } ]*/
 
     // js library alias
@@ -182,6 +187,43 @@ module.exports = function (grunt) {
     }
     
     
+    // jade
+    if (useJade) {
+        grunt.loadNpmTasks('grunt-contrib-jade');
+
+        config.jade = {};
+
+        // files
+        var jadeFiles = grunt.file.expand({ cwd: JADE }, [
+            '*.jade'
+        ]);
+        
+        var jadeMap = function (dest) {
+            var map = {};
+            jadeFiles.forEach(function (jadeFile) {
+                map[
+                    path.join(devSitePath, jadeFile).replace(/\.jade$/, '')
+                ] = path.join(JADE, jadeFile);
+            });
+            return map;
+        };
+
+        // dev
+        config.jade[DEV] = {
+            options: {
+                pretty: true
+            },
+            files: jadeMap(devSitePath)
+        };
+        devTasks.push('jade:' + DEV);
+
+        // watch
+        config.esteWatch.options.dirs.push(JADE + '/*.jade');
+        config.esteWatch.options.dirs.push(JADE + '/**/*.jade');
+        config.esteWatch['jade'] = function () { return 'jade:' + DEV; };
+    }
+
+
     // ejs
     if (useEjs) {
         grunt.loadNpmTasks('grunt-simple-ejs');

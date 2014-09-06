@@ -31,6 +31,12 @@ exports.template = function (grunt, init, done) {
         // init.prompt('author_url'),
         // init.prompt('jquery_version'),
         {
+            name: 'template_engine',
+            message: 'template engine',
+            default: 'jade',
+            validator: /^(jade|ejs)$/
+        },
+        {
             name: 'with_test',
             message: 'use mocha test. [Y|n]',
             default: 'n',
@@ -51,6 +57,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-este-watch': 'git://github.com/fnobi/grunt-este-watch.git',
                 'grunt-contrib-copy': '0.5.0',
                 'grunt-contrib-compass': '0.3.0',
+                'grunt-contrib-jade': '0.12.0',
                 'grunt-auto-deps': '0.4.1',
                 'grunt-koko': '0.1.1',
                 'grunt-simple-ejs': '0.3.0',
@@ -103,6 +110,12 @@ exports.template = function (grunt, init, done) {
         // Files to copy (and process).
         var files = init.filesToCopy(props);
 
+        if (props.template_engine != 'jade') {
+            delete pkg.devDependencies['grunt-contrib-jade'];
+        }
+        if (props.template_engine != 'ejs') {
+            delete pkg.devDependencies['grunt-simple-ejs'];
+        }
         if (!props.with_test) {
             escapeFiles('src/test/*.*', files);
             delete pkg.devDependencies['grunt-mocha-html'];
