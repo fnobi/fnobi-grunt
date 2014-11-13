@@ -77,7 +77,7 @@ exports.template = function (grunt, init, done) {
             main: 'index.html',
             dependencies: {
                 'ejs-head-modules': '~1.0.5',
-                'ejs-sns-modules': '~0.4.1',
+                'ejs-sns-modules': '~0.4.3',
                 'html5shiv': '~3.6.2',
                 'jquery': '~1.10.*'
             }
