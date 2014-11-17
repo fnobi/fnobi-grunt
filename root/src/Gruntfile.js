@@ -208,10 +208,17 @@ module.exports = function (grunt) {
             return map;
         };
 
+        var options = grunt.file.readYAML('options.yaml');
+        options.http_path = devHttpPath;
+        options.css_path  = path.resolve(devHttpPath, CSS);
+        options.js_path   = path.resolve(devHttpPath, JS );
+        options.img_path  = path.resolve(devHttpPath, IMG);
+
         // dev
         config.jade[DEV] = {
             options: {
-                pretty: true
+                pretty: true,
+                data: options
             },
             files: jadeMap(devSitePath)
         };
