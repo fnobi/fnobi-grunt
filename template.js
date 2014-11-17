@@ -115,9 +115,13 @@ exports.template = function (grunt, init, done) {
         var files = init.filesToCopy(props);
 
         if (props.template_engine != 'jade') {
+            escapeFiles('src/jade/*.*', files);
+            escapeFiles('src/jade/**/*.*', files);
             delete pkg.devDependencies['grunt-contrib-jade'];
         }
         if (props.template_engine != 'ejs') {
+            escapeFiles('src/ejs/*.*', files);
+            escapeFiles('src/ejs/**/*.*', files);
             delete pkg.devDependencies['grunt-simple-ejs'];
         }
         if (!props.with_test) {
