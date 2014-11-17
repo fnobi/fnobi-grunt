@@ -48,9 +48,13 @@ exports.template = function (grunt, init, done) {
             name: props.name,
             description: props.description,
             version: props.version,
-            scripts: { },
+            scripts: {
+                preinstall: "npm -g install grunt-cli",
+                start: "grunt server",
+                build: "grunt dev"
+            },
             engines: {
-                node: '>=0.10.2'
+                node: '>=0.10.26'
             },
             devDependencies: {
                 'grunt': '~0.4.0',
@@ -129,7 +133,11 @@ exports.template = function (grunt, init, done) {
         init.copyAndProcess(files, props, {});
 
         // write package.json
-        init.writePackageJSON('src/package.json', pkg);
+        init.writePackageJSON('src/package.json', pkg, function (pkg, props) {
+            pkg.engines = props.engines;
+            pkg.scripts = props.scripts;
+            return pkg;
+        });
 
         // write bower.json
         init.writePackageJSON('src/bower.json', bower);
