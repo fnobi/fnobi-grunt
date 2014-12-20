@@ -120,6 +120,39 @@ module.exports = function (grunt) {
     }
     
     
+    // uglify
+    {
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        config.uglify = {};
+
+        var devConfig = {
+            options: {
+                sourceMap: true,
+                sourceMapName: path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.map')
+            },
+            files: {}
+        };
+        devConfig.files[path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
+            path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.js')
+        ];
+        config.uglify[DEV] = devConfig;
+        devTasks.push('uglify:' + DEV);
+
+        var prodConfig = {
+            options: {
+                sourceMap: true,
+                sourceMapName: path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.map')
+            },
+            files: {}
+        };
+        prodConfig.files[path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
+            path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.js')
+        ];
+        config.uglify[PROD] = prodConfig;
+        prodTasks.push('uglify:' + PROD);
+    }
+
+
     // js lib copy
     (function () {
         var libs = [
