@@ -36,6 +36,16 @@ html(lang="ja")
     script(src=js_path + "/lib/html5shiv.js")
     link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
+    // line-button script
+    div!= helper.line_button_script()
+
     section.wrapper
       block wrapper
     script(src=js_path + "//*[= camelCasedName ]*/.js")
+
+    // fb-root
+    div#fb-root
+    script!= helper.fb_root()
+
+    // twitter-wjs
+    script!= helper.twitter_wjs()

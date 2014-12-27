@@ -247,6 +247,8 @@ module.exports = function (grunt) {
         options.js_path   = path.resolve(devHttpPath, JS );
         options.img_path  = path.resolve(devHttpPath, IMG);
 
+        options.helper = require('./jade/helper');
+
         // dev
         config.jade[DEV] = {
             options: {
