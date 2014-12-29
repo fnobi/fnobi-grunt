@@ -250,6 +250,8 @@ module.exports = function (grunt) {
         var jadeDefaultData = grunt.file.readYAML('options.yaml');
         jadeDefaultData.helper = require('./jade/helper');
 
+        options.helper = require('./jade/helper');
+
         // dev
         config.jade[DEV] = {
             options: {

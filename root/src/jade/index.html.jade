@@ -3,3 +3,7 @@ extends layout/wrapper
 block wrapper
   h1= title
   h2= description
+  ul
+    li!= helper.tweet_button()
+    li!= helper.fb_like_button()
+    li!= helper.line_button()
