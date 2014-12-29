@@ -8,6 +8,7 @@ module.exports = function (grunt) {
     var CSS = 'css';
     var SASS = 'sass';
     var IMG = 'img';
+    var SOUND = 'sound';
     var JADE = 'jade';
     var EJS = 'ejs';
     var TEST = 'test';
@@ -51,6 +52,11 @@ module.exports = function (grunt) {
                         expand: true,
                         src: path.join(devSitePath, IMG, '*'),
                         dest: path.join(prodSitePath, IMG)
+                    },
+                    { // sound
+                        expand: true,
+                        src: path.join(devSitePath, SOUND, '*'),
+                        dest: path.join(prodSitePath, SOUND)
                     },
                     { // js lib
                         expand: true,
@@ -235,27 +241,44 @@ module.exports = function (grunt) {
             var map = {};
             jadeFiles.forEach(function (jadeFile) {
                 map[
-                    path.join(devSitePath, jadeFile).replace(/\.jade$/, '')
+                    path.join(dest, jadeFile).replace(/\.jade$/, '')
                 ] = path.join(JADE, jadeFile);
             });
             return map;
         };
 
-        var options = grunt.file.readYAML('options.yaml');
-        options.http_path = devHttpPath;
-        options.css_path  = path.resolve(devHttpPath, CSS);
-        options.js_path   = path.resolve(devHttpPath, JS );
-        options.img_path  = path.resolve(devHttpPath, IMG);
+        var jadeDefaultData = grunt.file.readYAML('options.yaml');
+        jadeDefaultData.helper = require('./jade/helper');
 
         // dev
         config.jade[DEV] = {
             options: {
                 pretty: true,
-                data: options
+                data: util.clone(jadeDefaultData, {
+                    http_path: devHttpPath,
+                    css_path : path.resolve(devHttpPath, CSS),
+                    js_path  : path.resolve(devHttpPath, JS ),
+                    img_path : path.resolve(devHttpPath, IMG)
+                })
             },
             files: jadeMap(devSitePath)
         };
         devTasks.push('jade:' + DEV);
+
+        // prod
+        config.jade[PROD] = {
+            options: {
+                pretty: true,
+                data: util.clone(jadeDefaultData, {
+                    http_path: prodHttpPath,
+                    css_path : path.resolve(prodHttpPath, CSS),
+                    js_path  : path.resolve(prodHttpPath, JS ),
+                    img_path : path.resolve(prodHttpPath, IMG)
+                })
+            },
+            files: jadeMap(prodSitePath)
+        };
+        prodTasks.push('jade:' + PROD);
 
         // watch
         config.esteWatch.options.dirs.push(JADE + '/*.jade');
