@@ -29,7 +29,7 @@ module.exports = {
             'data-share': share ? 'true' : 'false'
         };
         if (href) {
-            attr['data-href'] = encodeURIComponent(href);
+            attr['data-href'] = href;
         }
 
         return this.render_tag('div', attr);
@@ -47,7 +47,7 @@ module.exports = {
             'data-layout': layout
         };
         if (href) {
-            attr['data-href'] = encodeURIComponent(href);
+            attr['data-href'] = href;
         }
 
         return this.render_tag('div', attr);
