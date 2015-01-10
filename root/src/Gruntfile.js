@@ -275,6 +275,7 @@ module.exports = function (grunt) {
             tumblr_tag: require('./jade/helper/tumblr_tag')
         };
         devData.helper.tumblr_tag.data = prodData.helper.tumblr_tag.data = {
+            available: true,
             blog: grunt.file.readJSON('data/blog.json'),
             posts: grunt.file.readJSON('data/posts.json')
         };
