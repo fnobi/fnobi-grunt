@@ -1,0 +1,53 @@
+mixin tumblr_block_permalink_page
+  if tumblr_tag.data.available
+    if tumblr_tag.data.isPermalinkPage
+      block
+  else
+    = '{block:PermalinkPage}'
+    block
+    = '{/block:PermalinkPage}'
+
+mixin tumblr_block_index_page
+  if tumblr_tag.data.available
+    if !tumblr_tag.data.isPermalinkPage
+      block
+  else
+    = '{block:IndexPage}'
+    block
+    = '{/block:IndexPage}'
+
+mixin tumblr_block_posts(index)
+  if tumblr_tag.data.available
+    if tumblr_tag.data.isPermalinkPage
+      - post = tumblr_tag.data.posts[index || 0]
+      block
+    else
+      each p in tumblr_tag.data.posts
+        - post = p
+        block
+  else
+    = '{block:Posts}'
+    - post = null
+    block
+    = '{/block:Posts}'
+
+mixin tumblr_block_text
+  if tumblr_tag.data.available
+    if post && post.type == 'text'
+      block
+  else
+    = '{block:Text}'
+    - post = null
+    block
+    = '{/block:Text}'
+
+mixin tumblr_block_photo
+  if tumblr_tag.data.available
+    if post && post.type == 'photo' && post.photos.length == 1
+      - photo = post.photos[0]
+      block
+  else
+    = '{block:Photo}'
+    - post = null
+    block
+    = '{/block:Photo}'

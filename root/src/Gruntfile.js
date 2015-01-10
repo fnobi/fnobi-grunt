@@ -271,8 +271,14 @@ module.exports = function (grunt) {
 
         // load jade helper
         devData.helper = prodData.helper = {
-            sns: require('./jade/helper/sns')
+            sns: require('./jade/helper/sns'),
+            tumblr_tag: require('./jade/helper/tumblr_tag')
         };
+        devData.helper.tumblr_tag.data = prodData.helper.tumblr_tag.data = {
+            blog: grunt.file.readJSON('data/blog.json'),
+            posts: grunt.file.readJSON('data/posts.json')
+        };
+
 
         // dev
         config.jade[DEV] = {
