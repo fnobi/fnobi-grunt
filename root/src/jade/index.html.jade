@@ -3,7 +3,4 @@ extends layout/wrapper
 block wrapper
   h1= title
   h2= description
-  ul
-    li!= helper.sns.tweet_button({ url: url, text: share_text })
-    li!= helper.sns.fb_like_button({ href: url })
-    li!= helper.sns.line_button({ text: share_text })
+  include /partial/share
