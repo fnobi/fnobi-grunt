@@ -4,6 +4,6 @@ block wrapper
   h1= title
   h2= description
   ul
-    li!= helper.tweet_button()
-    li!= helper.fb_like_button()
-    li!= helper.line_button()
+    li!= helper.tweet_button({ url: url, text: share_text })
+    li!= helper.fb_like_button({ href: url })
+    li!= helper.line_button({ text: share_text })

@@ -14,7 +14,8 @@ description:
 
 keywords: []
 
-favicon_url: ''
+share_text:
+  /*[= name ]*/
 
 viewport: 
   - width=device-width
@@ -22,30 +23,13 @@ viewport:
   - maximum-scale=1.0
   - user-scalable=0
 
+favicon_url: ''
+
 ios_icon_url: ''
 
 facebook_app_id: ''
 
 ogp_type: 'website'
-
 ogp_image_url: ''
 ogp_image_width: 0
 ogp_image_height: 0
-
-
-sns:
-  twitter:
-    sharetext:
-      /*[= description ]*/
-    sharehashtag: []
-
-  facebook:
-    app_id: ''
-    sharetext:
-      /*[= description ]*/
-
-ogp:
-  image: 
-    url: /*[= homepage ]*//img/ogp-icon.png
-    width: 300
-    height: 300
