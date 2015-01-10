@@ -37,7 +37,7 @@ html(lang="ja")
     link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
     // line-button script
-    != helper.line_button_script()
+    != helper.sns.line_button_script()
 
     section.wrapper
       block wrapper
@@ -45,7 +45,7 @@ html(lang="ja")
 
     // fb-root
     div#fb-root
-    script!= helper.fb_root(facebook_app_id)
+    script!= helper.sns.fb_root(facebook_app_id)
 
     // twitter-wjs
-    script!= helper.twitter_wjs()
+    script!= helper.sns.twitter_wjs()
