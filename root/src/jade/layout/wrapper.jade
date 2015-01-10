@@ -33,11 +33,11 @@ html(lang="ja")
     meta(property="og:locale", content=ogp_locale || "ja_JP")
 
     title= title
-    script(src=js_path + "/lib/html5shiv.js")
+    script(src=js_path + "/lib/html5shiv.min.js")
     link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
     // line-button script
-    div!= helper.line_button_script()
+    != helper.line_button_script()
 
     section.wrapper
       block wrapper

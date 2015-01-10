@@ -162,7 +162,7 @@ module.exports = function (grunt) {
     // js lib copy
     (function () {
         var libs = [
-            'bower_components/html5shiv/src/html5shiv.js'
+            'bower_components/html5shiv/dist/html5shiv.min.js'
         ];
     
         var files = [];

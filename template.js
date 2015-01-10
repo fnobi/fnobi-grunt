@@ -83,7 +83,7 @@ exports.template = function (grunt, init, done) {
             dependencies: {
                 'ejs-head-modules': '~1.0.5',
                 'ejs-sns-modules': '~0.4.3',
-                'html5shiv': '~3.6.2',
+                'html5shiv': '~3.7.2',
                 'jquery': '~1.10.*'
             }
         };
