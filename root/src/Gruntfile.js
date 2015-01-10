@@ -40,6 +40,28 @@ module.exports = function (grunt) {
     var prodHttpPath = '/';
 
 
+    // init template data
+    var devData, prodData;
+    (function () {
+        var defaultData = {};
+        defaultData = util.clone(defaultData, grunt.file.readYAML('data/config.yaml'));
+
+        devData = util.clone(defaultData, {
+            http_path: devHttpPath,
+            css_path : path.resolve(devHttpPath, CSS),
+            js_path  : path.resolve(devHttpPath, JS ),
+            img_path : path.resolve(devHttpPath, IMG)
+        });
+
+        prodData = util.clone(defaultData, {
+            http_path: prodHttpPath,
+            css_path : path.resolve(prodHttpPath, CSS),
+            js_path  : path.resolve(prodHttpPath, JS ),
+            img_path : path.resolve(prodHttpPath, IMG)
+        });
+    })();
+
+
     // basic
     {
         config.pkg =  grunt.file.readJSON('package.json');
@@ -247,19 +269,14 @@ module.exports = function (grunt) {
             return map;
         };
 
-        var jadeDefaultData = grunt.file.readYAML('options.yaml');
-        jadeDefaultData.helper = require('./jade/helper');
+        // load jade helper
+        devData.helper = prodData.helper = require('./jade/helper');
 
         // dev
         config.jade[DEV] = {
             options: {
                 pretty: true,
-                data: util.clone(jadeDefaultData, {
-                    http_path: devHttpPath,
-                    css_path : path.resolve(devHttpPath, CSS),
-                    js_path  : path.resolve(devHttpPath, JS ),
-                    img_path : path.resolve(devHttpPath, IMG)
-                })
+                data: devData
             },
             files: jadeMap(devSitePath)
         };
@@ -269,12 +286,7 @@ module.exports = function (grunt) {
         config.jade[PROD] = {
             options: {
                 pretty: true,
-                data: util.clone(jadeDefaultData, {
-                    http_path: prodHttpPath,
-                    css_path : path.resolve(prodHttpPath, CSS),
-                    js_path  : path.resolve(prodHttpPath, JS ),
-                    img_path : path.resolve(prodHttpPath, IMG)
-                })
+                data: prodData
             },
             files: jadeMap(prodSitePath)
         };
@@ -306,30 +318,14 @@ module.exports = function (grunt) {
         // dev
         config.ejs[DEV] = util.clone(ejsDefaultConfig, {
             dest: devSitePath,
-            options: [
-                {
-                    http_path : devHttpPath,
-                    css_path  : path.resolve(devHttpPath, CSS),
-                    js_path   : path.resolve(devHttpPath, JS ),
-                    img_path  : path.resolve(devHttpPath, IMG)
-                },
-                'options.yaml'
-            ]
+            options: devData
         });
         devTasks.push('ejs:' + DEV);
 
         // prod
         config.ejs[PROD] = util.clone(ejsDefaultConfig, {
             dest: prodSitePath,
-            options: [
-                {
-                    http_path : prodHttpPath,
-                    css_path  : path.resolve(prodHttpPath, CSS),
-                    js_path   : path.resolve(prodHttpPath, JS ),
-                    img_path  : path.resolve(prodHttpPath, IMG)
-                },
-                'options.yaml'
-            ]
+            options: prodData
         });
         prodTasks.push('ejs:' + PROD);
         
