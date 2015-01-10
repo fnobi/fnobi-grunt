@@ -1,6 +1,6 @@
 mixin tumblr_block_permalink_page
-  if tumblr_tag.data.available
-    if tumblr_tag.data.isPermalinkPage
+  if helper.tumblr_tag.data.available
+    if helper.tumblr_tag.data.isPermalinkPage
       block
   else
     = '{block:PermalinkPage}'
@@ -8,8 +8,8 @@ mixin tumblr_block_permalink_page
     = '{/block:PermalinkPage}'
 
 mixin tumblr_block_index_page
-  if tumblr_tag.data.available
-    if !tumblr_tag.data.isPermalinkPage
+  if helper.tumblr_tag.data.available
+    if !helper.tumblr_tag.data.isPermalinkPage
       block
   else
     = '{block:IndexPage}'
@@ -17,12 +17,12 @@ mixin tumblr_block_index_page
     = '{/block:IndexPage}'
 
 mixin tumblr_block_posts(index)
-  if tumblr_tag.data.available
-    if tumblr_tag.data.isPermalinkPage
-      - post = tumblr_tag.data.posts[index || 0]
+  if helper.tumblr_tag.data.available
+    if helper.tumblr_tag.data.isPermalinkPage
+      - post = helper.tumblr_tag.data.posts[index || 0]
       block
     else
-      each p in tumblr_tag.data.posts
+      each p in helper.tumblr_tag.data.posts
         - post = p
         block
   else
@@ -32,7 +32,7 @@ mixin tumblr_block_posts(index)
     = '{/block:Posts}'
 
 mixin tumblr_block_text
-  if tumblr_tag.data.available
+  if helper.tumblr_tag.data.available
     if post && post.type == 'text'
       block
   else
@@ -42,7 +42,7 @@ mixin tumblr_block_text
     = '{/block:Text}'
 
 mixin tumblr_block_photo
-  if tumblr_tag.data.available
+  if helper.tumblr_tag.data.available
     if post && post.type == 'photo' && post.photos.length == 1
       - photo = post.photos[0]
       block

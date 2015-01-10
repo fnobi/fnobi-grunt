@@ -1,0 +1,9 @@
+extends layout/wrapper
+
+block config
+  include mixin/tumblr_block
+  - helper.tumblr_tag.data.available = false
+  - use_single_file = true
+
+block wrapper
+  include partial/tumblr-sample
