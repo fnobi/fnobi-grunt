@@ -31,12 +31,6 @@ exports.template = function (grunt, init, done) {
         // init.prompt('author_url'),
         // init.prompt('jquery_version'),
         {
-            name: 'template_engine',
-            message: 'template engine',
-            default: 'jade',
-            validator: /^(jade|ejs)$/
-        },
-        {
             name: 'with_test',
             message: 'use mocha test. [Y|n]',
             default: 'n',
@@ -105,6 +99,8 @@ exports.template = function (grunt, init, done) {
             });
             return camelCased;
         })(props.name);
+
+        props.template_engine = 'jade';
 
         props.with_test = props.with_test == 'Y';
 
