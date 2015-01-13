@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/fnobi/grunt-init-jsapp.git"
+    "url": "git://github.com/fnobi/grunt-init-me.git"
   },
   "keywords": [
     "gruntinit"
