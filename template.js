@@ -1,7 +1,7 @@
 var escapeFiles = require('./lib/escapeFiles'),
     shellLines = require('./lib/shellLines');
 
-exports.description = 'web page template (compass + auto deps + mocha + koko)';
+exports.description = 'tumblr theme template';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
@@ -90,7 +90,7 @@ exports.template = function (grunt, init, done) {
 
 
         // add template info to props.
-        props.template_name = 'me';
+        props.template_name = 'tumblr';
 
         props.project_path = process.cwd();
 
