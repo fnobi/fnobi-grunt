@@ -154,10 +154,7 @@ module.exports = function (grunt) {
         config.uglify = {};
 
         var devConfig = {
-            options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.map')
-            },
+            options: {},
             files: {}
         };
         devConfig.files[path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
@@ -167,10 +164,7 @@ module.exports = function (grunt) {
         devTasks.push('uglify:' + DEV);
 
         var prodConfig = {
-            options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.map')
-            },
+            options: {},
             files: {}
         };
         prodConfig.files[path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
