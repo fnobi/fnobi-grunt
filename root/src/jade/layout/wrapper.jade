@@ -10,7 +10,7 @@ html(lang="ja")
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
 
     // ios meta
-    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    meta(name="viewport", content=viewport.join(', '))
     meta(name="apple-mobile-web-app-capable", content=ios_capable ? 'yes' : 'no')
     meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
     if ios_icon_url
