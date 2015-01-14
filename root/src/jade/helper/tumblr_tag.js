@@ -30,6 +30,13 @@ module.exports = {
             return '{BlogURL}';
         }
     },
+    urlEncodedBlogURL: function () {
+        if (this.data.available) {
+            return escape(this.blogURL());
+        } else {
+            return '{URLEncodedBlogURL}';
+        }
+    },
     permalink: function (post) {
         if (this.data.available) {
             if (post) {
@@ -50,6 +57,17 @@ module.exports = {
             }
         } else {
             return '{PhotoURL-500}';
+        }
+    },
+    photoURLHighRes: function (photo) {
+        if (this.data.available) {
+            if (photo) {
+                return photo.original_size.url;
+            } else {
+                return '';
+            }
+        } else {
+            return '{PhotoURL-HighRes}';
         }
     }
 };
