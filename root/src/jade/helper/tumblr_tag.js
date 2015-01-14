@@ -23,7 +23,7 @@ module.exports = {
             return '{Description}';
         }
     },
-    blogurl: function () {
+    blogURL: function () {
         if (this.data.available) {
             return this.data.blog.url;
         } else {
