@@ -10,6 +10,14 @@ module.exports = {
         }
         return '<' + tagName + ' ' + attrList.join(' ') + '>' + text + '</' + tagName + '>';
     },
+    encodeQueryString: function (param) {
+        param = param || {};
+        var buf = [];
+        for (var key in param) {
+            buf.push([key, param[key]].join('='));
+        }
+        return buf.join('&');
+    },
     fb_like_button: function (opts) {
         opts = opts || {};
 
@@ -52,6 +60,9 @@ module.exports = {
 
         return this.render_tag('div', attr);
     },
+    fb_share_link: function (url) {
+        return "https://www.facebook.com/sharer/sharer.php?u=" + url;
+    },
     fb_root: function (appId) {
         return [
             '(function(d, s, id) {',
@@ -93,6 +104,25 @@ module.exports = {
     },
     twitter_wjs: function () {
         return '!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');';
+    },
+    tweet_link: function (opts) {
+        opts = opts || {};
+
+        var param = {
+            tw_p: 'tweetbutton'
+        };
+
+        if (opts.text) {
+            param.text = opts.text;
+        }
+        if (opts.url) {
+            param.url = opts.url;
+        }
+        if (opts.hashtags) {
+            param.hashtags = opts.hashtags.join ? (opts.hashtags.join(',')) : opts.hashtags;
+        }
+        
+        return 'https://twitter.com/intent/tweet?' + this.encodeQueryString(param);
     },
     line_button: function (opts) {
         opts = opts || {};
