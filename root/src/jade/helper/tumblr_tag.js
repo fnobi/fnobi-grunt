@@ -3,10 +3,10 @@ module.exports = {
         available: false,
         isPermalinkPage: false,
         blog: {},
-        posts: [],
         custom: {
             image: {}
-        }
+        },
+        posts: []
     },
     title: function (post) {
         if (this.data.available) {
@@ -24,6 +24,13 @@ module.exports = {
             return this.data.blog.description;
         } else {
             return '{Description}';
+        }
+    },
+    metaDescription: function () {
+        if (this.data.available) {
+            return this.data.blog.description.replace(/\n+/g, ' ');
+        } else {
+            return '{MetaDescription}';
         }
     },
     blogURL: function () {

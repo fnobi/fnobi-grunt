@@ -4,8 +4,7 @@ html(lang="ja")
   head
     // meta
     meta(charset="utf-8")
-    if description
-      meta(name="description", content=helper.tumblr_tag.description())
+    meta(name="description", content=helper.tumblr_tag.metaDescription())
     if keywords
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
 
