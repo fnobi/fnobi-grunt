@@ -9,6 +9,9 @@ html(lang="ja")
     if keywords
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
 
+    // tumblr meta
+    != helper.tumblr_tag.customDeclearMeta()
+
     // ios meta
     meta(name="viewport", content=viewport.join(', '))
     meta(name="apple-mobile-web-app-capable", content=ios_capable ? 'yes' : 'no')

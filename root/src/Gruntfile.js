@@ -271,7 +271,8 @@ module.exports = function (grunt) {
         devData.helper.tumblr_tag.data = prodData.helper.tumblr_tag.data = {
             available: true,
             blog: grunt.file.readJSON('data/blog.json'),
-            posts: grunt.file.readJSON('data/posts.json')
+            posts: grunt.file.readJSON('data/posts.json'),
+            custom: grunt.file.readYAML('data/custom.yaml')
         };
 
 

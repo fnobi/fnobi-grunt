@@ -3,7 +3,10 @@ module.exports = {
         available: false,
         isPermalinkPage: false,
         blog: {},
-        posts: []
+        posts: [],
+        custom: {
+            image: {}
+        }
     },
     title: function (post) {
         if (this.data.available) {
@@ -68,6 +71,25 @@ module.exports = {
             }
         } else {
             return '{PhotoURL-HighRes}';
+        }
+    },
+    customDeclearMeta: function () {
+        if (this.data.available) {
+            return '';
+        }
+        var custom = this.data.custom;
+        var image = custom.image;
+        var buf = [];
+        for (var name in image) {
+            buf.push('<meta name="image:' + name + '" content="' + image[name] + '" />');
+        }
+        return buf.join('');
+    },
+    customImage: function (name) {
+        if (this.data.available) {
+            return this.data.custom.image[name] || '';
+        } else {
+            return '{image:' + name + '}';
         }
     }
 };
