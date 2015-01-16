@@ -51,3 +51,23 @@ mixin tumblr_block_photo
     - post = null
     block
     = '{/block:Photo}'
+
+mixin tumblr_block_video
+  if helper.tumblr_tag.data.available
+    if post && post.type == 'video'
+      block
+  else
+    = '{block:Video}'
+    - post = null
+    block
+    = '{/block:Video}'
+
+mixin tumblr_block_link
+  if helper.tumblr_tag.data.available
+    if post && post.type == 'link'
+      block
+  else
+    = '{block:Link}'
+    - post = null
+    block
+    = '{/block:Link}'

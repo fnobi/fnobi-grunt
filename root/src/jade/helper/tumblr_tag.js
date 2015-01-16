@@ -59,14 +59,35 @@ module.exports = {
         }
     },
     photoURL500: function (photo) {
+        return this._photoURL(photo, 500);
+    },
+    photoURL400: function (photo) {
+        return this._photoURL(photo, 400);
+    },
+    photoURL250: function (photo) {
+        return this._photoURL(photo, 250);
+    },
+    photoURL100: function (photo) {
+        return this._photoURL(photo, 100);
+    },
+    photoURL75sq: function (photo) {
+        return this._photoURL(photo, 75);
+    },
+    _photoURL: function (photo, size) {
         if (this.data.available) {
             if (photo) {
-                return photo.alt_sizes[1].url;
+                var altSize;
+                for (var i = 0; i < photo.alt_sizes.length; i++) {
+                    if (!altSize && photo.alt_sizes[i].width <= size) {
+                        altSize = photo.alt_sizes[i];
+                    }
+                }
+                return altSize ? altSize.url : '';
             } else {
                 return '';
             }
         } else {
-            return '{PhotoURL-500}';
+            return '{PhotoURL-' + size + '}';
         }
     },
     photoURLHighRes: function (photo) {
@@ -97,6 +118,57 @@ module.exports = {
             return this.data.custom.image[name] || '';
         } else {
             return '{image:' + name + '}';
+        }
+    },
+    video700: function (post) {
+        return this._video(post, 700);
+    },
+    video500: function (post) {
+        return this._video(post, 500);
+    },
+    video400: function (post) {
+        return this._video(post, 400);
+    },
+    video250: function (post) {
+        return this._video(post, 250);
+    },
+    _video: function (post, size) {
+        if (this.data.available) {
+            if (post && post.player) {
+                var player = { embed_code: '' };
+                for (var i = 0; i < post.player.length; i++) {
+                    if (post.player[i].width <= size) {
+                        player = post.player[i];
+                    }
+                }
+                return player.embed_code;
+            } else {
+                return '';
+            }
+        } else {
+            return '{Video-' + size + '}';
+        }
+    },
+    url: function (post) {
+        if (this.data.available) {
+            if (post) {
+                return post.url;
+            } else {
+                return '';
+            }
+        } else {
+            return '{URL}';
+        }
+    },
+    name: function (post) {
+        if (this.data.available) {
+            if (post) {
+                return post.title;
+            } else {
+                return '';
+            }
+        } else {
+            return '{Name}';
         }
     }
 };
