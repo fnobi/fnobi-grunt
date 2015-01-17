@@ -33,6 +33,17 @@ module.exports = {
             return '{MetaDescription}';
         }
     },
+    body: function (post) {
+        if (this.data.available) {
+            if (post) {
+                return post.body;
+            } else {
+                return this.data.blog.body;
+            }
+        } else {
+            return '{Body}';
+        }
+    },
     blogURL: function () {
         if (this.data.available) {
             return this.data.blog.url;
