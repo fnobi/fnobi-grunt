@@ -1,10 +1,7 @@
-extends layout/wrapper
+extends layout/DefaultLayout
 
-block config
+block ConfigBlock
   include mixin/tumblr_block
   - helper.tumblr_tag.data.available = true
   - helper.tumblr_tag.data.isPermalinkPage = false
   - use_single_file = false
-
-block wrapper
-  include partial/tumblr-sample
