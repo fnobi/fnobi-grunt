@@ -1,0 +1,53 @@
+block ConfigBlock
+doctype html
+html(lang="ja")
+  head
+    // meta
+    meta(charset="utf-8")
+    if description
+      meta(name="description", content=description)
+    if keywords
+      meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
+
+    // ios meta
+    meta(name="viewport", content=viewport.join(', '))
+    meta(name="apple-mobile-web-app-capable", content=ios_capable ? 'yes' : 'no')
+    meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
+    if ios_icon_url
+      link(rel="apple-touch-icon", href=ios_icon_url)
+
+    // opg
+    if facebook_app_id
+      meta(property="fb:app_id", content=facebook_app_id)
+    if url
+      meta(property="og:url", content=url)
+    if ogp_image_url
+      meta(property="og:image", content=ogp_image_url)
+    if ogp_image_width
+      meta(property="og:image:width", content=ogp_image_width)
+    if ogp_image_height
+      meta(property="og:image:height", content=ogp_image_height)
+    meta(property="og:type", content=ogp_type || "website")
+    meta(property="og:title", content=title)
+    meta(property="og:site_name", content=ogp_site_name || title)
+    meta(property="og:description", content=description)
+    meta(property="og:locale", content=ogp_locale || "ja_JP")
+
+    title= title
+    script(src=js_path + "/lib/html5shiv.min.js")
+    link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
+  body
+    // line-button script
+    != helper.sns.line_button_script()
+
+    block ContentBlock
+      include ../partial/wrapper
+
+    script(src=js_path + "//*[= camelCasedName ]*/.js")
+
+    // fb-root
+    div#fb-root
+    script!= helper.sns.fb_root(facebook_app_id)
+
+    // twitter-wjs
+    script!= helper.sns.twitter_wjs()
