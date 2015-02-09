@@ -4,12 +4,12 @@ html(lang="ja")
   head
     // meta
     meta(charset="utf-8")
-    meta(name="description", content=helper.tumblr_tag.metaDescription())
+    meta(name="description", content=TumblrTagHelper.metaDescription())
     if keywords
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
 
     // tumblr meta
-    != helper.tumblr_tag.customDeclearMeta()
+    != TumblrTagHelper.customDeclearMeta()
 
     // ios meta
     meta(name="viewport", content=viewport.join(', '))
@@ -30,12 +30,12 @@ html(lang="ja")
     if ogp_image_height
       meta(property="og:image:height", content=ogp_image_height)
     meta(property="og:type", content=ogp_type || "website")
-    meta(property="og:title", content=helper.tumblr_tag.title())
-    meta(property="og:site_name", content=ogp_site_name || helper.tumblr_tag.title())
-    meta(property="og:description", content=helper.tumblr_tag.description())
+    meta(property="og:title", content=TumblrTagHelper.title())
+    meta(property="og:site_name", content=ogp_site_name || TumblrTagHelper.title())
+    meta(property="og:description", content=TumblrTagHelper.description())
     meta(property="og:locale", content=ogp_locale || "ja_JP")
 
-    title= helper.tumblr_tag.title()
+    title= TumblrTagHelper.title()
 
     if use_single_file
       script
@@ -47,7 +47,7 @@ html(lang="ja")
       link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
     // line-button script
-    != helper.sns.line_button_script()
+    != SNSHelper.line_button_script()
 
     block ContentBlock
       include ../partial/wrapper
@@ -60,7 +60,7 @@ html(lang="ja")
 
     // fb-root
     div#fb-root
-    script!= helper.sns.fb_root(facebook_app_id)
+    script!= SNSHelper.fb_root(facebook_app_id)
 
     // twitter-wjs
-    script!= helper.sns.twitter_wjs()
+    script!= SNSHelper.twitter_wjs()

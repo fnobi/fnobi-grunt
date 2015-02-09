@@ -264,11 +264,9 @@ module.exports = function (grunt) {
         };
 
         // load jade helper
-        devData.helper = prodData.helper = {
-            sns: require('./jade/helper/sns'),
-            tumblr_tag: require('./jade/helper/tumblr_tag')
-        };
-        devData.helper.tumblr_tag.data = prodData.helper.tumblr_tag.data = {
+        devData.SNSHelper = prodData.SNSHelper = require('./jade/helper/SNSHelper');
+        devData.TumblrTagHelper = prodData.TumblrTagHelper = require('./jade/helper/TumblrTagHelper');
+        devData.TumblrTagHelper.data = prodData.TumblrTagHelper.data = {
             available: true,
             blog: grunt.file.readJSON('data/blog.json'),
             posts: grunt.file.readJSON('data/posts.json'),

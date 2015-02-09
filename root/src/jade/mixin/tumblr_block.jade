@@ -1,6 +1,6 @@
 mixin tumblr_block_permalink_page
-  if helper.tumblr_tag.data.available
-    if helper.tumblr_tag.data.isPermalinkPage
+  if TumblrTagHelper.data.available
+    if TumblrTagHelper.data.isPermalinkPage
       block
   else
     = '{block:PermalinkPage}'
@@ -8,8 +8,8 @@ mixin tumblr_block_permalink_page
     = '{/block:PermalinkPage}'
 
 mixin tumblr_block_index_page
-  if helper.tumblr_tag.data.available
-    if !helper.tumblr_tag.data.isPermalinkPage
+  if TumblrTagHelper.data.available
+    if !TumblrTagHelper.data.isPermalinkPage
       block
   else
     = '{block:IndexPage}'
@@ -17,16 +17,16 @@ mixin tumblr_block_index_page
     = '{/block:IndexPage}'
 
 mixin tumblr_block_posts(index)
-  if helper.tumblr_tag.data.available
-    if helper.tumblr_tag.data.isPermalinkPage
-      - post = helper.tumblr_tag.data.posts[index || 0]
+  if TumblrTagHelper.data.available
+    if TumblrTagHelper.data.isPermalinkPage
+      - post = TumblrTagHelper.data.posts[index || 0]
       block
-    else if helper.tumblr_tag.data.pageTagName
-      each p in helper.tumblr_tag.taggedPosts()
+    else if TumblrTagHelper.data.pageTagName
+      each p in TumblrTagHelper.taggedPosts()
         - post = p
         block
     else
-      each p in helper.tumblr_tag.data.posts
+      each p in TumblrTagHelper.data.posts
         - post = p
         block
   else
@@ -36,7 +36,7 @@ mixin tumblr_block_posts(index)
     = '{/block:Posts}'
 
 mixin tumblr_block_text
-  if helper.tumblr_tag.data.available
+  if TumblrTagHelper.data.available
     if post && post.type == 'text'
       block
   else
@@ -46,7 +46,7 @@ mixin tumblr_block_text
     = '{/block:Text}'
 
 mixin tumblr_block_photo
-  if helper.tumblr_tag.data.available
+  if TumblrTagHelper.data.available
     if post && post.type == 'photo' && post.photos.length == 1
       - photo = post.photos[0]
       block
@@ -57,7 +57,7 @@ mixin tumblr_block_photo
     = '{/block:Photo}'
 
 mixin tumblr_block_video
-  if helper.tumblr_tag.data.available
+  if TumblrTagHelper.data.available
     if post && post.type == 'video'
       block
   else
@@ -67,7 +67,7 @@ mixin tumblr_block_video
     = '{/block:Video}'
 
 mixin tumblr_block_link
-  if helper.tumblr_tag.data.available
+  if TumblrTagHelper.data.available
     if post && post.type == 'link'
       block
   else

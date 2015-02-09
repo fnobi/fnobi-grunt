@@ -2,6 +2,6 @@ extends layout/DefaultLayout
 
 block ConfigBlock
   include mixin/tumblr_block
-  - helper.tumblr_tag.data.available = true
-  - helper.tumblr_tag.data.isPermalinkPage = true
+  - TumblrTagHelper.data.available = true
+  - TumblrTagHelper.data.isPermalinkPage = true
   - use_single_file = false
