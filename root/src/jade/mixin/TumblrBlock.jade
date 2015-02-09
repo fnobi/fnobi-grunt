@@ -1,4 +1,4 @@
-mixin tumblr_block_permalink_page
+mixin TumblrBlockPermalinkPage
   if TumblrTagHelper.data.available
     if TumblrTagHelper.data.isPermalinkPage
       block
@@ -7,7 +7,7 @@ mixin tumblr_block_permalink_page
     block
     = '{/block:PermalinkPage}'
 
-mixin tumblr_block_index_page
+mixin TumblrBlockIndexPage
   if TumblrTagHelper.data.available
     if !TumblrTagHelper.data.isPermalinkPage
       block
@@ -16,7 +16,7 @@ mixin tumblr_block_index_page
     block
     = '{/block:IndexPage}'
 
-mixin tumblr_block_posts(index)
+mixin TumblrBlockPosts(index)
   if TumblrTagHelper.data.available
     if TumblrTagHelper.data.isPermalinkPage
       - post = TumblrTagHelper.data.posts[index || 0]
@@ -35,7 +35,7 @@ mixin tumblr_block_posts(index)
     block
     = '{/block:Posts}'
 
-mixin tumblr_block_text
+mixin TumblrBlockText
   if TumblrTagHelper.data.available
     if post && post.type == 'text'
       block
@@ -45,7 +45,7 @@ mixin tumblr_block_text
     block
     = '{/block:Text}'
 
-mixin tumblr_block_photo
+mixin TumblrBlockPhoto
   if TumblrTagHelper.data.available
     if post && post.type == 'photo' && post.photos.length == 1
       - photo = post.photos[0]
@@ -56,7 +56,7 @@ mixin tumblr_block_photo
     block
     = '{/block:Photo}'
 
-mixin tumblr_block_video
+mixin TumblrBlockVideo
   if TumblrTagHelper.data.available
     if post && post.type == 'video'
       block
@@ -66,7 +66,7 @@ mixin tumblr_block_video
     block
     = '{/block:Video}'
 
-mixin tumblr_block_link
+mixin TumblrBlockLink
   if TumblrTagHelper.data.available
     if post && post.type == 'link'
       block
