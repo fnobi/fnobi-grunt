@@ -181,5 +181,36 @@ module.exports = {
         } else {
             return '{Name}';
         }
+    },
+    tagsForClassName: function (post, prefix) {
+        prefix = prefix || '';
+        if (this.data.available) {
+            if (post) {
+                var list = [];
+                (post.tags || []).forEach(function (tag) {
+                    list.push(prefix + tag);
+                });
+                return list.join(' ');
+            } else {
+                return '';
+            }
+        } else {
+            return ['{block:Tags}', prefix, '{URLSafeTag}', ' ', '{/block:Tags}'].join('');
+        }
+    },
+    taggedPosts: function () {
+        var tagName = this.data.pageTagName;
+        var posts = [];
+        this.data.posts.forEach(function (post, index) {
+            var tags = post.tags || [];
+            var hit = false;
+            tags.forEach(function (tag) {
+                hit = hit || (tag == tagName);
+            });
+            if (hit) {
+                posts.push(post);
+            }
+        });
+        return posts;
     }
 };

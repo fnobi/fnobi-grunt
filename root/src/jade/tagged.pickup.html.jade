@@ -1,0 +1,8 @@
+extends layout/DefaultLayout
+
+block ConfigBlock
+  include mixin/tumblr_block
+  - helper.tumblr_tag.data.available = true
+  - helper.tumblr_tag.data.isPermalinkPage = false
+  - helper.tumblr_tag.data.pageTagName = 'pickup'
+  - use_single_file = false
