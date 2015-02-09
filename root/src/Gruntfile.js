@@ -270,9 +270,7 @@ module.exports = function (grunt) {
         };
 
         // load jade helper
-        devData.helper = prodData.helper = {
-            sns: require('./jade/helper/sns')
-        };
+        devData.SNSHelper = prodData.SNSHelper = require('./jade/helper/SNSHelper');
 
         // dev
         config.jade[DEV] = {
