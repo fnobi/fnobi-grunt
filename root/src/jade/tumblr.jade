@@ -1,0 +1,6 @@
+extends layout/DefaultLayout
+
+block ConfigBlock
+  include mixin/TumblrBlock
+  - TumblrTagHelper.data.available = false
+  - use_single_file = true

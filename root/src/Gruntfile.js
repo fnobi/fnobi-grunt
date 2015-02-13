@@ -154,10 +154,7 @@ module.exports = function (grunt) {
         config.uglify = {};
 
         var devConfig = {
-            options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.map')
-            },
+            options: {},
             files: {}
         };
         devConfig.files[path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
@@ -167,10 +164,7 @@ module.exports = function (grunt) {
         devTasks.push('uglify:' + DEV);
 
         var prodConfig = {
-            options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.map')
-            },
+            options: {},
             files: {}
         };
         prodConfig.files[path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
@@ -271,6 +265,14 @@ module.exports = function (grunt) {
 
         // load jade helper
         devData.SNSHelper = prodData.SNSHelper = require('./jade/helper/SNSHelper');
+        devData.TumblrTagHelper = prodData.TumblrTagHelper = require('./jade/helper/TumblrTagHelper');
+        devData.TumblrTagHelper.data = prodData.TumblrTagHelper.data = {
+            available: true,
+            blog: grunt.file.readJSON('data/blog.json'),
+            posts: grunt.file.readJSON('data/posts.json'),
+            custom: grunt.file.readYAML('data/custom.yaml')
+        };
+
 
         // dev
         config.jade[DEV] = {

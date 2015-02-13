@@ -1,7 +1,7 @@
 var escapeFiles = require('./lib/escapeFiles'),
     shellLines = require('./lib/shellLines');
 
-exports.description = 'web page template (compass + auto deps + mocha + koko)';
+exports.description = 'tumblr theme template';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
@@ -30,12 +30,6 @@ exports.template = function (grunt, init, done) {
         init.prompt('author_email'),
         // init.prompt('author_url'),
         // init.prompt('jquery_version'),
-        {
-            name: 'template_engine',
-            message: 'template engine',
-            default: 'jade',
-            validator: /^(jade|ejs)$/
-        },
         {
             name: 'with_test',
             message: 'use mocha test. [Y|n]',
@@ -90,7 +84,7 @@ exports.template = function (grunt, init, done) {
 
 
         // add template info to props.
-        props.template_name = 'me';
+        props.template_name = 'tumblr';
 
         props.project_path = process.cwd();
 
@@ -105,6 +99,8 @@ exports.template = function (grunt, init, done) {
             });
             return camelCased;
         })(props.name);
+
+        props.template_engine = 'jade';
 
         props.with_test = props.with_test == 'Y';
 

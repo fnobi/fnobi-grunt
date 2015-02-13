@@ -1,0 +1,15 @@
+div.tumblr-sample
+  h1= TumblrTagHelper.title()
+  h2= TumblrTagHelper.description()
+  ul
+    +TumblrBlockPermalinkPage
+      // here is permalink page
+    +TumblrBlockIndexPage
+      // here is index page
+    +TumblrBlockPosts
+      li
+        a(href=TumblrTagHelper.permalink(post))
+          +TumblrBlockText
+            = TumblrTagHelper.title(post)
+          +TumblrBlockPhoto
+            img(src=TumblrTagHelper.photoURL500(photo))
