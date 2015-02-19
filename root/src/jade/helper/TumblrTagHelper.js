@@ -212,5 +212,100 @@ module.exports = {
             }
         });
         return posts;
+    },
+    caption: function (post) {
+        if (this.data.available) {
+            if (post) {
+                return post.caption;
+            } else {
+                return '';
+            }
+        } else {
+            return '{Caption}';
+        }
+    },
+    copyrightYears: function () {
+        if (this.data.available) {
+            return (new Date()).getFullYear();
+        } else {
+            return '{CopyrightYears}';
+        }
+    },
+    portraitURL128: function () {
+        return this._portraitURL(128);
+    },
+    portraitURL96: function () {
+        return this._portraitURL(96);
+    },
+    portraitURL64: function () {
+        return this._portraitURL(64);
+    },
+    portraitURL48: function () {
+        return this._portraitURL(48);
+    },
+    portraitURL40: function () {
+        return this._portraitURL(40);
+    },
+    portraitURL30: function () {
+        return this._portraitURL(30);
+    },
+    portraitURL24: function () {
+        return this._portraitURL(24);
+    },
+    portraitURL16: function () {
+        return this._portraitURL(16);
+    },
+    _portraitURL: function (size) {
+        if (this.data.available) {
+            return '';
+        } else {
+            return '{PortraitURL-' + size + '}';
+        }
+    },
+    favicon: function () {
+        if (this.data.available) {
+            return '';
+        } else {
+            return '{Favicon}';
+        }        
+    },
+    year: function (post) {
+        if (this.data.available) {
+            var d;
+            if (post) {
+                d = new Date(post.date);
+            } else {
+                d = new Date();
+            }
+            return d.getFullYear();
+        } else {
+            return '{Year}';
+        }
+    },
+    dayOfMonth: function (post) {
+        if (this.data.available) {
+            var d;
+            if (post) {
+                d = new Date(post.date);
+            } else {
+                d = new Date();
+            }
+            return d.getDate();
+        } else {
+            return '{DayOfMonth}';
+        }
+    },
+    monthNumber: function (post) {
+        if (this.data.available) {
+            var d;
+            if (post) {
+                d = new Date(post.date);
+            } else {
+                d = new Date();
+            }
+            return (d.getMonth() + 1);
+        } else {
+            return '{MonthNumber}';
+        }
     }
 };
