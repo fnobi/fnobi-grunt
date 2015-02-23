@@ -83,16 +83,24 @@ module.exports = {
         var count = (opts.count === undef) ? true : opts.count;
         var text = opts.text;
         var hashtags = opts.hashtags;
+        var vertical = !!opts.vertical;
+
+        var className = [ 'twitter-share-button' ];
+        if (vertical) {
+            className.push('twitter-count-vertical');
+        }
 
         var attr = {
             'href': 'https://twitter.com/share',
-            'class': 'twitter-share-button'
+            'class': className.join(' ')
         };
         if (url) {
             attr['data-url'] = url;
         }
         if (!count) {
             attr['data-count'] = 'none';
+        } else if (vertical) {
+            attr['data-count'] = 'vertical';
         }
         if (text) {
             attr['data-text'] = text;
