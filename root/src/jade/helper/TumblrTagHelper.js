@@ -19,9 +19,13 @@ module.exports = {
             return '{Title}';
         }
     },
-    description: function () {
+    description: function (post) {
         if (this.data.available) {
-            return this.data.blog.description;
+            if (post) {
+                return post.description;
+            } else {
+                return this.data.blog.description;
+            }
         } else {
             return '{Description}';
         }
