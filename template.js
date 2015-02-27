@@ -57,7 +57,7 @@ exports.template = function (grunt, init, done) {
                 'grunt-contrib-compass': '0.3.0',
                 'grunt-contrib-jade': '0.12.0',
                 "grunt-contrib-uglify": "^0.6.0",
-                'grunt-auto-deps': '0.4.2',
+                'grunt-auto-deps': '0.4.3',
                 'grunt-koko': '0.1.1',
                 'grunt-simple-ejs': '0.3.0',
                 'grunt-mocha-html': '0.1.0',
