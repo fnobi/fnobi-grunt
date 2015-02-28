@@ -311,5 +311,21 @@ module.exports = {
         } else {
             return '{MonthNumber}';
         }
+    },
+    postTitle: function (postfix) {
+        postfix = postfix || '';
+        if (this.data.available) {
+            return '';
+        } else {
+            return '{block:PostTitle}{PostTitle}' + postfix + '{/block:PostTitle}';
+        }
+    },
+    postSummary: function (postfix) {
+        postfix = postfix || '';
+        if (this.data.available) {
+            return '';
+        } else {
+            return '{block:PostSummary}{PostSummary}' + postfix + '{/block:PostSummary}';
+        }
     }
 };
