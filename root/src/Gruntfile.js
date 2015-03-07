@@ -155,8 +155,7 @@ module.exports = function (grunt) {
 
         var devConfig = {
             options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.map')
+                sourceMap: true
             },
             files: {}
         };
@@ -168,8 +167,7 @@ module.exports = function (grunt) {
 
         var prodConfig = {
             options: {
-                sourceMap: true,
-                sourceMapName: path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.map')
+                sourceMap: true
             },
             files: {}
         };
