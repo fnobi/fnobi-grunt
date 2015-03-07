@@ -121,13 +121,21 @@ module.exports = {
         };
 
         if (opts.text) {
-            param.text = opts.text;
+            param.text = encodeURIComponent(opts.text);
         }
         if (opts.url) {
-            param.url = opts.url;
+            param.url = encodeURIComponent(opts.url);
         }
         if (opts.hashtags) {
-            param.hashtags = opts.hashtags.join ? (opts.hashtags.join(',')) : opts.hashtags;
+            var escapedTags = [];
+            if (!opts.hashtags.forEach) {
+                opts.hashtags.forEach(function (tag) {
+                    escapedTags.push(encodeURIComponent(tag));
+                });
+            } else {
+                escapedTags.push(encodeURIComponent(opts.hashtags));
+            }
+            param.hashtags = escapedTags.join(',');
         }
         
         return 'https://twitter.com/intent/tweet?' + this.encodeQueryString(param);
