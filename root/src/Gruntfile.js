@@ -91,19 +91,6 @@ module.exports = function (grunt) {
         prodTasks.push('copy:' + PROD);
     }
 
-    // este watch
-    {
-        grunt.loadNpmTasks('grunt-este-watch');
-        grunt.registerTask('watch', 'esteWatch');
-
-        config.esteWatch = {
-            options: {
-                dirs: [],
-                livereload: { enabled: false }
-            }
-        };
-    }
-
     // release
     {
         grunt.loadNpmTasks('grunt-release');
@@ -141,10 +128,6 @@ module.exports = function (grunt) {
             dest: path.resolve(prodSitePath, JS)
         });
         prodTasks.push('auto_deps:' + PROD);
-    
-        // watch
-        config.esteWatch.options.dirs.push(JS + '/*.js');
-        config.esteWatch['js'] = function () { return 'auto_deps:' + DEV; };
     }
     
     
@@ -238,13 +221,7 @@ module.exports = function (grunt) {
                 environment             : 'production'
             }
         });
-        prodTasks.push('compass:' + PROD);
-        
-        // watch
-        config.esteWatch.options.dirs.push(SASS + '/*.scss');
-        config.esteWatch.options.dirs.push(SASS + '/**/*.scss');
-        config.esteWatch['scss'] = function () { return 'compass:' + DEV; };
-    
+        prodTasks.push('compass:' + PROD);    
     }
     
     
@@ -291,11 +268,6 @@ module.exports = function (grunt) {
             files: jadeMap(prodSitePath)
         };
         prodTasks.push('jade:' + PROD);
-
-        // watch
-        config.esteWatch.options.dirs.push(JADE + '/*.jade');
-        config.esteWatch.options.dirs.push(JADE + '/**/*.jade');
-        config.esteWatch['jade'] = function () { return 'jade:' + DEV; };
     }
 
 
@@ -328,12 +300,6 @@ module.exports = function (grunt) {
             options: prodData
         });
         prodTasks.push('ejs:' + PROD);
-        
-        // watch
-        config.esteWatch.options.dirs.push(EJS + '/*.ejs');
-        config.esteWatch.options.dirs.push(EJS + '/**/*.ejs');
-        config.esteWatch['ejs'] = function () { return 'ejs:' + DEV; };
-    
     }/*[ if (with_test) { ]*/
     
     
@@ -383,6 +349,42 @@ module.exports = function (grunt) {
         grunt.registerTask('server', ['koko:' + DEV]);
     }
     
+    // este watch
+    {
+        grunt.loadNpmTasks('grunt-este-watch');
+        grunt.registerTask('watch', 'esteWatch');
+
+        config.esteWatch = {
+            options: {
+                livereload: { enabled: false },
+                dirs: [
+                    JS + '/*.js',
+                    SASS + '/*.scss',
+                    SASS + '/**/*.scss'/*[ if (template_engine == 'jade') { ]*/,
+                    JADE + '/*.jade',
+                    JADE + '/**/*.jade'/*[ } else if (template_engine == 'ejs') { ]*/,
+                    EJS + '/*.ejs',
+                    EJS + '/**/*.ejs'/*[ } ]*/
+                ]
+            },
+            js: function () {
+                return [
+                    'auto_deps:' + DEV,
+                    'uglify:' + DEV
+                ];
+            },
+            scss: function () {
+                return 'compass:' + DEV;
+            }/*[ if (template_engine == 'jade') { ]*/,
+            jade: function () {
+                return 'jade:' + DEV;
+            }/*[ } else if (template_engine == 'ejs') { ]*/,
+            ejs: function () {
+                return 'ejs:' + DEV;
+            }/*[ } ]*/
+        };
+    }
+
     // set as task
     grunt.registerTask(DEV, devTasks);
     grunt.registerTask(PROD, prodTasks);
