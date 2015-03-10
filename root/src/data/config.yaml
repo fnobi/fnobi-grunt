@@ -17,6 +17,8 @@ keywords: []
 share_text:
   /*[= name ]*/
 
+share_hashtags: ''
+
 viewport: 
   - width=device-width
   - initial-scale=1.0

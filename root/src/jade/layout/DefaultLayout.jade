@@ -54,9 +54,9 @@ html(lang="ja")
 
     if use_single_file
       script
-        include ../../../js//*[= camelCasedName ]*/.js
+        include ../../../js//*[= camelCasedName ]*/.min.js
     else
-      script(src=js_path + "//*[= camelCasedName ]*/.js")
+      script(src=js_path + "//*[= camelCasedName ]*/.min.js")
 
     // fb-root
     div#fb-root
