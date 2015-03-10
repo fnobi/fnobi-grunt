@@ -49,14 +49,14 @@ module.exports = function (grunt) {
         devData = util.clone(defaultData, {
             http_path: devHttpPath,
             css_path : path.resolve(devHttpPath, CSS),
-            js_path  : path.resolve(devHttpPath, JS ),
+            js_path  : path.resolve(devHttpPath, JS),
             img_path : path.resolve(devHttpPath, IMG)
         });
 
         prodData = util.clone(defaultData, {
             http_path: prodHttpPath,
             css_path : path.resolve(prodHttpPath, CSS),
-            js_path  : path.resolve(prodHttpPath, JS ),
+            js_path  : path.resolve(prodHttpPath, JS),
             img_path : path.resolve(prodHttpPath, IMG)
         });
     })();
@@ -154,26 +154,28 @@ module.exports = function (grunt) {
         config.uglify = {};
 
         var devConfig = {
-            options: {
-                sourceMap: true
-            },
+            options: { sourceMap: true },
             files: {}
         };
-        devConfig.files[path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
-            path.resolve(devSitePath, JS, '/*[= camelCasedName ]*/.js')
-        ];
+        ['/*[= camelCasedName ]*/.js'].forEach(function (script) {
+            var min = script.replace(/\.js$/, '.min.js');
+            devConfig.files[path.resolve(devSitePath, JS, min)] = [
+                path.resolve(devSitePath, JS, script)
+            ];
+        });
         config.uglify[DEV] = devConfig;
         devTasks.push('uglify:' + DEV);
 
         var prodConfig = {
-            options: {
-                sourceMap: true
-            },
+            options: { sourceMap: true },
             files: {}
         };
-        prodConfig.files[path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.min.js')] = [
-            path.resolve(prodSitePath, JS, '/*[= camelCasedName ]*/.js')
-        ];
+        ['/*[= camelCasedName ]*/.js'].forEach(function (script) {
+            var min = script.replace(/\.js$/, '.min.js');
+            prodConfig.files[path.resolve(prodSitePath, JS, min)] = [
+                path.resolve(prodSitePath, JS, script)
+            ];
+        });
         config.uglify[PROD] = prodConfig;
         prodTasks.push('uglify:' + PROD);
     }
