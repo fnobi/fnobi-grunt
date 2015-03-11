@@ -26,8 +26,7 @@ viewport:
   - user-scalable=0
 
 favicon_url: ''
-
-ios_icon_url: ''
+webclipicon_url: ''
 
 facebook_app_id: ''
 

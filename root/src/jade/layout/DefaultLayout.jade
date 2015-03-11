@@ -14,10 +14,10 @@ html(lang="ja")
 
     // ios meta
     meta(name="viewport", content=viewport.join(', '))
-    meta(name="apple-mobile-web-app-capable", content=ios_capable ? 'yes' : 'no')
-    meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
-    if ios_icon_url
-      link(rel="apple-touch-icon", href=ios_icon_url)
+    if webclipicon_url
+      meta(name="apple-mobile-web-app-capable", content='yes')
+      meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
+      link(rel="apple-touch-icon", href=webclipicon_url)
 
     // opg
     if facebook_app_id
