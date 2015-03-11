@@ -5,18 +5,21 @@ html(lang="ja")
     // meta
     meta(charset="utf-8")
     meta(name="description", content=TumblrTagHelper.metaDescription())
-    if keywords
+    if keywords && keywords.length
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
+    if favicon_url
+      link(rel="shortcut icon", href=favicon_url, type="image/vnd.microsoft.icon")
+      link(rel="icon", href=favicon_url, type="image/vnd.microsoft.icon")
 
     // tumblr meta
     != TumblrTagHelper.customDeclearMeta()
 
     // ios meta
     meta(name="viewport", content=viewport.join(', '))
-    meta(name="apple-mobile-web-app-capable", content=ios_capable ? 'yes' : 'no')
-    meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
-    if ios_icon_url
-      link(rel="apple-touch-icon", href=ios_icon_url)
+    if webclipicon_url
+      meta(name="apple-mobile-web-app-capable", content='yes')
+      meta(name="apple-mobile-web-app-status-bar-style", content=ios_status_bar || 'default')
+      link(rel="apple-touch-icon", href=webclipicon_url)
 
     // opg
     if facebook_app_id
