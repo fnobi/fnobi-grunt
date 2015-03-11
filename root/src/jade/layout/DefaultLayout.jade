@@ -4,6 +4,7 @@ html(lang="ja")
   head
     // meta
     meta(charset="utf-8")
+    title= title
     if description
       meta(name="description", content=description)
     if keywords && keywords.length
@@ -12,7 +13,7 @@ html(lang="ja")
       link(rel="shortcut icon", href=favicon_url, type="image/vnd.microsoft.icon")
       link(rel="icon", href=favicon_url, type="image/vnd.microsoft.icon")
 
-    // ios meta
+    // smartphone meta
     meta(name="viewport", content=viewport.join(', '))
     if webclipicon_url
       meta(name="apple-mobile-web-app-capable", content='yes')
@@ -36,17 +37,19 @@ html(lang="ja")
     meta(property="og:description", content=description)
     meta(property="og:locale", content=ogp_locale || "ja_JP")
 
-    title= title
     script(src=js_path + "/lib/html5shiv.min.js")
-    link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
+    // stylesheet
+    block StylesheetBlock
+      link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
-    // line-button script
     != SNSHelper.line_button_script()
 
     block ContentBlock
       include ../partial/wrapper
 
-    script(src=js_path + "//*[= camelCasedName ]*/.min.js")
+    // javascript
+    block JavascriptBlock
+      script(src=js_path + "//*[= camelCasedName ]*/.min.js")
 
     // fb-root
     div#fb-root
