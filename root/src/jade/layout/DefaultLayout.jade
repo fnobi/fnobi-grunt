@@ -4,6 +4,7 @@ html(lang="ja")
   head
     // meta
     meta(charset="utf-8")
+    title= TumblrTagHelper.title()
     meta(name="description", content=TumblrTagHelper.metaDescription())
     if keywords && keywords.length
       meta(name="keywords", content=keywords.join ? keywords.join(', ') : keywords)
@@ -14,7 +15,7 @@ html(lang="ja")
     // tumblr meta
     != TumblrTagHelper.customDeclearMeta()
 
-    // ios meta
+    // smartphone meta
     meta(name="viewport", content=viewport.join(', '))
     if webclipicon_url
       meta(name="apple-mobile-web-app-capable", content='yes')
@@ -38,28 +39,32 @@ html(lang="ja")
     meta(property="og:description", content=TumblrTagHelper.description())
     meta(property="og:locale", content=ogp_locale || "ja_JP")
 
-    title= TumblrTagHelper.title()
-
     if use_single_file
       script
         include ../../../js/lib/html5shiv.min.js
-      style
-        include ../../../css//*[= name ]*/.css
     else
       script(src=js_path + '/lib/html5shiv.min.js')
-      link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
+
+    // stylesheet
+    block StylesheetBlock
+      if use_single_file
+        style
+          include ../../../css//*[= name ]*/.css
+      else
+        link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
   body
-    // line-button script
     != SNSHelper.line_button_script()
 
     block ContentBlock
       include ../partial/wrapper
 
-    if use_single_file
-      script
-        include ../../../js//*[= camelCasedName ]*/.min.js
-    else
-      script(src=js_path + "//*[= camelCasedName ]*/.min.js")
+    // javascript
+    block JavascriptBlock
+      if use_single_file
+        script
+          include ../../../js//*[= camelCasedName ]*/.min.js
+      else
+        script(src=js_path + "//*[= camelCasedName ]*/.min.js")
 
     // fb-root
     div#fb-root
