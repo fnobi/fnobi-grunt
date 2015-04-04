@@ -27,16 +27,16 @@ exports.template = function (grunt, init, done) {
         init.prompt('author_name'),
         init.prompt('author_email'),
         {
-            name: 'template_engine',
-            message: 'template engine',
-            default: 'jade',
-            validator: /^(jade|ejs)$/
-        },
-        {
             name: 'task_runner',
             message: 'task runner. [grunt|gulp]',
             default: 'gulp',
             validator: /^(grunt|gulp)$/
+        },
+        {
+            name: 'template_engine',
+            message: 'template engine',
+            default: 'jade',
+            validator: /^(jade|ejs)$/
         },
         {
             name: 'with_test',
