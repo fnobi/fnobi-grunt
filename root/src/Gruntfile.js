@@ -240,7 +240,7 @@ module.exports = function (grunt) {
             var map = {};
             jadeFiles.forEach(function (jadeFile) {
                 map[
-                    path.join(dest, jadeFile).replace(/\.jade$/, '')
+                    path.join(dest, jadeFile).replace(/\.jade$/, '.html')
                 ] = path.join(JADE, jadeFile);
             });
             return map;
