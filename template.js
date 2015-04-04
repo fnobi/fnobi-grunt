@@ -48,6 +48,7 @@ exports.template = function (grunt, init, done) {
         // package setting
         var devDeps = {
             'grunt-release': '~0.5.1',
+            'varline': "1.*",
             'mocha': '~1.9.0',
             'chai': '~1.6.1'
         };
@@ -68,7 +69,6 @@ exports.template = function (grunt, init, done) {
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
-            devDeps["varline"] = "1.*";
 
             scripts["start"] = "gulp server";
             scripts["build"] = "gulp build";
