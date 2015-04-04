@@ -18,7 +18,7 @@ exports.template = function (grunt, init, done) {
     // override template delimiter
     grunt.template.addDelimiters('init', '/*[', ']*/');
 
-    init.process( {}, [
+    init.process({}, [
         init.prompt('name'),
         init.prompt('description'),
         init.prompt('version'),
@@ -33,6 +33,12 @@ exports.template = function (grunt, init, done) {
             validator: /^(jade|ejs)$/
         },
         {
+            name: 'task_runner',
+            message: 'task runner. [grunt|gulp]',
+            default: 'gulp',
+            validator: /^(grunt|gulp)$/
+        },
+        {
             name: 'with_test',
             message: 'use mocha test. [Y|n]',
             default: 'n',
@@ -40,46 +46,65 @@ exports.template = function (grunt, init, done) {
         }
     ], function(err, props) {
         // package setting
+        var devDeps = {
+            'grunt-release': '~0.5.1',
+            'mocha': '~1.9.0',
+            'chai': '~1.6.1'
+        };
+
+        var scripts = {
+            preinstall: "npm -g install grunt-cli",
+            start: "grunt server",
+            build: "grunt dev",
+            start: "gulp server",
+            build: "gulp build",
+            watch: "gulp watch"
+        };
+
+        switch(props.task_runner) {
+        case 'gulp': 
+            devDeps["gulp"] = "3.*";
+            devDeps["gulp-ruby-sass"] = "1.*";
+            devDeps["gulp-jade"] = "1.*";
+            devDeps["js-yaml"] = "3.*";
+            devDeps["koko"] = "0.*";
+            devDeps["varline"] = "1.*";
+
+            scripts["start"] = "gulp server";
+            scripts["build"] = "gulp build";
+            scripts["watch"] = "gulp watch";
+
+            break;
+        case 'grunt':
+            devDeps['grunt'] = '~0.4.0';
+            devDeps['grunt-este-watch'] = 'git://github.com/fnobi/grunt-este-watch.git';
+            devDeps['grunt-contrib-copy'] = '0.5.0';
+            devDeps['grunt-contrib-compass'] = '0.3.0';
+            devDeps['grunt-contrib-jade'] = '0.12.0';
+            devDeps["grunt-contrib-uglify"] = "^0.6.0";
+            devDeps['grunt-auto-deps'] = '0.4.3';
+            devDeps['grunt-koko'] = '0.1.1';
+            devDeps['grunt-simple-ejs'] = '0.3.0';
+            devDeps['grunt-mocha-html'] = '0.1.0';
+            devDeps['grunt-mocha-phantomjs'] = '~0.2.8';
+            devDeps["grunt-html-validation"] = "~0.1.18";
+
+            scripts["preinstall"] = "npm -g install grunt-cli";
+            scripts["start"] = "grunt server";
+            scripts["build"] = "grunt dev";
+
+            break;
+        }
+
         var pkg = {
             name: props.name,
             description: props.description,
             version: props.version,
-            scripts: {
-                preinstall: "npm -g install grunt-cli",
-                start: "grunt server",
-                build: "grunt dev",
-                "start": "gulp server",
-                "build": "gulp build",
-                "watch": "gulp watch"
-            },
+            scripts: scripts,
             engines: {
                 node: '>=0.10.26'
             },
-            devDependencies: {
-                'grunt': '~0.4.0',
-                'grunt-este-watch': 'git://github.com/fnobi/grunt-este-watch.git',
-                'grunt-contrib-copy': '0.5.0',
-                'grunt-contrib-compass': '0.3.0',
-                'grunt-contrib-jade': '0.12.0',
-                "grunt-contrib-uglify": "^0.6.0",
-                'grunt-auto-deps': '0.4.3',
-                'grunt-koko': '0.1.1',
-                'grunt-simple-ejs': '0.3.0',
-                'grunt-mocha-html': '0.1.0',
-                'grunt-mocha-phantomjs': '~0.2.8',
-                "grunt-html-validation": "~0.1.18",
-
-                "gulp": "3.*",
-                "gulp-ruby-sass": "1.*",
-                "gulp-jade": "1.*",
-                "js-yaml": "3.*",
-                "koko": "0.*",
-                "varline": "1.*",
-
-                'grunt-release': '~0.5.1',
-                'mocha': '~1.9.0',
-                'chai': '~1.6.1'
-            }
+            devDependencies: devDeps
         };
 
         // bower setting
@@ -88,8 +113,6 @@ exports.template = function (grunt, init, done) {
             version: props.version,
             main: 'index.html',
             dependencies: {
-                'ejs-head-modules': '~1.0.5',
-                'ejs-sns-modules': '~0.4.3',
                 'html5shiv': '~3.7.2',
                 'jquery': '~1.10.*'
             }
@@ -122,6 +145,13 @@ exports.template = function (grunt, init, done) {
         // Files to copy (and process).
         var files = init.filesToCopy(props);
 
+        if (props.task_runner != 'gulp') {
+            escapeFiles('src/gulpfile.js', files);
+            escapeFiles('src/task-util.js', files);
+        }
+        if (props.task_runner != 'grunt') {
+            escapeFiles('src/Gruntfile.js', files);
+        }
         if (props.template_engine != 'jade') {
             escapeFiles('src/jade/*.*', files);
             escapeFiles('src/jade/**/*.*', files);
