@@ -91,18 +91,6 @@ module.exports = function (grunt) {
         prodTasks.push('copy:' + PROD);
     }
 
-    // release
-    {
-        grunt.loadNpmTasks('grunt-release');
-
-        config.release = {
-            options: {
-                file: 'bower.json',
-                npm: false
-            }
-        };
-    }
-
     // varline
     {
         grunt.loadNpmTasks('varline');

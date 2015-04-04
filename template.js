@@ -47,7 +47,6 @@ exports.template = function (grunt, init, done) {
     ], function(err, props) {
         // package setting
         var devDeps = {
-            'grunt-release': '~0.5.1',
             'varline': "1.*",
             'mocha': '~1.9.0',
             'chai': '~1.6.1'
