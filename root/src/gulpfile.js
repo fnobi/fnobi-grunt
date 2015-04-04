@@ -73,7 +73,7 @@ gulp.task('js', function () {
         }
     };
 
-    gulp.src([SRC_JS, 'hoge.js'].join('/'))
+    gulp.src([SRC_JS, '/*[= camelCasedName ]*/.js'].join('/'))
         .pipe(varline(opts))
         .pipe(gulp.dest(DEST_JS));
 });
