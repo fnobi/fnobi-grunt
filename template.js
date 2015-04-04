@@ -24,12 +24,8 @@ exports.template = function (grunt, init, done) {
         init.prompt('version'),
         init.prompt('repository'),
         init.prompt('homepage'),
-        // init.prompt('bugs'),
-        // init.prompt('licenses'),
         init.prompt('author_name'),
         init.prompt('author_email'),
-        // init.prompt('author_url'),
-        // init.prompt('jquery_version'),
         {
             name: 'template_engine',
             message: 'template engine',
@@ -51,7 +47,10 @@ exports.template = function (grunt, init, done) {
             scripts: {
                 preinstall: "npm -g install grunt-cli",
                 start: "grunt server",
-                build: "grunt dev"
+                build: "grunt dev",
+                "start": "gulp server",
+                "build": "gulp build",
+                "watch": "gulp watch"
             },
             engines: {
                 node: '>=0.10.26'
@@ -69,6 +68,14 @@ exports.template = function (grunt, init, done) {
                 'grunt-mocha-html': '0.1.0',
                 'grunt-mocha-phantomjs': '~0.2.8',
                 "grunt-html-validation": "~0.1.18",
+
+                "gulp": "3.*",
+                "gulp-ruby-sass": "1.*",
+                "gulp-jade": "1.*",
+                "js-yaml": "3.*",
+                "koko": "0.*",
+                "varline": "1.*",
+
                 'grunt-release': '~0.5.1',
                 'mocha': '~1.9.0',
                 'chai': '~1.6.1'
