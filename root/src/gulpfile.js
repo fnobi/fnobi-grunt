@@ -17,10 +17,12 @@ var SRC_SASS = path.join(SRC, 'sass');
 var SRC_JS = path.join(SRC, 'js');
 var SRC_JS_LIB = path.join(SRC_JS, 'lib');
 var SRC_JADE = path.join(SRC, 'jade');
+var SRC_DATA = path.join(SRC, 'data');
 
 var GLOB_SASS = path.join(SRC_SASS, '**/*.scss');
 var GLOB_JS = path.join(SRC_JS, '**/*.js');
 var GLOB_JADE = path.join(SRC_JADE, '**/*.jade');
+var GLOB_DATA = path.join(SRC_DATA, '*');
 
 var DEST = '..';
 var DEST_CSS = path.join(DEST, 'css');
@@ -81,7 +83,7 @@ gulp.task('js', function () {
         }
     };
 
-    gulp.src([SRC_JS, '/*[= camelCasedName ]*/.js'].join('/'))
+    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')
         .pipe(varline(opts))
         .pipe(gulp.dest(DEST_JS));
 });
@@ -105,7 +107,7 @@ gulp.task('watch', function () {
     gulp.watch(GLOB_SASS, ['sass']);
     gulp.watch(GLOB_JS, ['js']);
     gulp.watch(GLOB_JADE, ['jade']);
-    gulp.watch('data/*', ['jade']);
+    gulp.watch(GLOB_DATA, ['jade']);
 });
 
 gulp.task('build', ['sass', 'copy-lib', 'js', 'jade']);
