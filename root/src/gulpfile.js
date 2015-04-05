@@ -15,6 +15,7 @@ var util = require('./task-util');
 var SRC = '.';
 var SRC_SASS = path.join(SRC, 'sass');
 var SRC_JS = path.join(SRC, 'js');
+var SRC_JS_LIB = path.join(SRC_JS, 'lib');
 var SRC_JADE = path.join(SRC, 'jade');
 
 var GLOB_SASS = path.join(SRC_SASS, '**/*.scss');
@@ -24,6 +25,7 @@ var GLOB_JADE = path.join(SRC_JADE, '**/*.jade');
 var DEST = '..';
 var DEST_CSS = path.join(DEST, 'css');
 var DEST_JS = path.join(DEST, 'js');
+var DEST_JS_LIB = path.join(DEST_JS, 'lib');
 var DEST_JADE = DEST;
 
 var HTTP_PATH = '/';
@@ -60,12 +62,18 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(DEST_CSS));
 });
 
+gulp.task('copy-lib', function () {
+    return gulp.src([
+        'bower_components/html5shiv/dist/html5shiv.min.js'
+    ]).pipe(gulp.dest(DEST_JS_LIB));
+});
+
 gulp.task('js', function () {
     var opts = {
         wrap: true,
         loadPath: [
             SRC_JS + '/*.js',
-            SRC_JS + '/lib/*.js'
+            SRC_JS_LIB + '/*.js'
         ],
         alias: {
             $: 'jquery',
@@ -100,4 +108,4 @@ gulp.task('watch', function () {
     gulp.watch('data/*', ['jade']);
 });
 
-gulp.task('build', ['sass', 'js', 'jade']);
+gulp.task('build', ['sass', 'copy-lib', 'js', 'jade']);
