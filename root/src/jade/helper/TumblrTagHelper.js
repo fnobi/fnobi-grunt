@@ -202,6 +202,14 @@ module.exports = {
             return ['{block:Tags}', prefix, '{URLSafeTag}', ' ', '{/block:Tags}'].join('');
         }
     },
+    tagPageName: function (prefix) {
+        prefix = prefix || '';
+        if (this.data.available) {
+            return '';
+        } else {
+            return [prefix, '{URLSafeTag}'].join('');
+        }
+    },
     taggedPosts: function () {
         var tagName = this.data.pageTagName;
         var posts = [];
@@ -326,6 +334,20 @@ module.exports = {
             return '';
         } else {
             return '{block:PostSummary}{PostSummary}' + postfix + '{/block:PostSummary}';
+        }
+    },
+    ifTagPage: function (exp) {
+        if (this.data.available) {
+            return this.data.pageTagName ? exp : '';
+        } else {
+            return '{block:TagPage}' + exp + '{/block:TagPage}';
+        }
+    },
+    ifPermalinkPage: function (exp) {
+        if (this.data.available) {
+            return this.data.isPermalinkPage ? exp : '';
+        } else {
+            return '{block:PermalinkPage}' + exp + '{/block:PermalinkPage}';
         }
     }
 };
