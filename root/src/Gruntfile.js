@@ -91,24 +91,12 @@ module.exports = function (grunt) {
         prodTasks.push('copy:' + PROD);
     }
 
-    // release
+    // varline
     {
-        grunt.loadNpmTasks('grunt-release');
-
-        config.release = {
-            options: {
-                file: 'bower.json',
-                npm: false
-            }
-        };
-    }
-
-    // auto deps
-    {
-        grunt.loadNpmTasks('grunt-auto-deps');
-        config.auto_deps = {};
+        grunt.loadNpmTasks('varline');
+        config.varline = {};
     
-        var autoDepsDefaultConfig = {
+        var varlineDefaultConfig = {
             scripts: ['/*[= camelCasedName ]*/'],
             loadPath: [JS + '/*.js', JS_LIB + '/*.js'],
             ignore: [],
@@ -118,16 +106,16 @@ module.exports = function (grunt) {
         };
 
         // dev
-        config.auto_deps[DEV] = util.clone(autoDepsDefaultConfig, {
+        config.varline[DEV] = util.clone(varlineDefaultConfig, {
             dest: path.resolve(devSitePath, JS)
         });
-        devTasks.push('auto_deps:' + DEV);
+        devTasks.push('varline:' + DEV);
 
         // prod
-        config.auto_deps[PROD] = util.clone(autoDepsDefaultConfig, {
+        config.varline[PROD] = util.clone(varlineDefaultConfig, {
             dest: path.resolve(prodSitePath, JS)
         });
-        prodTasks.push('auto_deps:' + PROD);
+        prodTasks.push('varline:' + PROD);
     }
     
     
@@ -240,7 +228,7 @@ module.exports = function (grunt) {
             var map = {};
             jadeFiles.forEach(function (jadeFile) {
                 map[
-                    path.join(dest, jadeFile).replace(/\.jade$/, '')
+                    path.join(dest, jadeFile).replace(/\.jade$/, '.html')
                 ] = path.join(JADE, jadeFile);
             });
             return map;
@@ -377,7 +365,7 @@ module.exports = function (grunt) {
             },
             js: function () {
                 return [
-                    'auto_deps:' + DEV,
+                    'varline:' + DEV,
                     'uglify:' + DEV
                 ];
             },

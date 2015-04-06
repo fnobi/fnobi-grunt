@@ -144,7 +144,6 @@ module.exports = {
         opts = opts || {};
 
         var undef;
-
         var param = {
             pc: !!opts.pc,
             lang: opts.land || "ja",
@@ -153,13 +152,7 @@ module.exports = {
             withUrl: (opts.withUrl === undef) ? true : opts.withUrl
         };
 
-        return [
-            '<span>',
-            '<script type="text/javascript">',
-            'new media_line_me.LineButton(' + JSON.stringify(param) + ');',
-            '</script>',
-            '</span>'
-        ].join('\n');
+        return 'new media_line_me.LineButton(' + JSON.stringify(param) + ');';
     },
     line_button_script: function () {
         return '<script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140411" ></script>';

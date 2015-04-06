@@ -29,13 +29,3 @@ var BrowserFeature = function () {
     this.isLegacyAndroid = this.isAndroid2 || this.isAndroid3;
     this.isModern = (!this.isLegacy && !this.isLegacyAndroid);
 };
-
-
-
-
-
-
-
-
-
-
