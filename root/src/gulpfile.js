@@ -51,6 +51,14 @@ var loadLocals = function () {
         }
     ]);
     locals.SNSHelper = require('./jade/helper/SNSHelper');
+    locals.TumblrTagHelper = require('./jade/helper/TumblrTagHelper');
+    locals.TumblrTagHelper.data = {
+        available: true,
+        blog: util.readConfig('data/blog.json'),
+        posts: util.readConfig('data/posts.json'),
+        custom: util.readConfig('data/custom.yaml')
+    };
+
     return locals;
 };
 
