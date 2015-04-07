@@ -58,19 +58,25 @@ var loadLocals = function () {
 /* ========================================= *
  * tasks
  * ========================================= */
+
+// css
 gulp.task('sass', function () {
     return sass(SRC_SASS, { compass: true, style: 'compressed' })
         .on('error', onError)
         .pipe(gulp.dest(DEST_CSS));
 });
 
+gulp.task('css', ['sass']);
+
+
+// js
 gulp.task('copy-lib', function () {
     return gulp.src([
         'bower_components/html5shiv/dist/html5shiv.min.js'
     ]).pipe(gulp.dest(DEST_JS_LIB));
 });
 
-gulp.task('js', function () {
+gulp.task('varline', function () {
     var opts = {
         wrap: true,
         loadPath: [
@@ -88,6 +94,10 @@ gulp.task('js', function () {
         .pipe(gulp.dest(DEST_JS));
 });
 
+gulp.task('js', ['copy-lib', 'varline']);
+
+
+// html
 gulp.task('jade', function () {
     gulp.src(SRC_JADE + '/*.jade')
         .pipe(jade({
@@ -97,17 +107,25 @@ gulp.task('jade', function () {
         .pipe(gulp.dest(DEST_JADE));
 });
 
+gulp.task('html', ['jade']);
+
+
+// build
+gulp.task('build', ['css', 'js', 'html']);
+
+
+// server
 gulp.task('server', function () {
     new Koko(path.resolve(DEST), {
         openPath: HTTP_PATH
     }).start();
 });
 
+
+// watch
 gulp.task('watch', function () {
     gulp.watch(GLOB_SASS, ['sass']);
     gulp.watch(GLOB_JS, ['js']);
     gulp.watch(GLOB_JADE, ['jade']);
-    gulp.watch(GLOB_DATA, ['jade']);
+    gulp.watch(GLOB_DATA, ['html']);
 });
-
-gulp.task('build', ['sass', 'copy-lib', 'js', 'jade']);
