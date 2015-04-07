@@ -96,7 +96,7 @@ gulp.task('js', function () {
         .pipe(gulp.dest(DEST_JS));
 });
 
-gulp.task('jade', function () {
+gulp.task('jade', ['sass', 'copy-lib', 'js'], function () {
     gulp.src(SRC_JADE + '/*.jade')
         .pipe(jade({
             locals: loadLocals(),
@@ -118,4 +118,6 @@ gulp.task('watch', function () {
     gulp.watch(GLOB_DATA, ['jade']);
 });
 
-gulp.task('build', ['sass', 'copy-lib', 'js', 'jade']);
+// tumblr templateでは、jadeがぜんぶに依存持ってるので、
+// buildで呼ぶのはjadeだけでおk
+gulp.task('build', ['jade']);
