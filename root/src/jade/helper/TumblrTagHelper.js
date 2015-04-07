@@ -349,5 +349,17 @@ module.exports = {
         } else {
             return '{block:PermalinkPage}' + exp + '{/block:PermalinkPage}';
         }
+    },
+    nextPageButton: function (id, label) {
+        id = id || 'next-page-button';
+        label = label || 'next';
+
+        var href = this.data.available ? '' : '{NextPage}';
+        var html = '<a id="' + id +  '" href="' + href + '">' + label + '</a>';
+        if (this.data.available) {
+            return html;
+        } else {
+            return [ '{block:NextPage}', html, '{/block:NextPage}' ].join('');
+        }
     }
 };
