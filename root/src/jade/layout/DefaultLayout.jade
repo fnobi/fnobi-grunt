@@ -62,7 +62,7 @@ html(lang="ja")
     block JavascriptBlock
       if use_single_file
         script
-          include ../../../js//*[= camelCasedName ]*/.min.js
+          include ../../../js//*[= camelCasedName ]*/.js
       else
         script(src=js_path + "//*[= camelCasedName ]*/.js")
 
