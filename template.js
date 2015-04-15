@@ -52,14 +52,7 @@ exports.template = function (grunt, init, done) {
             'chai': '~1.6.1'
         };
 
-        var scripts = {
-            preinstall: "npm -g install grunt-cli",
-            start: "grunt server",
-            build: "grunt dev",
-            start: "gulp server",
-            build: "gulp build",
-            watch: "gulp watch"
-        };
+        var scripts = {};
 
         switch(props.task_runner) {
         case 'gulp': 
@@ -69,7 +62,7 @@ exports.template = function (grunt, init, done) {
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
 
-            scripts["start"] = "gulp server";
+            scripts["server"] = "gulp server";
             scripts["build"] = "gulp build";
             scripts["watch"] = "gulp watch";
 
@@ -89,7 +82,7 @@ exports.template = function (grunt, init, done) {
             devDeps["grunt-html-validation"] = "~0.1.18";
 
             scripts["preinstall"] = "npm -g install grunt-cli";
-            scripts["start"] = "grunt server";
+            scripts["server"] = "grunt server";
             scripts["build"] = "grunt dev";
 
             break;
