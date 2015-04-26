@@ -57,7 +57,7 @@ exports.template = function (grunt, init, done) {
         switch(props.task_runner) {
         case 'gulp': 
             devDeps["gulp"] = "3.*";
-            devDeps["gulp-ruby-sass"] = "1.*";
+            devDeps["gulp-ruby-sass"] = "1.0.0";
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
