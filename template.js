@@ -1,7 +1,7 @@
 var escapeFiles = require('./lib/escapeFiles'),
     shellLines = require('./lib/shellLines');
 
-exports.description = 'web page template (compass + auto deps + mocha + koko)';
+exports.description = 'web page template';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
@@ -40,9 +40,9 @@ exports.template = function (grunt, init, done) {
         },
         {
             name: 'js_builder',
-            message: 'js builder. [varline|babel]',
+            message: 'js builder. [varline|babel|browserify]',
             default: 'varline',
-            validator: /^(varline|babel)$/
+            validator: /^(varline|babel|browserify)$/
         },
         {
             name: 'with_test',
@@ -64,18 +64,21 @@ exports.template = function (grunt, init, done) {
             devDeps['varline'] = "1.*";
         case 'babel':
             devDeps['gulp-babel'] = "5.1.0";
+        case 'browserify':
+            devDeps['browserify'] = "9.0.8";
         }
 
         switch(props.task_runner) {
         case 'gulp': 
             devDeps["gulp"] = "3.*";
+            devDeps["vinyl-source-stream"] = "1.1.0";
             devDeps["gulp-ruby-sass"] = "1.0.0";
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
 
+            scripts["build"] = "gulp";
             scripts["server"] = "gulp server";
-            scripts["build"] = "gulp build";
             scripts["watch"] = "gulp watch";
 
             break;
