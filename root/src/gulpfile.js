@@ -1,8 +1,9 @@
 var path = require('path');
 var gulp = require('gulp');
 
-var sass = require('gulp-ruby-sass');
-var varline = require('varline').gulp;
+var sass = require('gulp-ruby-sass');/*[ if (js_builder == 'varline') { ]*/
+var varline = require('varline').gulp;/*[ } else if (js_builder == 'babel') { ]*/
+var babel = require('gulp-babel');/*[ } ]*/
 var jade = require('gulp-jade');
 var Koko = require('koko');
 
@@ -76,25 +77,24 @@ gulp.task('copy-lib', function () {
     ]).pipe(gulp.dest(DEST_JS_LIB));
 });
 
-gulp.task('varline', function () {
-    var opts = {
-        wrap: true,
-        loadPath: [
-            SRC_JS + '/*.js',
-            SRC_JS_LIB + '/*.js'
-        ],
-        alias: {
-            $: 'jquery',
-            _: 'underscore'
-        }
-    };
-
-    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')
-        .pipe(varline(opts))
+gulp.task('compile-js', function () {
+    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')/*[ if (js_builder == 'varline') { ]*/
+        .pipe(varline({
+            wrap: true,
+            loadPath: [
+                SRC_JS + '/*.js',
+                SRC_JS_LIB + '/*.js'
+            ],
+            alias: {
+                $: 'jquery',
+                _: 'underscore'
+            }
+        }))/*[ } else if (js_builder == 'babel') { ]*/
+        .pipe(babel())/*[ } ]*/
         .pipe(gulp.dest(DEST_JS));
 });
 
-gulp.task('js', ['copy-lib', 'varline']);
+gulp.task('js', ['copy-lib', 'compile-js']);
 
 
 // html

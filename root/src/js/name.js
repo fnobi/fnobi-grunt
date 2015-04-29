@@ -2,4 +2,4 @@
  * members
  * ========================================= */
 
-var bf = new BrowserFeature();
+// var bf = new BrowserFeature();
