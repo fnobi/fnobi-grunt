@@ -1,8 +1,11 @@
 var path = require('path');
 var gulp = require('gulp');
 
-var sass = require('gulp-ruby-sass');
-var varline = require('varline').gulp;
+var source = require('vinyl-source-stream');
+var sass = require('gulp-ruby-sass');/*[ if (js_builder == 'varline') { ]*/
+var varline = require('varline').gulp;/*[ } else if (js_builder == 'babel') { ]*/
+var babel = require('gulp-babel');/*[ } else if (js_builder == 'browserify') { ]*/
+var browserify = require('browserify');/*[ } ]*/
 var jade = require('gulp-jade');
 var Koko = require('koko');
 
@@ -13,11 +16,12 @@ var util = require('./task-util');
  * const
  * ========================================= */
 var SRC = '.';
-var SRC_SASS = path.join(SRC, 'sass');
-var SRC_JS = path.join(SRC, 'js');
-var SRC_JS_LIB = path.join(SRC_JS, 'lib');
-var SRC_JADE = path.join(SRC, 'jade');
-var SRC_DATA = path.join(SRC, 'data');
+var SRC_SASS = [ SRC, 'sass' ].join('/');
+var SRC_JS = [ SRC, 'js' ].join('/');
+var SRC_JS_LIB = [ SRC_JS, 'lib' ].join('/');
+var SRC_JADE = [ SRC, 'jade' ].join('/');
+var SRC_JADE_HELPER = [ SRC_JADE, 'helper' ].join('/');
+var SRC_DATA = [ SRC, 'data' ].join('/');
 
 var GLOB_SASS = path.join(SRC_SASS, '**/*.scss');
 var GLOB_JS = path.join(SRC_JS, '**/*.js');
@@ -50,15 +54,6 @@ var loadLocals = function () {
             img_path : HTTP_PATH_IMG
         }
     ]);
-    locals.SNSHelper = require('./jade/helper/SNSHelper');
-    locals.TumblrTagHelper = require('./jade/helper/TumblrTagHelper');
-    locals.TumblrTagHelper.data = {
-        available: true,
-        blog: util.readConfig('data/blog.json'),
-        posts: util.readConfig('data/posts.json'),
-        custom: util.readConfig('data/custom.yaml')
-    };
-
     return locals;
 };
 
@@ -84,32 +79,47 @@ gulp.task('copy-lib', function () {
     ]).pipe(gulp.dest(DEST_JS_LIB));
 });
 
-gulp.task('varline', function () {
-    var opts = {
-        wrap: true,
-        loadPath: [
-            SRC_JS + '/*.js',
-            SRC_JS_LIB + '/*.js'
-        ],
-        alias: {
-            $: 'jquery',
-            _: 'underscore'
-        }
-    };
+gulp.task('compile-js', function () {/*[ if (js_builder == 'browserify') { ]*/
 
-    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')
-        .pipe(varline(opts))
-        .pipe(gulp.dest(DEST_JS));
+    return browserify(SRC_JS + '//*[= camelCasedName ]*/.js')
+        .bundle()
+        .pipe(source('/*[= camelCasedName ]*/.js'))
+        .pipe(gulp.dest(DEST_JS));/*[ } else { ]*/
+
+    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')/*[ if (js_builder == 'varline') { ]*/
+        .pipe(varline({
+            wrap: true,
+            loadPath: [
+                SRC_JS + '/*.js',
+                SRC_JS_LIB + '/*.js'
+            ],
+            alias: {
+                $: 'jquery',
+                _: 'underscore'
+            }
+        }))/*[ } else if (js_builder == 'babel') { ]*/
+        .pipe(babel())/*[ } ]*/
+        .pipe(gulp.dest(DEST_JS));/*[ } ]*/
 });
 
-gulp.task('js', ['copy-lib', 'varline']);
+gulp.task('js', ['copy-lib', 'compile-js']);
 
 
 // html
 gulp.task('jade', ['css', 'js'], function () {
+    var locals = loadLocals();
+    locals.SNSHelper = require(SRC_JADE_HELPER + '/SNSHelper');
+    locals.TumblrTagHelper = require(SRC_JADE_HELPER + '/TumblrTagHelper');
+    locals.TumblrTagHelper.data = {
+        available: true,
+        blog: util.readConfig('data/blog.json'),
+        posts: util.readConfig('data/posts.json'),
+        custom: util.readConfig('data/custom.yaml')
+    };
+
     gulp.src(SRC_JADE + '/*.jade')
         .pipe(jade({
-            locals: loadLocals(),
+            locals: locals,
             pretty: true
         }))
         .pipe(gulp.dest(DEST_JADE));
@@ -135,5 +145,5 @@ gulp.task('watch', function () {
 });
 
 // tumblr templateでは、jadeがぜんぶに依存持ってるので、
-// buildで呼ぶのはjadeだけでおk
-gulp.task('build', ['jade']);
+// defaultで呼ぶのはhtmlだけでおk
+gulp.task('default', ['html']);
