@@ -45,12 +45,21 @@ exports.template = function (grunt, init, done) {
             validator: /^(varline|webpack|browserify)$/
         },
         {
+            name: 'with_babel',
+            message: 'use es6 (babel). [Y|n]',
+            default: 'n',
+            validator: /^(Y|n)$/
+        },
+        {
             name: 'with_test',
             message: 'use mocha test. [Y|n]',
             default: 'n',
             validator: /^(Y|n)$/
         }
     ], function(err, props) {
+        props.with_babel = props.with_babel == 'Y';
+        props.with_test = props.with_test == 'Y';
+
         // package setting
         var devDeps = {
             'mocha': '~1.9.0',
@@ -65,6 +74,9 @@ exports.template = function (grunt, init, done) {
             break;
         case 'webpack':
             devDeps['gulp-webpack'] = "1.4.0";
+            if (props.with_babel) {
+                devDeps['babel-loader'] = "5.0.0";
+            }
             break;
         case 'browserify':
             devDeps['browserify'] = "9.0.8";
@@ -145,8 +157,6 @@ exports.template = function (grunt, init, done) {
             });
             return camelCased;
         })(props.name);
-
-        props.with_test = props.with_test == 'Y';
 
         props.pkg = pkg;
         props.bower = bower;

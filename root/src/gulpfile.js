@@ -104,7 +104,14 @@ gulp.task('compile-js', function () {/*[ if (js_builder == 'browserify') { ]*/
             },
             resolve: {
                 extensions: ['', '.js']
-            }
+            }/*[ if (with_babel) { ]*/,
+            module: {
+                loaders: [{
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader'
+                }]
+            }/*[ } ]*/
         }))/*[ } ]*/
         .pipe(gulp.dest(DEST_JS));/*[ } ]*/
 });
