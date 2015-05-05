@@ -40,9 +40,9 @@ exports.template = function (grunt, init, done) {
         },
         {
             name: 'js_builder',
-            message: 'js builder. [varline|browserify]',
+            message: 'js builder. [varline|webpack|browserify]',
             default: 'varline',
-            validator: /^(varline|browserify)$/
+            validator: /^(varline|webpack|browserify)$/
         },
         {
             name: 'with_test',
@@ -62,6 +62,9 @@ exports.template = function (grunt, init, done) {
         switch(props.js_builder) {
         case 'varline':
             devDeps['varline'] = "1.*";
+            break;
+        case 'webpack':
+            devDeps['gulp-webpack'] = "1.4.0";
             break;
         case 'browserify':
             devDeps['browserify'] = "9.0.8";
