@@ -62,8 +62,10 @@ exports.template = function (grunt, init, done) {
         switch(props.js_builder) {
         case 'varline':
             devDeps['varline'] = "1.*";
+            break;
         case 'browserify':
             devDeps['browserify'] = "9.0.8";
+            break;
         }
 
         switch(props.task_runner) {
