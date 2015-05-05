@@ -40,9 +40,9 @@ exports.template = function (grunt, init, done) {
         },
         {
             name: 'js_builder',
-            message: 'js builder. [varline|babel|browserify]',
+            message: 'js builder. [varline|browserify]',
             default: 'varline',
-            validator: /^(varline|babel|browserify)$/
+            validator: /^(varline|browserify)$/
         },
         {
             name: 'with_test',
@@ -62,8 +62,6 @@ exports.template = function (grunt, init, done) {
         switch(props.js_builder) {
         case 'varline':
             devDeps['varline'] = "1.*";
-        case 'babel':
-            devDeps['gulp-babel'] = "5.1.0";
         case 'browserify':
             devDeps['browserify'] = "9.0.8";
         }

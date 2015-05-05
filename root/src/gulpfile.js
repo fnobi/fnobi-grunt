@@ -3,8 +3,7 @@ var gulp = require('gulp');
 
 var source = require('vinyl-source-stream');
 var sass = require('gulp-ruby-sass');/*[ if (js_builder == 'varline') { ]*/
-var varline = require('varline').gulp;/*[ } else if (js_builder == 'babel') { ]*/
-var babel = require('gulp-babel');/*[ } else if (js_builder == 'browserify') { ]*/
+var varline = require('varline').gulp;/*[ } else if (js_builder == 'browserify') { ]*/
 var browserify = require('browserify');/*[ } ]*/
 var jade = require('gulp-jade');
 var Koko = require('koko');
@@ -97,8 +96,7 @@ gulp.task('compile-js', function () {/*[ if (js_builder == 'browserify') { ]*/
                 $: 'jquery',
                 _: 'underscore'
             }
-        }))/*[ } else if (js_builder == 'babel') { ]*/
-        .pipe(babel())/*[ } ]*/
+        }))/*[ } ]*/
         .pipe(gulp.dest(DEST_JS));/*[ } ]*/
 });
 
