@@ -8,6 +8,8 @@ var webpack = require('gulp-webpack');/*[ } else if (js_builder == 'browserify')
 var browserify = require('browserify');/*[ } ]*/
 var jade = require('gulp-jade');
 var Koko = require('koko');
+var awspublish = require('gulp-awspublish');
+var rename = require('gulp-rename');
 
 var util = require('./task-util');
 
@@ -144,6 +146,22 @@ gulp.task('server', function () {
     new Koko(path.resolve(DEST), {
         openPath: HTTP_PATH
     }).start();
+});
+
+// publish
+gulp.task('publish', function () {
+    var config = util.readConfig([ 'aws-credentials.json' ]);
+    
+    var publisher = awspublish.create(config);
+    gulp.src([
+        DEST + '/*.html',
+        DEST + '/?(css|js|img)/**/*.*'
+    ])
+        .pipe(publisher.publish())
+        .pipe(publisher.sync())
+        .pipe(awspublish.reporter({
+            states: ['create', 'update', 'delete']
+        }));
 });
 
 

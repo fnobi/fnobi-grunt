@@ -91,6 +91,8 @@ exports.template = function (grunt, init, done) {
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
+            devDeps["gulp-awspublish"] = "2.0.0";
+            devDeps["gulp-rename"] = "1.2.2";
 
             scripts["build"] = "gulp";
             scripts["server"] = "gulp server";
