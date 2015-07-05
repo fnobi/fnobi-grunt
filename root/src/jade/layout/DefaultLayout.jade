@@ -54,8 +54,13 @@ html(lang="ja")
   body
     != SNSHelper.line_button_script()
 
-    block ContentBlock
-      include ../partial/wrapper
+    section.wrapper
+      header
+        h1= title
+        h2= description
+      block ContentBlock
+      footer
+        include ../partial/share
 
     // javascript
     block JavascriptBlock
