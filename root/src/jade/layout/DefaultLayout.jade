@@ -48,9 +48,9 @@ html(lang="ja")
         meta(property="twitter:image", content=ogp_image_url)
 
     // stylesheet
-    script(src=js_path + "/lib/html5shiv.min.js")
+    script(src=http_path + "/js/lib/html5shiv.min.js")
     block StylesheetBlock
-      link(rel="stylesheet", href=css_path + "//*[= name ]*/.css")
+      link(rel="stylesheet", href=http_path + "/css//*[= name ]*/.css")
   body
     != SNSHelper.line_button_script()
 
@@ -64,7 +64,7 @@ html(lang="ja")
 
     // javascript
     block JavascriptBlock
-      script(src=js_path + "//*[= camelCasedName ]*/.js")
+      script(src=http_path + "/js//*[= camelCasedName ]*/.js")
 
     // fb-root
     div#fb-root

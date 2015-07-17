@@ -37,9 +37,6 @@ var DEST_JS_LIB = path.join(DEST_JS, 'lib');
 var DEST_JADE = DEST;
 
 var HTTP_PATH = '/';
-var HTTP_PATH_CSS = path.join(HTTP_PATH, 'css');
-var HTTP_PATH_JS = path.join(HTTP_PATH, 'js');
-var HTTP_PATH_IMG = path.join(HTTP_PATH, 'img');
 
 
 var onError = function (err) {
@@ -50,10 +47,7 @@ var loadLocals = function () {
     var locals = util.readConfig([
         'data/config.yaml',
         {
-            http_path: HTTP_PATH,
-            css_path : HTTP_PATH_CSS,
-            js_path  : HTTP_PATH_JS,
-            img_path : HTTP_PATH_IMG
+            http_path: HTTP_PATH
         }
     ]);
     return locals;
