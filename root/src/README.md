@@ -2,7 +2,7 @@
 
 /*[= description ]*/
 
-## install
+## install dependencies
 
 ```
 npm install
