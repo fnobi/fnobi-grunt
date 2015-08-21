@@ -94,8 +94,8 @@ exports.template = function (grunt, init, done) {
             devDeps["gulp-awspublish"] = "2.0.0";
             devDeps["gulp-rename"] = "1.2.2";
 
+            scripts["start"] = "gulp server";
             scripts["build"] = "gulp";
-            scripts["server"] = "gulp server";
             scripts["watch"] = "gulp watch";
 
             break;

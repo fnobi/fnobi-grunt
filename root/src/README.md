@@ -27,7 +27,7 @@ bower install
 
 ### 開発用サーバーの起動
 
-- `npm run server`
+- `npm start`
   - `gulp server`でも可
 
 - 開発用のサーバーを起動し、ブラウザを開きます
