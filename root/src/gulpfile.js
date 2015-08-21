@@ -1,4 +1,4 @@
-var path = require('path');
+[var path = require('path');
 var gulp = require('gulp');
 
 var source = require('vinyl-source-stream');
@@ -147,10 +147,7 @@ gulp.task('publish', function () {
     var config = util.readConfig([ 'aws-credentials.json' ]);
     
     var publisher = awspublish.create(config);
-    gulp.src([
-        DEST + '/*.html',
-        DEST + '/?(css|js|img)/**/*.*'
-    ])
+    gulp.src(DEST + '/**/*')
         .pipe(publisher.publish())
         .pipe(publisher.sync())
         .pipe(awspublish.reporter({
