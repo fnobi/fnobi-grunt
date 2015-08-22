@@ -123,6 +123,10 @@ exports.template = function (grunt, init, done) {
         var pkg = {
             name: props.name,
             description: props.description,
+            repository: {
+                type: 'git',
+                 'url': props.repository
+            },
             version: props.version,
             scripts: scripts,
             engines: {
