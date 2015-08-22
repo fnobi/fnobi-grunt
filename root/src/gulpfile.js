@@ -1,4 +1,4 @@
-[var path = require('path');
+var path = require('path');
 var gulp = require('gulp');
 
 var source = require('vinyl-source-stream');
