@@ -109,6 +109,7 @@ gulp.task('compile-js', function () {/*[ if (js_builder == 'browserify') { ]*/
                 }]
             }/*[ } ]*/
         }))/*[ } ]*/
+        .on('error', onError)
         .pipe(gulp.dest(DEST_JS));/*[ } ]*/
 });
 
@@ -125,6 +126,7 @@ gulp.task('jade', function () {
             locals: locals,
             pretty: true
         }))
+        .on('error', onError)
         .pipe(gulp.dest(DEST_JADE));
 });
 
