@@ -35,11 +35,11 @@ bower install
 
 ### 個別ビルド
 
-- html
-  - `gulp html`を実行してください
+#### html
+- `gulp html`を実行してください
 
-- css
-  - `gulp css`を実行してください
+#### css
+- `gulp css`を実行してください
 
-- js
-  - `gulp js`を実行してください
+#### js
+- `gulp js`を実行してください
