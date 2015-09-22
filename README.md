@@ -1,10 +1,28 @@
 grunt-init-me
 ================
 
-web page template (compass + mocha + koko + simple ejs)
+Web site template with gulp, jade, compass and varline.
 
 
-## start developing web application with modern enviornment!!
+## about `grunt-init`
+
+- See [Project Scaffolding](http://gruntjs.com/project-scaffolding) guide on Grunt document.
+
+## dependencies
+
+- [grunt-init](https://github.com/gruntjs/grunt-init)
+  - `npm -g install grunt-init`
+
+- [gulp-jade](https://github.com/phated/gulp-jade)
+  - task for jade template.
+
+- [gulp-ruby-sass](https://github.com/sindresorhus/gulp-ruby-sass)
+  - task for scss compiling.
+
+- [varline](https://github.com/fnobi/varline)
+  - task for resolving dependencies and combining js.
+
+## install
 
 ```
 # install this template
