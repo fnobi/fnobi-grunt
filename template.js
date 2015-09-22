@@ -93,7 +93,8 @@ exports.template = function (grunt, init, done) {
             devDeps["koko"] = "0.*";
             devDeps["gulp-awspublish"] = "2.0.0";
             devDeps["gulp-rename"] = "1.2.2";
-
+            devDeps["gulp-imagemin"] = "2.3.*";
+            
             scripts["start"] = "gulp server";
             scripts["build"] = "gulp";
             scripts["watch"] = "gulp watch";
