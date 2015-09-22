@@ -1,7 +1,7 @@
 var escapeFiles = require('./lib/escapeFiles'),
     shellLines = require('./lib/shellLines');
 
-exports.description = 'web page template';
+exports.description = 'Web site template with gulp, jade, compass and varline.';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
