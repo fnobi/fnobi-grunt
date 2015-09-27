@@ -53,13 +53,13 @@ html(lang="ja")
     // stylesheet
     if use_single_file
       script
-        include ../../../js/lib/html5shiv.min.js
+        include ../../../public/js/lib/html5shiv.min.js
     else
       script(src=http_path + "js/lib/html5shiv.min.js")
     block StylesheetBlock
       if use_single_file
         style
-          include ../../../css//*[= name ]*/.css
+          include ../../../public/css//*[= name ]*/.css
       else
         link(rel="stylesheet", href=http_path + "css//*[= name ]*/.css")
   body
@@ -77,7 +77,7 @@ html(lang="ja")
     block JavascriptBlock
       if use_single_file
         script
-          include ../../../js//*[= camelCasedName ]*/.js
+          include ../../../public/js//*[= camelCasedName ]*/.js
       else
         script(src=http_path + "js//*[= camelCasedName ]*/.js")
 
