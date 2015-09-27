@@ -6,7 +6,7 @@ url:
 repository:
   /*[= repository ]*/
 
-title:
+site_name:
   /*[= name ]*/
 
 description:

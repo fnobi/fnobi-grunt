@@ -2,7 +2,7 @@
 
 /*[= description ]*/
 
-## install
+## install dependencies
 
 ```
 npm install
@@ -27,7 +27,7 @@ bower install
 
 ### 開発用サーバーの起動
 
-- `npm run server`
+- `npm start`
   - `gulp server`でも可
 
 - 開発用のサーバーを起動し、ブラウザを開きます
@@ -35,11 +35,11 @@ bower install
 
 ### 個別ビルド
 
-- html
-  - `gulp html`を実行してください
+#### html
+- `gulp html`を実行してください
 
-- css
-  - `gulp css`を実行してください
+#### css
+- `gulp css`を実行してください
 
-- js
-  - `gulp js`を実行してください
+#### js
+- `gulp js`を実行してください

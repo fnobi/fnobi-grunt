@@ -1,5 +1,3 @@
-/* ========================================= *
- * members
- * ========================================= */
-
-// var bf = new BrowserFeature();
+var /*[= camelCasedName ]*/ = {
+    bf: new BrowserFeature()
+};
