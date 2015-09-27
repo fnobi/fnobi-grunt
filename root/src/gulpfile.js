@@ -34,7 +34,7 @@ var DEST = '../public';
 var DEST_CSS = path.join(DEST, 'css');
 var DEST_JS = path.join(DEST, 'js');
 var DEST_JS_LIB = path.join(DEST_JS, 'lib');
-var DEST_JADE = DEST;
+var DEST_HTML = DEST;
 
 var HTTP_PATH = '/';
 
@@ -127,7 +127,7 @@ gulp.task('jade', function () {
             pretty: true
         }))
         .on('error', onError)
-        .pipe(gulp.dest(DEST_JADE));
+        .pipe(gulp.dest(DEST_HTML));
 });
 
 gulp.task('html', ['jade']);
