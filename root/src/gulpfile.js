@@ -31,6 +31,7 @@ var GLOB_JADE = path.join(SRC_JADE, '**/*.jade');
 var GLOB_DATA = path.join(SRC_DATA, '*');
 
 var DEST = '../public';
+var DEST_IMG = path.join(DEST, 'img');
 var DEST_CSS = path.join(DEST, 'css');
 var DEST_JS = path.join(DEST, 'js');
 var DEST_JS_LIB = path.join(DEST_JS, 'lib');
@@ -133,16 +134,13 @@ gulp.task('jade', function () {
 gulp.task('html', ['jade']);
 
 
-// default
-gulp.task('default', ['css', 'js', 'html']);
-
-
 // server
 gulp.task('server', function () {
     new Koko(path.resolve(DEST), {
         openPath: HTTP_PATH
     }).start();
 });
+
 
 // publish
 gulp.task('publish', function () {
@@ -158,6 +156,22 @@ gulp.task('publish', function () {
 });
 
 
+// optimize-image
+gulp.task('optimize-image', function (callback) {
+    var exec = require('child_process').exec;
+
+    var cmd = [
+        'cd ' + DEST_IMG,
+        'pngquant 256 --ext=.png -f *.png',
+        'open -a /Applications/ImageOptim.app *.png'
+    ].join(' && ');
+    
+    exec(cmd, function (error, stdout, stderr) {
+        callback(error);
+    });
+});
+
+
 // watch
 gulp.task('watch', function () {
     gulp.watch(GLOB_SASS, ['sass']);
@@ -165,3 +179,7 @@ gulp.task('watch', function () {
     gulp.watch(GLOB_JADE, ['jade']);
     gulp.watch(GLOB_DATA, ['html']);
 });
+
+
+// default
+gulp.task('default', ['css', 'js', 'html']);
