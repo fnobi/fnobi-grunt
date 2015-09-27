@@ -125,7 +125,7 @@ gulp.task('jade', ['css', 'js'], function () {
     locals.TumblrTagHelper.data = {
         available: true,
         blog: util.readConfig('data/blog.json'),
-        posts: util.readConfig('data/posts.json'),
+        posts: util.readJSON('data/posts.json'),
         custom: util.readConfig('data/custom.yaml')
     };
 
