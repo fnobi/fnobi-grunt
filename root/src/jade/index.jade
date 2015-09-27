@@ -2,14 +2,6 @@ extends layout/DefaultLayout
 
 prepend ConfigBlock
   include mixin/TumblrBlock
-  - page_name = ''
   - TumblrTagHelper.data.available = true
   - TumblrTagHelper.data.isPermalinkPage = false
   - use_single_file = false
-
-// append StylesheetBlock
-
-// append JavascriptBlock
-
-block ContentBlock
-  | hello, world!
