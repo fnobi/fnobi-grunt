@@ -19,6 +19,9 @@ Web site template with gulp, jade, sass, pleeease and varline.
 - [gulp-ruby-sass](https://github.com/sindresorhus/gulp-ruby-sass)
   - task for scss compiling.
 
+- [gulp-pleeease](https://github.com/danielhusar/gulp-pleeease)
+  - task for css auto-prefix.
+
 - [varline](https://github.com/fnobi/varline)
   - task for resolving dependencies and combining js.
 
