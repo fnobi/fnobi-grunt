@@ -143,7 +143,7 @@ exports.template = function (grunt, init, done) {
             main: 'index.html',
             dependencies: {
                 'html5shiv': '~3.7.2',
-                'jquery': '~1.10.*',
+                'jquery': '~1.11.*',
                 'normalize-css': 'normalize.css#~3.0.*'
             }
         };
