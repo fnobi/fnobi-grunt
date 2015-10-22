@@ -1,6 +1,9 @@
+// config
 @import "definitions";
-// @import "keyframes";
+/* @import "keyframes"; */
 
-@import $reset_css;
+// reset css
+@import "bower_components/normalize-css/normalize.css";
 
+// modules
 @import "components/wrapper";
