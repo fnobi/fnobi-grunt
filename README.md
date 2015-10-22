@@ -1,7 +1,7 @@
 grunt-init-me
 ================
 
-Web site template with gulp, jade, compass and varline.
+Web site template with gulp, jade, sass, pleeease and varline.
 
 
 ## about `grunt-init`
