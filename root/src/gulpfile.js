@@ -2,7 +2,8 @@ var path = require('path');
 var gulp = require('gulp');
 
 var source = require('vinyl-source-stream');
-var sass = require('gulp-ruby-sass');/*[ if (js_builder == 'varline') { ]*/
+var sass = require('gulp-ruby-sass');
+var pleeease = require('gulp-pleeease');/*[ if (js_builder == 'varline') { ]*/
 var varline = require('varline').gulp;/*[ } else if (js_builder == 'webpack') { ]*/
 var webpack = require('gulp-webpack');/*[ } else if (js_builder == 'browserify') { ]*/
 var browserify = require('browserify');/*[ } ]*/
@@ -61,7 +62,8 @@ var loadLocals = function () {
 
 // css
 gulp.task('sass', function () {
-    return sass(SRC_SASS, { compass: true, style: 'compressed' })
+    return sass(SRC_SASS, { style: 'compressed' })
+        .pipe(pleeease())
         .on('error', onError)
         .pipe(gulp.dest(DEST_CSS));
 });

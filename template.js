@@ -88,6 +88,7 @@ exports.template = function (grunt, init, done) {
             devDeps["gulp"] = "3.*";
             devDeps["vinyl-source-stream"] = "1.1.0";
             devDeps["gulp-ruby-sass"] = "1.0.0";
+            devDeps["gulp-pleeease"] = "2.0.*";
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
