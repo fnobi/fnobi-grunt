@@ -11,6 +11,7 @@ var jade = require('gulp-jade');
 var Koko = require('koko');
 var awspublish = require('gulp-awspublish');
 var rename = require('gulp-rename');
+var notify = require('gulp-notify');
 
 var util = require('./task-util');
 
@@ -18,6 +19,8 @@ var util = require('./task-util');
 /* ========================================= *
  * const
  * ========================================= */
+var PROJ_NAME = '/*[= name ]*/';
+
 var SRC = '.';
 var SRC_SASS = [ SRC, 'sass' ].join('/');
 var SRC_JS = [ SRC, 'js' ].join('/');
@@ -40,10 +43,10 @@ var DEST_HTML = DEST;
 
 var HTTP_PATH = '/';
 
-
-var onError = function (err) {
-    console.error('Error!', err.message);
-};
+var onError = notify.onError({
+    title: 'Error: <%= error.plugin %> / ' + PROJ_NAME,
+    message: '<%= error.message %>'
+});
 
 var loadLocals = function () {
     var locals = util.readConfig([
