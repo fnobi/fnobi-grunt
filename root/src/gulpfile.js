@@ -88,7 +88,7 @@ gulp.task('compile-js', function () {/*[ if (js_builder == 'browserify') { ]*/
         .pipe(source('/*[= camelCasedName ]*/.js'))
         .pipe(gulp.dest(DEST_JS));/*[ } else { ]*/
 
-    gulp.src(SRC_JS + '//*[= camelCasedName ]*/.js')/*[ if (js_builder == 'varline') { ]*/
+    gulp.src(SRC_JS + '//*[= camelCasedName ]*/*.js')/*[ if (js_builder == 'varline') { ]*/
         .pipe(varline({
             wrap: true,
             loadPath: [
