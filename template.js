@@ -93,12 +93,13 @@ exports.template = function (grunt, init, done) {
             devDeps["gulp-jade"] = "1.*";
             devDeps["js-yaml"] = "3.*";
             devDeps["koko"] = "0.*";
-            devDeps["gulp-awspublish"] = "2.0.0";
-            devDeps["gulp-rename"] = "1.2.2";
+            devDeps["gulp-awspublish"] = "2.0.*";
+            devDeps["gulp-rename"] = "1.2.*";
 
             scripts["start"] = "gulp server";
             scripts["build"] = "gulp";
             scripts["watch"] = "gulp watch";
+            scripts["publish"] = "gulp publish";
 
             break;
         case 'grunt':
