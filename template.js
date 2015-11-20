@@ -70,7 +70,7 @@ exports.template = function (grunt, init, done) {
 
         switch(props.js_builder) {
         case 'varline':
-            devDeps['varline'] = "1.1.*";
+            devDeps['varline'] = "1.2.*";
             break;
         case 'webpack':
             devDeps['gulp-webpack'] = "1.4.0";
